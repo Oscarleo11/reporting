@@ -1,0 +1,55 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\UtilisationCheque;
+use App\Models\FamilleCheque;
+use App\Models\TypeCarte;
+
+class UtilisationChequeController extends Controller
+{
+    public function create()
+    {
+        // $familles = FamilleCarte::all();
+        $familles = FamilleCheque::all();
+        $types = TypeCarte::all();
+        return view('utilisationcheque.create', compact('familles', 'types'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'debut_periode' => 'required|date',
+            'fin_periode' => 'required|date',
+            'details.*.code' => 'required|string',
+            'details.*.description' => 'required|string',
+            'details.*.nbcheque' => 'required|integer',
+            'details.*.valeurcfa' => 'required|integer',
+        ]);
+
+        $totalNb = collect($request->details)->sum('nbcheque');
+        $totalValeur = collect($request->details)->sum('valeurcfa');
+
+        foreach ($request->details as $ligne) {
+            UtilisationCheque::create([
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'code' => $ligne['code'],
+                'description' => $ligne['description'],
+                'nbcheque' => $ligne['nbcheque'],
+                'valeurcfa' => $ligne['valeurcfa'],
+                'totalnbcheque' => $totalNb,
+                'totalvaleurcfa' => $totalValeur,
+            ]);
+        }
+
+        return redirect()->route('utilisationcheque.index')->with('success', 'Utilisation enregistrée.');
+    }
+
+    public function index()
+    {
+        $utilisations = UtilisationCheque::orderBy('debut_periode', 'desc')->get()->groupBy('debut_periode');
+        return view('utilisationcheque.index', compact('utilisations'));
+    }
+}
