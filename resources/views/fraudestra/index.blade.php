@@ -1,39 +1,70 @@
-@extends('layouts.app')
-
+@extends('layouts.dashboard')
+@section('title', 'Déclaration de Fraudes STRA')
 @section('content')
-<div class="py-10">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <h2 class="text-xl font-bold mb-6">📋 Fraudes STRA enregistrées</h2>
-
-        @forelse($fraudes as $periode => $group)
-            @php $first = $group->first(); @endphp
-
-            <div class="mb-8 border border-gray-200 rounded shadow p-4 bg-white">
-                <h3 class="text-lg font-semibold text-red-700 mb-2">
-                    Période : {{ \Carbon\Carbon::parse($periode)->format('d/m/Y') }} —
-                    {{ \Carbon\Carbon::parse($first->fin_periode)->format('d/m/Y') }}
-                </h3>
-
-                <p class="text-sm text-gray-600 mb-4">
-                    Total fraudes : {{ $group->sum('nb_fraude') }} |
-                    Valeur totale : {{ number_format($group->sum('valeur_fraude'), 0, ',', ' ') }} CFA
-                </p>
-
-                @foreach($group as $fraude)
-                    <div class="p-4 border rounded bg-gray-50 mb-4">
-                        <p><strong>Code fraude :</strong> {{ $fraude->fraude }}</p>
-                        <p><strong>Service :</strong> {{ $fraude->service }}</p>
-                        <p><strong>Nb Fraudes :</strong> {{ $fraude->nb_fraude }}</p>
-                        <p><strong>Valeur :</strong> {{ number_format($fraude->valeur_fraude, 0, ',', ' ') }} CFA</p>
-                        <p><strong>Dates :</strong> du {{ \Carbon\Carbon::parse($fraude->debut_fraude)->format('d/m/Y') }} au {{ \Carbon\Carbon::parse($fraude->fin_fraude)->format('d/m/Y') }}</p>
-                        <p><strong>Mode opératoire :</strong> {{ $fraude->mode_operatoire }}</p>
-                        <p><strong>Mesures :</strong> {{ $fraude->mesures_correctives }}</p>
-                    </div>
-                @endforeach
+    <section class="section">
+        <div class="section-header">
+            <h1><i class="fas fa-user-secret text-primary mr-2"></i> Fraudes STRA enregistrées</h1>
+            <div class="section-header-breadcrumb">
+                <a href="{{ route('fraudestra.create') }}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus"></i> Nouvelle déclaration
+                </a>
             </div>
-        @empty
-            <p class="text-gray-500 italic">Aucune fraude enregistrée.</p>
-        @endforelse
-    </div>
-</div>
+        </div>
+        <div class="section-body">
+            @forelse($fraudes as $periode => $group)
+                @php $first = $group->first(); @endphp
+                <div class="row justify-content-center mb-4">
+                    <div class="col-lg-12">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-header text-primary">
+                                <h4 class="mb-0">
+                                    <i class="fas fa-calendar-alt mr-2"></i>
+                                    Période : {{ \Carbon\Carbon::parse($periode)->format('d/m/Y') }}
+                                    - {{ \Carbon\Carbon::parse($first->fin_periode)->format('d/m/Y') }}
+                                </h4>
+                                <span class="small">
+                                    Total fraudes : <strong>{{ $group->sum('nb_fraude') }}</strong> |
+                                    Valeur totale : <strong>{{ number_format($group->sum('valeur_fraude'), 0, ',', ' ') }} CFA</strong>
+                                </span>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover table-sm mb-0">
+                                        <thead class="bg-light">
+                                            <tr>
+                                                <th>Code fraude</th>
+                                                <th>Service</th>
+                                                <th class="text-right">Nb fraudes</th>
+                                                <th class="text-right">Valeur (CFA)</th>
+                                                <th>Début fraude</th>
+                                                <th>Fin fraude</th>
+                                                <th>Mode opératoire</th>
+                                                <th>Mesures correctives</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($group as $fraude)
+                                                <tr>
+                                                    <td>{{ $fraude->fraude }}</td>
+                                                    <td>{{ $fraude->service }}</td>
+                                                    <td class="text-right">{{ $fraude->nb_fraude }}</td>
+                                                    <td class="text-right">{{ number_format($fraude->valeur_fraude, 0, ',', ' ') }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($fraude->debut_fraude)->format('d/m/Y') }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($fraude->fin_fraude)->format('d/m/Y') }}</td>
+                                                    <td>{{ $fraude->mode_operatoire }}</td>
+                                                    <td>{{ $fraude->mesures_correctives }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="text-center text-muted font-italic">Aucune fraude enregistrée.</div>
+            @endforelse
+        </div>
+    </section>
 @endsection

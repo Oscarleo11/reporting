@@ -1,47 +1,66 @@
-@extends('layouts.app')
-
+@extends('layouts.dashboard')
+@section('title', 'Réclamations STRA')
 @section('content')
-<div class="py-10">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <h2 class="text-xl font-bold mb-6">📬 Réclamations STRA enregistrées</h2>
-
-        @forelse ($reclamations->groupBy('debut_periode') as $periode => $group)
-            @php $first = $group->first(); @endphp
-
-            <div class="mb-10 bg-white border shadow rounded p-4">
-                <h3 class="text-lg font-semibold text-green-700 mb-2">
-                    Période du {{ \Carbon\Carbon::parse($periode)->format('d/m/Y') }} au {{ \Carbon\Carbon::parse($first->fin_periode)->format('d/m/Y') }}
-                </h3>
-                <p class="text-sm text-gray-600 mb-3">
-                    Total reçues : {{ $first->total_recu }} | Traitées : {{ $first->total_traite }}
-                </p>
-
-                <table class="min-w-full table-auto text-sm border-collapse border border-gray-300">
-                    <thead class="bg-gray-100">
-                        <tr>
-                            <th class="border px-4 py-2">Service</th>
-                            <th class="border px-4 py-2">Nb reçues</th>
-                            <th class="border px-4 py-2">Nb traitées</th>
-                            <th class="border px-4 py-2">Motif</th>
-                            <th class="border px-4 py-2">Procédure</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($group as $rec)
-                            <tr>
-                                <td class="border px-4 py-2">{{ $rec->service }}</td>
-                                <td class="border px-4 py-2 text-center">{{ $rec->nb_recu }}</td>
-                                <td class="border px-4 py-2 text-center">{{ $rec->nb_traite }}</td>
-                                <td class="border px-4 py-2">{{ $rec->motif_reclamation }}</td>
-                                <td class="border px-4 py-2">{{ $rec->procedure_traitement }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+<section class="section">
+    <div class="section-header">
+        <h1><i class="fas fa-exclamation-circle text-primary mr-2"></i> Réclamations STRA enregistrées</h1>
+        <div class="section-header-breadcrumb">
+            <a href="{{ route('reclamationstra.create') }}" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus"></i> Nouvelle déclaration
+            </a>
+        </div>
+    </div>
+    <div class="section-body">
+        @forelse($reclamations as $periode => $group)
+            @php $premier = $group->first(); @endphp
+            <div class="row justify-content-center mb-4">
+                <div class="col-lg-12">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-header text-prymary">
+                            <h4 class="mb-0">
+                                <i class="fas fa-calendar-alt mr-2"></i>
+                                Période : {{ \Carbon\Carbon::parse($periode)->format('d/m/Y') }}
+                                @if($premier && $premier->fin_periode)
+                                    - {{ \Carbon\Carbon::parse($premier->fin_periode)->format('d/m/Y') }}
+                                @endif
+                            </h4>
+                            <span class="small">
+                                Total reçues : <strong>{{ $premier->total_recu }}</strong> |
+                                Traitées : <strong>{{ $premier->total_traite }}</strong>
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover table-sm mb-0">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th>Service</th>
+                                            <th class="text-center">Nb reçues</th>
+                                            <th class="text-center">Nb traitées</th>
+                                            <th>Motif</th>
+                                            <th>Procédure</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($group as $rec)
+                                            <tr>
+                                                <td>{{ $rec->service }}</td>
+                                                <td class="text-center">{{ $rec->nb_recu }}</td>
+                                                <td class="text-center">{{ $rec->nb_traite }}</td>
+                                                <td>{{ $rec->motif_reclamation }}</td>
+                                                <td>{{ $rec->procedure_traitement }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         @empty
-            <p class="text-gray-500 italic">Aucune déclaration trouvée.</p>
+            <div class="text-center text-muted font-italic">Aucune réclamation enregistrée pour le moment.</div>
         @endforelse
     </div>
-</div>
+</section>
 @endsection

@@ -83,7 +83,7 @@ class DeclarationXmlController extends Controller
             $data = \App\Models\OperationStra::where('debut_periode', $request->debut_periode)
                 ->where('fin_periode', $request->fin_periode)
                 ->get();
-        } elseif ($request->type === 'reclamstra') {
+        } elseif ($request->type === 'reclamationstra') {
             $data = \App\Models\ReclamationStra::where('debut_periode', $request->debut_periode)
                 ->where('fin_periode', $request->fin_periode)
                 ->get();
@@ -91,11 +91,13 @@ class DeclarationXmlController extends Controller
             $data = \App\Models\Ecosysteme::where('debut_periode', $request->debut_periode)
                 ->where('fin_periode', $request->fin_periode)
                 ->get();
+        } elseif ($request->type === 'annuaire') {
+            // Récupère l'annuaire STRA pour la période
+            $data = \App\Models\AnnuaireStra::with(['services.transactions'])
+                ->where('debut_periode', $request->debut_periode)
+                ->where('fin_periode', $request->fin_periode)
+                ->get();
         }
-
-
-
-
 
         return view('declaration.xml.index', [
             'donnees' => $data,
@@ -934,7 +936,111 @@ class DeclarationXmlController extends Controller
             return response($dom->saveXML(), 200)
                 ->header('Content-Type', 'application/xml')
                 ->header('Content-Disposition', 'attachment; filename="ecosysteme_' . $request->debut_periode . '_' . $request->fin_periode . '.xml"');
+        } elseif ($request->type === 'annuaire') {
+            $annuaires = \App\Models\AnnuaireStra::with(['services.transactions'])
+                ->where('debut_periode', $request->debut_periode)
+                ->where('fin_periode', $request->fin_periode)
+                ->get();
+
+            if ($annuaires->isEmpty()) {
+                return back()->withErrors(['type' => 'Aucune donnée trouvée pour cette période.']);
+            }
+
+            $dom = new \DOMDocument('1.0', 'UTF-8');
+            $dom->formatOutput = true;
+
+            $root = $dom->createElement('annuairestra');
+            $dom->appendChild($root);
+
+            foreach ($annuaires as $annuaire) {
+                // <declaration>
+                $header = $dom->createElement('declaration');
+                $header->appendChild($dom->createElement('debutperiode', $annuaire->debut_periode));
+                $header->appendChild($dom->createElement('finperiode', $annuaire->fin_periode));
+                $header->appendChild($dom->createElement('nbsous_agents', $annuaire->nbsous_agents));
+                $header->appendChild($dom->createElement('nbpoints_service', $annuaire->nbpoints_service));
+                $header->appendChild($dom->createElement('nb_emission_intra', $annuaire->nb_emission_intra));
+                $header->appendChild($dom->createElement('valeur_emission_intra', $annuaire->valeur_emission_intra));
+                $header->appendChild($dom->createElement('nb_emission_hors', $annuaire->nb_emission_hors));
+                $header->appendChild($dom->createElement('valeur_emission_hors', $annuaire->valeur_emission_hors));
+                $header->appendChild($dom->createElement('nb_reception_intra', $annuaire->nb_reception_intra));
+                $header->appendChild($dom->createElement('valeur_reception_intra', $annuaire->valeur_reception_intra));
+                $header->appendChild($dom->createElement('nb_reception_hors', $annuaire->nb_reception_hors));
+                $header->appendChild($dom->createElement('valeur_reception_hors', $annuaire->valeur_reception_hors));
+                $root->appendChild($header);
+
+                // <details>
+                $details = $dom->createElement('details');
+                foreach ($annuaire->services as $service) {
+                    $dataNode = $dom->createElement('data');
+                    $dataNode->appendChild($dom->createElement('operateur', $service->operateur));
+                    $dataNode->appendChild($dom->createElement('nbsous_agents', $service->nbsous_agents));
+                    $dataNode->appendChild($dom->createElement('nbpoints_service', $service->nbpoints_service));
+
+                    // <service code="...">
+                    $serviceNode = $dom->createElement('service');
+                    $serviceNode->setAttribute('code', $service->code_service);
+
+                    $desc = $dom->createElement('description_service');
+                    $desc->appendChild($dom->createCDATASection($service->description_service ?? ''));
+                    $serviceNode->appendChild($desc);
+
+                    $serviceNode->appendChild($dom->createElement('date_lancement', $service->date_lancement));
+                    $serviceNode->appendChild($dom->createElement('perimetre', $service->perimetre));
+                    $serviceNode->appendChild($dom->createElement('mecanisme_compensation_reglement', $service->mecanisme_compensation_reglement));
+
+                    // Transactions séparées
+                    $emissionNode = $dom->createElement('emission');
+                    $receptionNode = $dom->createElement('reception');
+
+                    foreach ($service->transactions as $transaction) {
+                        if ($transaction->type_transaction === 'emission') {
+                            $tx = $dom->createElement('transaction');
+                            if ($transaction->mode_envoi) {
+                                $tx->appendChild($dom->createElement('mode_envoi', $transaction->mode_envoi));
+                            }
+                            if ($transaction->mode_reception) {
+                                $tx->appendChild($dom->createElement('mode_reception', $transaction->mode_reception));
+                            }
+                            $tx->appendChild($dom->createElement('nb_emission_intra', $transaction->nb_intra));
+                            $tx->appendChild($dom->createElement('valeur_emission_intra', $transaction->valeur_intra));
+                            $tx->appendChild($dom->createElement('nb_emission_hors', $transaction->nb_hors));
+                            $tx->appendChild($dom->createElement('valeur_emission_hors', $transaction->valeur_hors));
+                            $emissionNode->appendChild($tx);
+                        } elseif ($transaction->type_transaction === 'reception') {
+                            $tx = $dom->createElement('transaction');
+                            if ($transaction->mode_envoi) {
+                                $tx->appendChild($dom->createElement('mode_envoi', $transaction->mode_envoi));
+                            }
+                            if ($transaction->mode_reception) {
+                                $tx->appendChild($dom->createElement('mode_reception', $transaction->mode_reception));
+                            }
+                            $tx->appendChild($dom->createElement('nb_reception_intra', $transaction->nb_intra));
+                            $tx->appendChild($dom->createElement('valeur_reception_intra', $transaction->valeur_intra));
+                            $tx->appendChild($dom->createElement('nb_reception_hors', $transaction->nb_hors));
+                            $tx->appendChild($dom->createElement('valeur_reception_hors', $transaction->valeur_hors));
+                            $receptionNode->appendChild($tx);
+                        }
+                    }
+
+                    if ($emissionNode->hasChildNodes()) {
+                        $serviceNode->appendChild($emissionNode);
+                    }
+                    if ($receptionNode->hasChildNodes()) {
+                        $serviceNode->appendChild($receptionNode);
+                    }
+
+                    $dataNode->appendChild($serviceNode);
+                    $details->appendChild($dataNode);
+                }
+                $root->appendChild($details);
+            }
+
+            return response($dom->saveXML(), 200)
+                ->header('Content-Type', 'application/xml')
+                ->header('Content-Disposition', 'attachment; filename="annuairestra_' . $request->debut_periode . '_' . $request->fin_periode . '.xml"');
         }
+
 
         return back()->with('error', 'Type de déclaration non supporté.');
     }

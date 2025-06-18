@@ -1,41 +1,73 @@
-@extends('layouts.app')
-
+@extends('layouts.dashboard')
+@section('title', 'Déclaration Écosystème')
 @section('content')
-<div class="py-10">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <h2 class="text-xl font-bold mb-6">🌐 Écosystèmes enregistrés</h2>
-
-        @forelse($ecosystemes as $periode => $group)
-            @php $first = $group->first(); @endphp
-
-            <div class="mb-8 border border-gray-200 rounded shadow p-4 bg-white">
-                <h3 class="text-lg font-semibold text-green-700 mb-2">
-                    Période : {{ \Carbon\Carbon::parse($periode)->format('d/m/Y') }} —
-                    {{ \Carbon\Carbon::parse($first->fin_periode)->format('d/m/Y') }}
-                </h3>
-
-                <p class="text-sm text-gray-600 mb-3">
-                    Sous-agents : {{ $first->nbsous_agents }} |
-                    Points de service : {{ $first->nbpoints_service }}<br>
-                    <strong>Contrôle :</strong> {{ $first->modalite_controle_sousagents }}
-                </p>
-
-                @foreach($group as $eco)
-                    <div class="p-4 border rounded bg-gray-50 mb-4">
-                        <p><strong>Service offert :</strong> {{ $eco->service_offert }}</p>
-                        <p><strong>Description :</strong> {{ $eco->description_service }}</p>
-                        <p><strong>Opérateur :</strong> {{ $eco->operateur }} ({{ $eco->pays_operateur }})</p>
-                        <p><strong>Périmètre :</strong> {{ $eco->perimetre_partenariat }}</p>
-                        <p><strong>Début partenariat :</strong> {{ \Carbon\Carbon::parse($eco->debut_partenariat)->format('d/m/Y') }}</p>
-                        @if ($eco->fin_partenariat)
-                            <p><strong>Fin partenariat :</strong> {{ \Carbon\Carbon::parse($eco->fin_partenariat)->format('d/m/Y') }}</p>
-                        @endif
-                    </div>
-                @endforeach
+    <section class="section">
+        <div class="section-header">
+            <h1><i class="fas fa-network-wired text-primary mr-2"></i> Écosystèmes enregistrés</h1>
+            <div class="section-header-breadcrumb">
+                <a href="{{ route('ecosysteme.create') }}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus"></i> Nouvelle déclaration
+                </a>
             </div>
-        @empty
-            <p class="text-gray-500 italic">Aucun écosystème enregistré.</p>
-        @endforelse
-    </div>
-</div>
+        </div>
+        <div class="section-body">
+            @forelse($ecosystemes as $periode => $group)
+                @php $first = $group->first(); @endphp
+                <div class="row justify-content-center mb-4">
+                    <div class="col-lg-12">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-header text-white">
+                                <h4 class="mb-0">
+                                    <i class="fas fa-calendar-alt mr-2"></i>
+                                    Période : {{ \Carbon\Carbon::parse($periode)->format('d/m/Y') }}
+                                    - {{ \Carbon\Carbon::parse($first->fin_periode)->format('d/m/Y') }}
+                                </h4>
+                                <span class="small">
+                                    Sous-agents : <strong>{{ $first->nbsous_agents }}</strong> |
+                                    Points de service : <strong>{{ $first->nbpoints_service }}</strong><br>
+                                    <strong>Contrôle :</strong> {{ $first->modalite_controle_sousagents }}
+                                </span>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover table-sm mb-0">
+                                        <thead class="bg-light">
+                                            <tr>
+                                                <th>Service offert</th>
+                                                <th>Description</th>
+                                                <th>Opérateur</th>
+                                                <th>Pays opérateur</th>
+                                                <th>Périmètre partenariat</th>
+                                                <th>Début partenariat</th>
+                                                <th>Fin partenariat</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($group as $eco)
+                                                <tr>
+                                                    <td>{{ $eco->service_offert }}</td>
+                                                    <td>{{ $eco->description_service }}</td>
+                                                    <td>{{ $eco->operateur }}</td>
+                                                    <td>{{ $eco->pays_operateur }}</td>
+                                                    <td>{{ $eco->perimetre_partenariat }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($eco->debut_partenariat)->format('d/m/Y') }}</td>
+                                                    <td>
+                                                        @if ($eco->fin_partenariat)
+                                                            {{ \Carbon\Carbon::parse($eco->fin_partenariat)->format('d/m/Y') }}
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="text-center text-muted font-italic">Aucun écosystème enregistré.</div>
+            @endforelse
+        </div>
+    </section>
 @endsection

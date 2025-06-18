@@ -1,39 +1,93 @@
-@extends('layouts.app')
-
+{{-- filepath: c:\laragon\www\reporting\resources\views\annuairestra\index.blade.php --}}
+@extends('layouts.dashboard')
+@section('title', 'Annuaire STRA')
 @section('content')
-<div class="py-10">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">📋 Liste des déclarations STRA</h2>
-
-        @if ($stras->isEmpty())
-            <div class="text-gray-500">Aucune déclaration enregistrée.</div>
-        @else
-            @foreach ($stras->groupBy('debut_periode') as $periode => $group)
-                <div class="bg-white rounded shadow p-6 mb-6">
-                    <h3 class="text-lg font-semibold text-blue-700 mb-4">
-                        Période : {{ \Carbon\Carbon::parse($periode)->format('d/m/Y') }}
-                    </h3>
-
-                    @foreach ($group as $stra)
-                        <div class="border-t border-gray-200 pt-4 mt-4">
-                            <p class="text-sm text-gray-600 mb-2">
-                                <strong>Sous-agents :</strong> {{ $stra->nbsous_agents }},
-                                <strong>Points de service :</strong> {{ $stra->nbpoints_service }},
-                                <strong>Émissions intra :</strong> {{ $stra->nb_emission_intra }},
-                                <strong>Réceptions hors :</strong> {{ $stra->nb_reception_hors }}
-                            </p>
-
-                            @foreach ($stra->services as $service)
-                                <div class="ml-4 mb-2 text-gray-700">
-                                    ▸ <strong>{{ $service->operateur }}</strong> —
-                                    <span class="text-sm text-gray-500">Service : {{ $service->code_service }}</span>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endforeach
-                </div>
-            @endforeach
-        @endif
+<section class="section">
+    <div class="section-header">
+        <h1><i class="fas fa-address-book text-primary mr-2"></i> Annuaire STRA enregistrés</h1>
+        <div class="section-header-breadcrumb">
+            <a href="{{ route('annuairestra.create') }}" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus"></i> Nouvelle déclaration
+            </a>
+        </div>
     </div>
-</div>
+    <div class="section-body">
+        @forelse($stras->groupBy('debut_periode') as $periode => $group)
+            @php $first = $group->first(); @endphp
+            <div class="row justify-content-center mb-4">
+                <div class="col-lg-12">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-header text-white">
+                            <h4 class="mb-0">
+                                <i class="fas fa-calendar-alt mr-2"></i>
+                                Période : {{ \Carbon\Carbon::parse($periode)->format('d/m/Y') }}
+                                @if($first && $first->fin_periode)
+                                    - {{ \Carbon\Carbon::parse($first->fin_periode)->format('d/m/Y') }}
+                                @endif
+                            </h4>
+                            <span class="small">
+                                Sous-agents : <strong>{{ $first->nbsous_agents }}</strong> |
+                                Points de service : <strong>{{ $first->nbpoints_service }}</strong>
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover table-sm mb-0">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th>Opérateur</th>
+                                            <th>Code service</th>
+                                            <th>Description</th>
+                                            <th>Date lancement</th>
+                                            <th>Périmètre</th>
+                                            <th>Mécanisme compensation</th>
+                                            <th>Nb sous-agents</th>
+                                            <th>Points de service</th>
+                                            <th>Transactions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($group as $stra)
+                                            @foreach ($stra->services as $service)
+                                                <tr>
+                                                    <td>{{ $service->operateur }}</td>
+                                                    <td>{{ $service->code_service }}</td>
+                                                    <td>{{ $service->description_service }}</td>
+                                                    <td>
+                                                        @if($service->date_lancement)
+                                                            {{ \Carbon\Carbon::parse($service->date_lancement)->format('d/m/Y') }}
+                                                        @endif
+                                                    </td>
+                                                    <td>{{ $service->perimetre }}</td>
+                                                    <td>{{ $service->mecanisme_compensation_reglement }}</td>
+                                                    <td>{{ $service->nbsous_agents }}</td>
+                                                    <td>{{ $service->nbpoints_service }}</td>
+                                                    <td>
+                                                        @if(isset($service->transactions) && count($service->transactions))
+                                                            <ul class="mb-0 pl-3">
+                                                                @foreach($service->transactions as $tx)
+                                                                    <li>
+                                                                        <strong>{{ ucfirst($tx->type_transaction) }}</strong>
+                                                                        (Intra: {{ $tx->nb_intra }}/{{ number_format($tx->valeur_intra, 0, ',', ' ') }} CFA,
+                                                                        Hors: {{ $tx->nb_hors }}/{{ number_format($tx->valeur_hors, 0, ',', ' ') }} CFA)
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @empty
+            <div class="text-center text-muted font-italic">Aucune déclaration enregistrée.</div>
+        @endforelse
+    </div>
+</section>
 @endsection

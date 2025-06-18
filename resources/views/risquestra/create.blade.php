@@ -1,66 +1,75 @@
-@extends('layouts.app')
-
+@extends('layouts.dashboard')
+@section('title', 'Acquisition de cartes')
 @section('content')
-<div class="py-10">
-    <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-        <form method="POST" action="{{ route('risquestra.store') }}">
-            @csrf
+<div class="section">
+    <div class="section-header">
+        <h1><i class="fas fa-exclamation-triangle text-danger mr-2"></i> Acquisition de cartes - Risques</h1>
+        <div class="section-header-breadcrumb">
+            <a href="{{ route('risquestra.index') }}" class="btn btn-outline-primary btn-sm">
+                <i class="fas fa-list"></i> Liste
+            </a>
+        </div>
+    </div>
+    <div class="section-body">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('risquestra.store') }}">
+                            @csrf
+                            <div class="form-row mb-4">
+                                <div class="form-group col-md-6">
+                                    <label class="text-danger">Début période</label>
+                                    <input type="date" name="debut_periode" class="form-control" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="text-danger">Fin période</label>
+                                    <input type="date" name="fin_periode" class="form-control" required>
+                                </div>
+                            </div>
 
-            <h2 class="text-xl font-bold mb-6">Déclaration de Risques STRA</h2>
-
-            {{-- Période --}}
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div>
-                    <label class="block text-sm font-medium">Début période</label>
-                    <input type="date" name="debut_periode" class="form-input w-full" required>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium">Fin période</label>
-                    <input type="date" name="fin_periode" class="form-input w-full" required>
-                </div>
-            </div>
-
-            {{-- Détails dynamiques --}}
-            <div id="details-container" class="space-y-6">
-                <div class="detail-block p-4 border rounded bg-gray-50">
-                    <h3 class="font-semibold text-gray-700 mb-4">🧾 Risque</h3>
-
-                    <div class="grid grid-cols-1 gap-4">
-                        <select name="details[0][code]" class="form-input w-full" required>
-                            <option value="">-- Sélectionner un type de risque --</option>
-                            @foreach ($types as $type)
-                                <option value="{{ $type->code }}">{{ $type->code }} - {{ $type->libelle }}</option>
-                            @endforeach
-                        </select>
-
-                        <textarea name="details[0][risque]" class="form-input w-full" rows="2" placeholder="Libellé du risque" required></textarea>
-
-                        <textarea name="details[0][mecanisme_maitrise]" class="form-input w-full" rows="2"
-                                  placeholder="Mécanisme de maîtrise" required></textarea>
+                            <h5 class="mb-3 font-weight-bold text-danger">Détails des risques</h5>
+                            <div id="details-container">
+                                <div class="card mb-3 detail-block border border-danger">
+                                    <div class="card-body">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="text-danger">Type de risque</label>
+                                                <select name="details[0][code]" class="form-control" required>
+                                                    <option value="">-- Sélectionner un type de risque --</option>
+                                                    @foreach ($types as $type)
+                                                        <option value="{{ $type->code }}">{{ $type->code }} - {{ $type->libelle }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="text-danger">Mécanisme de maîtrise</label>
+                                                <textarea name="details[0][mecanisme_maitrise]" class="form-control" rows="2" placeholder="Mécanisme de maîtrise" required></textarea>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label class="text-danger">Libellé du risque</label>
+                                                <textarea name="details[0][risque]" class="form-control" rows="2" placeholder="Libellé du risque" required></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <button type="button" onclick="removeBlock(this)" class="btn btn-link text-danger">Supprimer ce risque</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" onclick="addBlock()" class="btn btn-outline-danger mb-4">
+                                <i class="fas fa-plus"></i> Ajouter un risque
+                            </button>
+                            <div class="d-flex justify-content-end mt-4">
+                                <button type="submit" class="btn btn-danger px-5">
+                                    <i class="fas fa-save"></i> Enregistrer
+                                </button>
+                            </div>
+                        </form>
                     </div>
-
-                    <div class="text-right mt-3">
-                        <button type="button" onclick="removeBlock(this)" class="text-red-500 text-sm hover:underline">
-                            ❌ Supprimer ce risque
-                        </button>
-                    </div>
                 </div>
             </div>
-
-            {{-- Ajouter un risque --}}
-            <div class="mt-6">
-                <button type="button" onclick="addBlock()" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300">
-                    Ajouter un risque
-                </button>
-            </div>
-
-            {{-- Submit --}}
-            <div class="mt-6">
-                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
-                    ✅ Enregistrer
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
@@ -74,7 +83,7 @@
 
         clone.querySelectorAll('input, textarea, select').forEach(el => {
             if (el.name) {
-                el.name = el.name.replace(/\d+/, index);
+                el.name = el.name.replace(/\[\d+\]/, `[${index}]`);
                 el.value = '';
             }
         });

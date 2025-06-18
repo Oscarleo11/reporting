@@ -29,6 +29,7 @@ use App\Http\Controllers\EcosystemeController;
 use App\Http\Controllers\FraudeStraController;
 use App\Http\Controllers\OperationStraController;
 use App\Http\Controllers\ReclamationStraController;
+use App\Http\Controllers\DashboardController;
 
 
 use Illuminate\Support\Facades\Route;
@@ -37,21 +38,40 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
+    if (auth()->check()) {
+        return redirect()->route('dashboard');
+    }
     return view('welcome');
 });
 
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard', [
-        'totalAcquisition' => AcquisitionCarte::count(),
-        'totalEmission' => EmissionCarte::count(),
-        'totalFraude' => FraudeChequeCarte::count(),
-        'totalIncident' => IncidentChequeCarte::count(),
-        'totalIncidentPaiement' => IncidentPaiementCarte::count(),
-        'totalIncidentPaiementCheque' => IncidentPaiementCheque::count(),
-    ]);
-})->middleware(['auth'])->name('dashboard');
+
+// Route::get('/dashboard1', function () {
+//     return view('dashboard1', [
+//         'totalAcquisition' => AcquisitionCarte::count(),
+//         'totalEmission' => EmissionCarte::count(),
+//         'totalFraude' => FraudeChequeCarte::count(),
+//         'totalIncident' => IncidentChequeCarte::count(),
+//         'totalIncidentPaiement' => IncidentPaiementCarte::count(),
+//         'totalIncidentPaiementCheque' => IncidentPaiementCheque::count(),
+//     ]);
+// })->middleware(['auth'])->name('dashboard1');
+
+
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard', [
+//         'totalAcquisition' => AcquisitionCarte::count(),
+//         'totalEmission' => EmissionCarte::count(),
+//         'totalFraude' => FraudeChequeCarte::count(),
+//         'totalIncident' => IncidentChequeCarte::count(),
+//         'totalIncidentPaiement' => IncidentPaiementCarte::count(),
+//         'totalIncidentPaiementCheque' => IncidentPaiementCheque::count(),
+//     ]);
+// })->middleware(['auth'])->name('dashboard');
+
 
 
 

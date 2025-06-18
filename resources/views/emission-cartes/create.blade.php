@@ -1,92 +1,120 @@
-@extends('layouts.app')
-
+@extends('layouts.dashboard')
+@section('title', 'Émission de cartes')
 @section('content')
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white shadow sm:rounded-lg p-6">
-                <h2 class="text-2xl font-bold mb-6">Émission de cartes</h2>
-
-                <form method="POST" action="{{ route('emission-cartes.store') }}">
-                    @csrf
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Début période</label>
-                            <input type="date" name="debut_periode" class="form-input w-full" required>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Fin période</label>
-                            <input type="date" name="fin_periode" class="form-input w-full" required>
-                        </div>
+<div class="section">
+    <div class="section-header">
+        <h1><i class="fas fa-credit-card text-primary mr-2"></i> Émission de cartes</h1>
+        <div class="section-header-breadcrumb">
+            <a href="{{ route('emission-cartes.index') }}" class="btn btn-outline-primary btn-sm">
+                <i class="fas fa-list"></i> Liste
+            </a>
+        </div>
+    </div>
+    <div class="section-body">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header  text-white">
+                        <h4 class="mb-0"><i class="fas fa-calendar-alt mr-2"></i> Période de déclaration</h4>
                     </div>
-
-                    <hr class="my-6">
-
-                    <h3 class="text-lg font-semibold mb-4">Détails</h3>
-
-                    <div id="details-container">
-                        <div class="detail-row grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-                            <div>
-                                <label>Famille Carte</label>
-                                <select name="details[0][codefamille]" class="form-select w-full" required>
-                                    <option value="">-- Sélectionner --</option>
-                                    @foreach ($familles as $f)
-                                        <option value="{{ $f->code }}">{{ $f->code }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('emission-cartes.store') }}">
+                            @csrf
+                            <div class="form-row mb-4">
+                                <div class="form-group col-md-6">
+                                    <label for="debut_periode">Début période</label>
+                                    <input type="date" name="debut_periode" id="debut_periode" class="form-control" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="fin_periode">Fin période</label>
+                                    <input type="date" name="fin_periode" id="fin_periode" class="form-control" required>
+                                </div>
                             </div>
 
-                            <div>
-                                <label>Type Carte</label>
-                                <select name="details[0][codetype]" class="form-select w-full" required>
-                                    <option value="">-- Sélectionner --</option>
-                                    @foreach ($types as $t)
-                                        <option value="{{ $t->code }}">{{ $t->code }} - {{ $t->libelle }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                            <hr class="my-4">
+
+                            <h5 class="mb-3 font-weight-bold">Détails</h5>
+                            <div id="details-container">
+                                <div class="card mb-3 detail-row border border-primary">
+                                    <div class="card-body">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label>Famille Carte</label>
+                                                <select name="details[0][codefamille]" class="form-control" required>
+                                                    <option value="">-- Sélectionner --</option>
+                                                    @foreach ($familles as $f)
+                                                        <option value="{{ $f->code }}">{{ $f->code }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Type Carte</label>
+                                                <select name="details[0][codetype]" class="form-control" required>
+                                                    <option value="">-- Sélectionner --</option>
+                                                    @foreach ($types as $t)
+                                                        <option value="{{ $t->code }}">{{ $t->code }} - {{ $t->libelle }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Description</label>
+                                                <input type="text" name="details[0][description]" class="form-control" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Nombre de cartes</label>
+                                                <input type="number" name="details[0][nbcarte]" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <button type="button" onclick="removeRow(this)" class="btn btn-link text-danger">Supprimer cette ligne</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div>
-                                <label>Description</label>
-                                <input type="text" name="details[0][description]" class="form-input w-full" required>
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" onclick="addRow()" class="btn btn-outline-primary">
+                                    <i class="fas fa-plus"></i> Ajouter une ligne
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Enregistrer les émissions
+                                </button>
                             </div>
-
-                            <div>
-                                <label>Nombre de cartes</label>
-                                <input type="number" name="details[0][nbcarte]" class="form-input w-full" required>
-                            </div>
-                        </div>
+                        </form>
                     </div>
-
-                    <div class="mt-6 flex justify-between">
-                        <button type="button" id="add-row" class="mb-6 btn btn-secondary px-6 py-2 mb-2">+ Ajouter une
-                            ligne</button>
-
-                        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700">
-                            Enregistrer les émissions
-                        </button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        let rowIndex = 1;
-        document.getElementById('add-row').addEventListener('click', () => {
-            const container = document.getElementById('details-container');
-            const newRow = container.children[0].cloneNode(true);
-            newRow.querySelectorAll('select, input').forEach((el) => {
-                const name = el.name;
-                const newName = name.replace(/\d+/, rowIndex);
-                el.name = newName;
+<script>
+    let rowIndex = 1;
+
+    function addRow() {
+        const container = document.getElementById('details-container');
+        const template = document.querySelector('.detail-row');
+        const newRow = template.cloneNode(true);
+
+        // Mise à jour des index
+        newRow.querySelectorAll('input, select').forEach(el => {
+            if (el.name) {
+                el.name = el.name.replace(/\[\d+\]/, `[${rowIndex}]`);
                 el.value = '';
-            });
-            container.appendChild(newRow);
-            rowIndex++;
+            }
         });
-    </script>
+
+        container.appendChild(newRow);
+        rowIndex++;
+    }
+
+    function removeRow(button) {
+        const rows = document.querySelectorAll('.detail-row');
+        if (rows.length > 1) {
+            button.closest('.detail-row').remove();
+        } else {
+            alert("Au moins une ligne est requise.");
+        }
+    }
+</script>
 @endsection

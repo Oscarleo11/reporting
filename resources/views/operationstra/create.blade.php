@@ -1,59 +1,82 @@
-@extends('layouts.app')
-
+@extends('layouts.dashboard')
+@section('title', 'Déclaration des opérations STRA')
 @section('content')
-<div class="py-10">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <form method="POST" action="{{ route('operationstra.store') }}">
-            @csrf
+<div class="section">
+    <div class="section-header">
+        <h1><i class="fas fa-exchange-alt text-primary mr-2"></i> Déclaration des opérations STRA</h1>
+        <div class="section-header-breadcrumb">
+            <a href="{{ route('operationstra.index') }}" class="btn btn-outline-primary btn-sm">
+                <i class="fas fa-list"></i> Liste
+            </a>
+        </div>
+    </div>
+    <div class="section-body">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('operationstra.store') }}">
+                            @csrf
 
-            <h2 class="text-xl font-bold mb-6">📦 Déclaration des opérations STRA</h2>
+                            <div class="form-row mb-4">
+                                <div class="form-group col-md-6">
+                                    <label>Début période</label>
+                                    <input type="date" name="debut_periode" class="form-control" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Fin période</label>
+                                    <input type="date" name="fin_periode" class="form-control" required>
+                                </div>
+                            </div>
 
-            {{-- Période --}}
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div>
-                    <label class="block text-sm font-medium">Début période</label>
-                    <input type="date" name="debut_periode" class="form-input w-full" required>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium">Fin période</label>
-                    <input type="date" name="fin_periode" class="form-input w-full" required>
-                </div>
-            </div>
-
-            {{-- Détails --}}
-            <div id="details-container" class="space-y-6">
-                <div class="detail-block p-4 border rounded bg-gray-50">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input type="text" name="details[0][service]" placeholder="Service" class="form-input w-full" required>
-                        <input type="text" name="details[0][pays]" placeholder="Pays" class="form-input w-full" required>
-                        <input type="text" name="details[0][motif]" placeholder="Motif" class="form-input w-full" required>
-
-                        <input type="number" name="details[0][nb_transaction_emission]" placeholder="Nb émission" class="form-input w-full" required>
-                        <input type="number" name="details[0][valeur_transaction_emission]" placeholder="Valeur émission" class="form-input w-full" required>
-                        <input type="number" name="details[0][nb_transaction_reception]" placeholder="Nb réception" class="form-input w-full" required>
-                        <input type="number" name="details[0][valeur_transaction_reception]" placeholder="Valeur réception" class="form-input w-full" required>
+                            <h5 class="mb-3 font-weight-bold text-primary">Détails des opérations</h5>
+                            <div id="details-container">
+                                <div class="card mb-3 detail-block border border-primary">
+                                    <div class="card-body">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <input type="text" name="details[0][service]" placeholder="Service" class="form-control" required>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <input type="text" name="details[0][pays]" placeholder="Pays" class="form-control" required>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <input type="text" name="details[0][motif]" placeholder="Motif" class="form-control" required>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <input type="number" name="details[0][nb_transaction_emission]" placeholder="Nb émission" class="form-control" required>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <input type="number" name="details[0][valeur_transaction_emission]" placeholder="Valeur émission" class="form-control" required>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <input type="number" name="details[0][nb_transaction_reception]" placeholder="Nb réception" class="form-control" required>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <input type="number" name="details[0][valeur_transaction_reception]" placeholder="Valeur réception" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <button type="button" onclick="removeBlock(this)" class="btn btn-link text-danger">
+                                                Supprimer cette opération
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" onclick="addBlock()" class="btn btn-outline-primary mb-4">
+                                <i class="fas fa-plus"></i> Ajouter une opération
+                            </button>
+                            <div class="d-flex justify-content-end mt-4">
+                                <button type="submit" class="btn btn-primary px-5">
+                                    <i class="fas fa-save"></i> Enregistrer
+                                </button>
+                            </div>
+                        </form>
                     </div>
-
-                    <div class="text-right mt-3">
-                        <button type="button" onclick="removeBlock(this)" class="text-red-500 text-sm hover:underline">
-                            ❌ Supprimer
-                        </button>
-                    </div>
                 </div>
             </div>
-
-            <div class="mt-6">
-                <button type="button" onclick="addBlock()" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300">
-                    ➕ Ajouter un enregistrement
-                </button>
-            </div>
-
-            <div class="mt-6">
-                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
-                    ✅ Enregistrer
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 

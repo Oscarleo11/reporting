@@ -1,47 +1,49 @@
 <section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Update Password') }}
+    <header class="mb-4">
+        <h2 class="h5 font-weight-bold text-primary mb-1">
+            <i class="fas fa-key mr-2"></i> Modifier le mot de passe
         </h2>
-
-        <p class="mt-1 text-sm text-gray-600">
-            {{ __('Ensure your account is using a long, random password to stay secure.') }}
+        <p class="text-muted mb-0">
+            Utilisez un mot de passe long et complexe pour sécuriser votre compte.
         </p>
     </header>
 
-    <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('password.update') }}" class="mt-3">
         @csrf
         @method('put')
 
-        <div>
-            <x-input-label for="update_password_current_password" :value="__('Current Password')" />
-            <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
-            <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
+        <div class="form-group mb-3">
+            <label for="current_password" class="font-weight-bold">Mot de passe actuel</label>
+            <input id="current_password" name="current_password" type="password" class="form-control" autocomplete="current-password" required>
+            @error('current_password', 'updatePassword')
+                <div class="text-danger small mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
-        <div>
-            <x-input-label for="update_password_password" :value="__('New Password')" />
-            <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
+        <div class="form-group mb-3">
+            <label for="password" class="font-weight-bold">Nouveau mot de passe</label>
+            <input id="password" name="password" type="password" class="form-control" autocomplete="new-password" required>
+            @error('password', 'updatePassword')
+                <div class="text-danger small mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
-        <div>
-            <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
-            <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
+        <div class="form-group mb-3">
+            <label for="password_confirmation" class="font-weight-bold">Confirmer le nouveau mot de passe</label>
+            <input id="password_confirmation" name="password_confirmation" type="password" class="form-control" autocomplete="new-password" required>
+            @error('password_confirmation', 'updatePassword')
+                <div class="text-danger small mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
-
+        <div class="d-flex align-items-center gap-3 mt-4">
+            <button type="submit" class="btn btn-primary px-4">
+                <i class="fas fa-save mr-1"></i> Enregistrer
+            </button>
             @if (session('status') === 'password-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
-                >{{ __('Saved.') }}</p>
+                <span class="text-success ml-3">
+                    <i class="fas fa-check-circle"></i> Mot de passe modifié.
+                </span>
             @endif
         </div>
     </form>

@@ -1,38 +1,54 @@
-@extends('layouts.app')
-
+@extends('layouts.dashboard')
+@section('title', 'Utilisation de chèques')
 @section('content')
-<div class="py-10">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <h2 class="text-2xl font-semibold mb-6">Utilisation des chèques</h2>
-
+<section class="section">
+    <div class="section-header">
+        <h1><i class="fas fa-money-check-alt text-primary mr-2"></i> Utilisation des chèques</h1>
+        <div class="section-header-breadcrumb">
+            <a href="{{ route('utilisationcheque.create') }}" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus"></i> Nouvelle déclaration
+            </a>
+        </div>
+    </div>
+    <div class="section-body">
         @foreach($utilisations as $periode => $group)
-            <div class="mb-8 bg-white p-6 rounded shadow">
-                <h3 class="text-lg font-bold mb-3 text-indigo-800">
-                    Période : {{ \Carbon\Carbon::parse($periode)->format('d/m/Y') }}
-                </h3>
-
-                <table class="w-full text-sm border-collapse">
-                    <thead class="bg-gray-100">
-                        <tr>
-                            <th class="border px-2 py-2">Code</th>
-                            <th class="border px-2 py-2">Description</th>
-                            <th class="border px-2 py-2 text-right">Nb chèques</th>
-                            <th class="border px-2 py-2 text-right">Valeur CFA</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($group as $ligne)
-                            <tr>
-                                <td class="border px-2 py-1">{{ $ligne->code }}</td>
-                                <td class="border px-2 py-1">{{ $ligne->description }}</td>
-                                <td class="border px-2 py-1 text-right">{{ $ligne->nbcheque }}</td>
-                                <td class="border px-2 py-1 text-right">{{ number_format($ligne->valeurcfa, 0, ',', ' ') }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+            <div class="row justify-content-center mb-4">
+                <div class="col-lg-10">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-header text-white">
+                            <h4 class="mb-0">
+                                <i class="fas fa-calendar-alt mr-2"></i>
+                                Période : {{ \Carbon\Carbon::parse($periode)->format('d/m/Y') }}
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover table-sm mb-0">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Description</th>
+                                            <th class="text-right">Nb chèques</th>
+                                            <th class="text-right">Valeur CFA</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($group as $ligne)
+                                            <tr>
+                                                <td>{{ $ligne->code }}</td>
+                                                <td>{{ $ligne->description }}</td>
+                                                <td class="text-right">{{ $ligne->nbcheque }}</td>
+                                                <td class="text-right">{{ number_format($ligne->valeurcfa, 0, ',', ' ') }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         @endforeach
     </div>
-</div>
+</section>
 @endsection
