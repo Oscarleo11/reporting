@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,29 +11,29 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
 </head>
+
 <body class="bg-[#FDFDFC] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
-    {{-- Retiré "dark:bg-[#0a0a0a]" pour éviter le fond noir --}}
     <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6">
         <nav class="flex items-center justify-between">
             <div class="flex items-center gap-2">
                 <img src="{{ asset('favicon.png') }}" alt="Logo" class="h-4 w-4 rounded">
-                <span class="font-semibold text-lg">UReporting</span>
+                <span class="font-semibold text-lg">UREPORTING</span>
             </div>
             <div>
                 @if (Route::has('login'))
                     @auth
                         <a href="{{ url('/dashboard') }}"
-                           class="inline-block px-5 py-1.5 border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] rounded-sm text-sm leading-normal">
+                            class="inline-block px-5 py-1.5 border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] rounded-sm text-sm leading-normal">
                             Accéder au tableau de bord
                         </a>
                     @else
                         <a href="{{ route('login') }}"
-                           class="inline-block px-5 py-1.5 border border-transparent hover:border-[#19140035] text-[#1b1b18] rounded-sm text-sm leading-normal">
+                            class="inline-block px-5 py-1.5 border border-transparent hover:border-[#19140035] text-[#1b1b18] rounded-sm text-sm leading-normal">
                             Se connecter
                         </a>
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}"
-                               class="inline-block px-5 py-1.5 border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] rounded-sm text-sm leading-normal ml-2">
+                                class="inline-block px-5 py-1.5 border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] rounded-sm text-sm leading-normal ml-2">
                                 S'inscrire
                             </a>
                         @endif
@@ -59,7 +60,7 @@
                     <a href="{{ route('login') }}" class="btn btn-primary px-5 py-2">
                         <i class="fas fa-sign-in-alt mr-2"></i> Se connecter
                     </a>
-                    @if (Route::has('register'))
+                    @if (Route::has('register') && Auth::check() && Auth::user()->role === 'admin')
                         <a href="{{ route('register') }}" class="btn btn-outline-primary px-5 py-2">
                             <i class="fas fa-user-plus mr-2"></i> S'inscrire
                         </a>
@@ -73,4 +74,5 @@
         &copy; {{ date('Y') }} UReporting. Tous droits réservés.
     </footer>
 </body>
+
 </html>

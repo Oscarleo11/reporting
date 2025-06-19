@@ -47,7 +47,7 @@
               PROFIL: {{ strtoupper(Auth::user()->role ?? 'Utilisateur') }}
             </div>
             <a href="{{ route('profile.edit') }}" class="dropdown-item has-icon">
-              <i class="fas fa-user-cog"></i> Mon profil
+              <i class="fas fa-user-cog"></i> Paramètre
             </a>
             <div class="dropdown-divider"></div>
             <form method="POST" action="{{ route('logout') }}">
@@ -89,6 +89,12 @@
           </a>
         </li>
 
+        <li>
+          @if (Auth::check() && Auth::user()->role === 'admin')
+        <a href="{{ route('admin.users.create') }}">Ajouter un utilisateur</a>
+      @endif
+        </li>
+
         <li class="menu-header">Produit électronique</li>
         <li class="nav-item dropdown">
           <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
@@ -100,9 +106,11 @@
             <li><a href="{{ route('fraudechequecarte.create') }}" class="nav-link">Fraude chèque/carte</a></li>
             <li><a href="{{ route('incidentchequecarte.create') }}" class="nav-link">Incidents chèque/carte</a></li>
             <li><a href="{{ route('incidentpaiementcarte.create') }}" class="nav-link">Incidents paiement carte</a></li>
-            <li><a href="{{ route('incidentpaiementcheque.create') }}" class="nav-link">Incidents paiement chèque</a></li>
+            <li><a href="{{ route('incidentpaiementcheque.create') }}" class="nav-link">Incidents paiement chèque</a>
+            </li>
             <li><a href="{{ route('reclamationchequecarte.create') }}" class="nav-link">Réclamations</a></li>
-            <li><a href="{{ route('tarificationchequecarte.create') }}" class="nav-link">Tarification (carte & chèque)</a></li>
+            <li><a href="{{ route('tarificationchequecarte.create') }}" class="nav-link">Tarification (carte &
+                chèque)</a></li>
             <li><a href="{{ route('typologiecheque.create') }}" class="nav-link">Typologie chèques</a></li>
             <li><a href="{{ route('utilisationcarte.create') }}" class="nav-link">Utilisation carte</a></li>
             <li><a href="{{ route('utilisationcheque.create') }}" class="nav-link">Utilisation chèque</a></li>
@@ -189,5 +197,7 @@
 <script>
   $('#message').delay(5000).fadeOut('slow');
 </script>
+
+
 
 </html>

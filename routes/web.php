@@ -30,9 +30,10 @@ use App\Http\Controllers\FraudeStraController;
 use App\Http\Controllers\OperationStraController;
 use App\Http\Controllers\ReclamationStraController;
 use App\Http\Controllers\DashboardController;
-
+use App\Http\Controllers\Admin\UserManagementController;
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -44,9 +45,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
-
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
 // Route::get('/dashboard1', function () {
 //     return view('dashboard1', [
@@ -73,8 +72,6 @@ Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 // })->middleware(['auth'])->name('dashboard');
 
 
-
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -89,12 +86,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    // Route::get('/emission-cartes/create', [EmissionCarteController::class, 'create'])->name('emission-cartes.create');
-    // Route::post('/emission-cartes/store', [EmissionCarteController::class, 'store'])->name('emission-cartes.store');
-    // // Route::resource('emission-cartes', EmissionCarteController::class)->only(['create', 'store']);
-    // Route::get('/emission-cartes', [EmissionCarteController::class, 'index'])->name('emission-cartes.index');
-    // Route::post('/emission-cartes', [EmissionCarteController::class, 'index'])->name('emission-cartes.index');
-
     Route::get('/emission-cartes/create', [EmissionCarteController::class, 'create'])->name('emission-cartes.create');
     Route::post('/emission-cartes/store', [EmissionCarteController::class, 'store'])->name('emission-cartes.store');
     Route::get('/emission-cartes', [EmissionCarteController::class, 'index'])->name('emission-cartes.index');
@@ -207,6 +198,12 @@ Route::get('/reclamationstra/create', [ReclamationStraController::class, 'create
 Route::post('/reclamationstra/store', [ReclamationStraController::class, 'store'])->name('reclamationstra.store');
 Route::get('/reclamationstra', [ReclamationStraController::class, 'index'])->name('reclamationstra.index');
 
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/users/create', [UserManagementController::class, 'create'])->name('admin.users.create');
+    Route::post('/admin/users/store', [UserManagementController::class, 'store'])->name('admin.users.store');
+});
 
 
 require __DIR__ . '/auth.php';
