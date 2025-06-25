@@ -28,14 +28,16 @@
                         </a>
                     @else
                         <a href="{{ route('login') }}"
-                            class="inline-block px-5 py-1.5 border border-transparent hover:border-[#19140035] text-[#1b1b18] rounded-sm text-sm leading-normal">
+                            class="inline-block px-5 py-1.5 border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] rounded-sm text-sm leading-normal ml-2"">
                             Se connecter
                         </a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}"
-                                class="inline-block px-5 py-1.5 border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] rounded-sm text-sm leading-normal ml-2">
-                                S'inscrire
-                            </a>
+                        @if (Route::has('register') && Auth::check() && Auth::user()->role === 'admin')
+                            @if (Route::has('register'))
+                                <a href="{{ route('register') }}"
+                                    class="inline-block px-5 py-1.5 border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] rounded-sm text-sm leading-normal ml-2">
+                                    S'inscrire
+                                </a>
+                            @endif
                         @endif
                     @endauth
                 @endif
@@ -50,7 +52,7 @@
             Connectez-vous pour accéder à vos tableaux de bord, générer des rapports XML, et bien plus encore.
         </p> --}}
         <img src="{{ asset('welcome3.avif') }}" alt="Illustration" class="mx-auto mb-8" style="max-width:320px;">
-        <div class="flex flex-col items-center gap-2">
+        {{-- <div class="flex flex-col items-center gap-2">
             @if (Route::has('login'))
                 @auth
                     <a href="{{ url('/dashboard') }}" class="btn btn-primary px-5 py-2">
@@ -67,7 +69,7 @@
                     @endif
                 @endauth
             @endif
-        </div>
+        </div> --}}
     </main>
 
     <footer class="mt-12 text-xs text-[#706f6c]">

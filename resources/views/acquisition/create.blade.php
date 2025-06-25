@@ -3,9 +3,9 @@
 @section('content')
 <div class="section">
     <div class="section-header">
-        <h1><i class="fas fa-credit-card text-danger mr-2"></i> Acquisition de cartes</h1>
+        <h1><i class="fas fa-credit-card text-primary mr-2"></i> Acquisition de cartes</h1>
         <div class="section-header-breadcrumb">
-            <a href="{{ route('acquisition.index') }}" class="btn btn-outline-danger btn-sm">
+            <a href="{{ route('acquisition.index') }}" class="btn btn-outline-primary btn-sm">
                 <i class="fas fa-list"></i> Liste
             </a>
         </div>
@@ -58,17 +58,17 @@
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <button type="button" onclick="removeRow(this)" class="btn btn-link text-danger">Supprimer cette ligne</button>
+                                            <button type="button" onclick="removeRow(this)" class="btn btn-link text-primary">Supprimer cette ligne</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="d-flex justify-content-between mt-4">
-                                <button type="button" onclick="addRow()" class="btn btn-outline-danger">
+                                <button type="button" onclick="addRow()" class="btn btn-outline-primary">
                                     <i class="fas fa-plus"></i> Ajouter une ligne
                                 </button>
-                                <button type="submit" class="btn btn-danger">
+                                <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-save"></i> Enregistrer
                                 </button>
                             </div>

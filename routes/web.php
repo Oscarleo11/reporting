@@ -31,6 +31,7 @@ use App\Http\Controllers\OperationStraController;
 use App\Http\Controllers\ReclamationStraController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\UserManagementController;
+use App\Http\Controllers\XmlExportController;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -203,6 +204,11 @@ Route::get('/reclamationstra', [ReclamationStraController::class, 'index'])->nam
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/users/create', [UserManagementController::class, 'create'])->name('admin.users.create');
     Route::post('/admin/users/store', [UserManagementController::class, 'store'])->name('admin.users.store');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/xml_exports', [XmlExportController::class, 'index'])->name('xml_exports.index');
+    Route::put('/xml-exports/{export}/status', [XmlExportController::class, 'updateStatus'])->name('xml_exports.updateStatus');
 });
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\AcquisitionCarte;
+use App\Models\XmlExport; // Assurez-vous d'inclure le modèle XmlExport
 
 
 class DeclarationXmlController extends Controller
@@ -153,9 +154,20 @@ class DeclarationXmlController extends Controller
                 $type->addChild('plafondretraitjournalier', $row->plafond_retrait_journalier);
             }
 
+            $nomDuFichier = 'acquisition_' . $request->debut_periode . '.xml';
+
+            // Enregistrement dans la table
+            XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
+
             return response($xml->asXML(), 200)
                 ->header('Content-Type', 'application/xml')
-                ->header('Content-Disposition', 'attachment; filename="acquisition_' . $request->debut_periode . '.xml"');
+                ->header('Content-Disposition', 'attachment; filename="' . $nomDuFichier . '"');
         } elseif ($request->type === 'emission') {
             $rows = \App\Models\EmissionCarte::where('debut_periode', $request->debut_periode)
                 ->where('fin_periode', $request->fin_periode)
@@ -206,14 +218,21 @@ class DeclarationXmlController extends Controller
             // Génération du fichier XML
             $xmlString = $dom->saveXML();
 
+            // Nom du fichier
+            $nomDuFichier = sprintf('emission_%s_%s.xml', $request->debut_periode, $request->fin_periode);
+
+            // Enregistrement dans la table XmlExport
+            XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
+
             return response($xmlString, 200)
                 ->header('Content-Type', 'application/xml')
-                ->header('Content-Disposition', sprintf(
-                    'attachment; filename="emission_%s_%s.xml"',
-                    $request->debut_periode,
-                    $request->fin_periode
-                ));
-
+                ->header('Content-Disposition', 'attachment; filename="' . $nomDuFichier . '"');
         } elseif ($request->type === 'fraudechequecarte') {
             $rows = \App\Models\FraudeChequeCarte::where('debut_periode', $request->debut_periode)
                 ->where('fin_periode', $request->fin_periode)

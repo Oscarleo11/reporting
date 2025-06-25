@@ -3,7 +3,7 @@
 @section('content')
 <div class="section">
     <div class="section-header">
-        <h1><i class="fas fa-exclamation-triangle text-danger mr-2"></i> Déclaration des incidents STRA</h1>
+        <h1><i class="fas fa-exclamation-triangle text-primary mr-2"></i> Déclaration des incidents STRA</h1>
         <div class="section-header-breadcrumb">
             <a href="{{ route('incidentstra.index') }}" class="btn btn-outline-primary btn-sm">
                 <i class="fas fa-list"></i> Liste
@@ -19,18 +19,18 @@
                             @csrf
                             <div class="form-row mb-4">
                                 <div class="form-group col-md-6">
-                                    <label class="text-danger">Début période</label>
+                                    <label class="text-primary">Début période</label>
                                     <input type="date" name="debut_periode" class="form-control" required>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label class="text-danger">Fin période</label>
+                                    <label class="text-primary">Fin période</label>
                                     <input type="date" name="fin_periode" class="form-control" required>
                                 </div>
                             </div>
 
-                            <h5 class="mb-3 font-weight-bold text-danger">Détails des incidents</h5>
+                            <h5 class="mb-3 font-weight-bold text-primary">Détails des incidents</h5>
                             <div id="details-container">
-                                <div class="card mb-3 detail-block border border-danger">
+                                <div class="card mb-3 detail-block border border-primary">
                                     <div class="card-body">
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
@@ -75,16 +75,16 @@
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <button type="button" onclick="removeBlock(this)" class="btn btn-link text-danger">Supprimer cet incident</button>
+                                            <button type="button" onclick="removeBlock(this)" class="btn btn-link text-primary">Supprimer cet incident</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" onclick="addBlock()" class="btn btn-outline-danger mb-4">
+                            <button type="button" onclick="addBlock()" class="btn btn-outline-primary mb-4">
                                 <i class="fas fa-plus"></i> Ajouter un incident
                             </button>
                             <div class="d-flex justify-content-end mt-4">
-                                <button type="submit" class="btn btn-danger px-5">
+                                <button type="submit" class="btn btn-primary px-5">
                                     <i class="fas fa-save"></i> Enregistrer
                                 </button>
                             </div>

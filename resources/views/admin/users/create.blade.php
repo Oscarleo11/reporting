@@ -6,7 +6,7 @@
     <div class="section-header">
         <h1><i class="fas fa-user-plus text-danger mr-2"></i> Ajouter un utilisateur</h1>
         <div class="section-header-breadcrumb">
-            <a href="{{ url()->previous() }}" class="btn btn-outline-danger btn-sm">
+            <a href="{{ url()->previous() }}" class="btn btn-outline-primary btn-sm">
                 <i class="fas fa-arrow-left"></i> Retour
             </a>
         </div>
@@ -55,7 +55,7 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end mt-4">
-                                <button type="submit" class="btn btn-danger">
+                                <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-save"></i> Créer l'utilisateur
                                 </button>
                             </div>

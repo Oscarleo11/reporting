@@ -1,9 +1,9 @@
 @extends('layouts.dashboard')
-@section('title', 'Acquisition de cartes')
+@section('title', 'Risques')
 @section('content')
 <div class="section">
     <div class="section-header">
-        <h1><i class="fas fa-exclamation-triangle text-danger mr-2"></i> Acquisition de cartes - Risques</h1>
+        <h1><i class="fas fa-exclamation-triangle text-primary mr-2"></i> Risques STRA</h1>
         <div class="section-header-breadcrumb">
             <a href="{{ route('risquestra.index') }}" class="btn btn-outline-primary btn-sm">
                 <i class="fas fa-list"></i> Liste
@@ -19,22 +19,22 @@
                             @csrf
                             <div class="form-row mb-4">
                                 <div class="form-group col-md-6">
-                                    <label class="text-danger">Début période</label>
+                                    <label class="text-primary">Début période</label>
                                     <input type="date" name="debut_periode" class="form-control" required>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label class="text-danger">Fin période</label>
+                                    <label class="text-primary">Fin période</label>
                                     <input type="date" name="fin_periode" class="form-control" required>
                                 </div>
                             </div>
 
-                            <h5 class="mb-3 font-weight-bold text-danger">Détails des risques</h5>
+                            <h5 class="mb-3 font-weight-bold text-primary">Détails des risques</h5>
                             <div id="details-container">
-                                <div class="card mb-3 detail-block border border-danger">
+                                <div class="card mb-3 detail-block border border-primary">
                                     <div class="card-body">
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label class="text-danger">Type de risque</label>
+                                                <label class="text-primary">Type de risque</label>
                                                 <select name="details[0][code]" class="form-control" required>
                                                     <option value="">-- Sélectionner un type de risque --</option>
                                                     @foreach ($types as $type)
@@ -43,25 +43,25 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label class="text-danger">Mécanisme de maîtrise</label>
+                                                <label class="text-primary">Mécanisme de maîtrise</label>
                                                 <textarea name="details[0][mecanisme_maitrise]" class="form-control" rows="2" placeholder="Mécanisme de maîtrise" required></textarea>
                                             </div>
                                             <div class="form-group col-md-12">
-                                                <label class="text-danger">Libellé du risque</label>
+                                                <label class="text-primary">Libellé du risque</label>
                                                 <textarea name="details[0][risque]" class="form-control" rows="2" placeholder="Libellé du risque" required></textarea>
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <button type="button" onclick="removeBlock(this)" class="btn btn-link text-danger">Supprimer ce risque</button>
+                                            <button type="button" onclick="removeBlock(this)" class="btn btn-link text-primary">Supprimer ce risque</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" onclick="addBlock()" class="btn btn-outline-danger mb-4">
+                            <button type="button" onclick="addBlock()" class="btn btn-outline-primary mb-4">
                                 <i class="fas fa-plus"></i> Ajouter un risque
                             </button>
                             <div class="d-flex justify-content-end mt-4">
-                                <button type="submit" class="btn btn-danger px-5">
+                                <button type="submit" class="btn btn-primary px-5">
                                     <i class="fas fa-save"></i> Enregistrer
                                 </button>
                             </div>

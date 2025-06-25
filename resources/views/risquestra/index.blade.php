@@ -3,7 +3,7 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1><i class="fas fa-exclamation-triangle text-danger mr-2"></i> Acquisition de cartes - Risques</h1>
+        <h1><i class="fas fa-exclamation-triangle text-primary mr-2"></i> Acquisition de cartes - Risques</h1>
         <div class="section-header-breadcrumb">
             <a href="{{ route('risquestra.create') }}" class="btn btn-primary btn-sm">
                 <i class="fas fa-plus"></i> Nouvelle déclaration
@@ -15,7 +15,7 @@
             <div class="row justify-content-center mb-4">
                 <div class="col-lg-10">
                     <div class="card shadow-sm border-0">
-                        <div class="card-header text-white">
+                        <div class="card-header text-primary">
                             <h4 class="mb-0">
                                 <i class="fas fa-calendar-alt mr-2"></i>
                                 Période : {{ \Carbon\Carbon::parse($bloc->debut_periode)->format('d/m/Y') }}

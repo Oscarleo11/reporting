@@ -91,8 +91,8 @@
 
         <li>
           @if (Auth::check() && Auth::user()->role === 'admin')
-        <a href="{{ route('admin.users.create') }}">Ajouter un utilisateur</a>
-      @endif
+           <a href="{{ route('admin.users.create') }}"><i class="fas fa-user-plus mr-2"></i><span> Ajouter un utilisateur</span></a>
+          @endif
         </li>
 
         <li class="menu-header">Produit électronique</li>

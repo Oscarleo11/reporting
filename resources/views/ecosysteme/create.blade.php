@@ -68,7 +68,7 @@
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <button type="button" onclick="removeBlock(this)" class="btn btn-link text-danger">Supprimer ce service</button>
+                                            <button type="button" onclick="removeBlock(this)" class="btn btn-link text-primary">Supprimer ce service</button>
                                         </div>
                                     </div>
                                 </div>
