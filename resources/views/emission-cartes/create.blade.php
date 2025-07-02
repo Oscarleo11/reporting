@@ -116,5 +116,16 @@
             alert("Au moins une ligne est requise.");
         }
     }
+
+        //     function setDescription(select) {
+        //     const descriptionInput = select.closest('.form-row').querySelector('input[name*="[description]"]');
+        //     const selectedOption = select.options[select.selectedIndex];
+        //     descriptionInput.value = selectedOption.getAttribute('data-libelle');
+        // }    
+
+        //     <div class="form-group col-md-6">
+        //          <label>Description</label>
+        //          <input type="text" name="details[0][description]" class="form-control" required readonly>
+        //      </div>   
 </script>
 @endsection

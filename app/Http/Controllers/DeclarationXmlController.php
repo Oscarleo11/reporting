@@ -98,6 +98,38 @@ class DeclarationXmlController extends Controller
                 ->where('debut_periode', $request->debut_periode)
                 ->where('fin_periode', $request->fin_periode)
                 ->get();
+        } elseif ($request->type === 'declarationincident') {
+            $data = \App\Models\DeclarationIncident::where('debut_periode', $request->debut_periode)
+                ->where('fin_periode', $request->fin_periode)
+                ->get();
+        } elseif ($request->type === 'declarationratios') {
+            $data = \App\Models\DeclarationRatio::where('debut_periode', $request->debut_periode)
+                ->where('fin_periode', $request->fin_periode)
+                ->get();
+        } elseif ($request->type === 'declarationreclamation') {
+            $data = \App\Models\DeclarationReclamation::where('debut_periode', $request->debut_periode)
+                ->where('fin_periode', $request->fin_periode)
+                ->get();
+        } elseif ($request->type === 'declarationfraude') {
+            $data = \App\Models\IndicateurFinancier::where('debut_periode', $request->debut_periode)
+                ->where('fin_periode', $request->fin_periode)
+                ->get();
+        } elseif ($request->type === 'indicateurfinancier') {
+            $data = \App\Models\DeclarationFraude::where('debut_periode', $request->debut_periode)
+                ->where('fin_periode', $request->fin_periode)
+                ->get();
+        } elseif ($request->type === 'declarationsfm') {
+            $data = \App\Models\DeclarationSFM::where('debut_periode', $request->debut_periode)
+                ->where('fin_periode', $request->fin_periode)
+                ->get();
+        } elseif ($request->type === 'placementfinancier') {
+            $data = \App\Models\PlacementFinancier::where('debut_periode', $request->debut_periode)
+                ->where('fin_periode', $request->fin_periode)
+                ->get();
+        } elseif ($request->type === 'controlencours') {
+            $data = \App\Models\ControleEncours::where('debut_periode', $request->debut_periode)
+                ->where('fin_periode', $request->fin_periode)
+                ->get();
         }
 
         return view('declaration.xml.index', [
@@ -289,6 +321,17 @@ class DeclarationXmlController extends Controller
             $dom->formatOutput = true;
             $xmlString = $dom->saveXML();
 
+            $nomDuFichier = 'fraudechequecarte' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);            
+
             return response($xmlString, 200)
                 ->header('Content-Type', 'application/xml')
                 ->header('Content-Disposition', 'attachment; filename="fraudechequecarte_' . $request->debut_periode . '_' . $request->fin_periode . '.xml"');
@@ -323,6 +366,17 @@ class DeclarationXmlController extends Controller
                 $data->addChild('infoscomplementaires', "<![CDATA[{$item->infoscomplementaires}]]>");
             }
 
+            $nomDuFichier = 'incidentchequecarte' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);            
+
             return response($xml->asXML(), 200)
                 ->header('Content-Type', 'application/xml')
                 ->header('Content-Disposition', 'attachment; filename="incidentchequecarte_' . $request->debut_periode . '.xml"');
@@ -351,6 +405,17 @@ class DeclarationXmlController extends Controller
                 }
             }
 
+            $nomDuFichier = 'incidentpaiementcarte' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);            
+
             return response($xml->asXML(), 200)
                 ->header('Content-Type', 'application/xml')
                 ->header('Content-Disposition', 'attachment; filename="incidentpaiementcarte_' . $request->debut_periode . '.xml"');
@@ -378,6 +443,17 @@ class DeclarationXmlController extends Controller
                     $typenom->addChild('valeurcfa', $item->valeurcfa);
                 }
             }
+
+            $nomDuFichier = 'incidentpaiementcheque' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);            
 
             return response($xml->asXML(), 200)
                 ->header('Content-Type', 'application/xml')
@@ -465,6 +541,17 @@ class DeclarationXmlController extends Controller
                 }
             }
 
+            $nomDuFichier = 'reclamationchequecarte' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
+
 
             return response($xml->asXML(), 200)
                 ->header('Content-Type', 'application/xml')
@@ -495,6 +582,17 @@ class DeclarationXmlController extends Controller
                 $service->addAttribute('code', $item->code);
                 $service->addChild('coutminimum', $item->coutminimum);
             }
+
+            $nomDuFichier = 'tarificationchequecarte' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
 
             return response($xml->asXML(), 200)
                 ->header('Content-Type', 'application/xml')
@@ -535,6 +633,17 @@ class DeclarationXmlController extends Controller
                 }
                 $i++;
             }
+
+            $nomDuFichier = 'typologiecheque' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
 
             return response($xml->asXML(), 200)
                 ->header('Content-Type', 'application/xml')
@@ -577,6 +686,17 @@ class DeclarationXmlController extends Controller
                 $i++;
             }
 
+            $nomDuFichier = 'utilisationcarte' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
+
             return response($xml->asXML(), 200)
                 ->header('Content-Type', 'application/xml')
                 ->header('Content-Disposition', 'attachment; filename="utilisationcarte_' . $request->debut_periode . '.xml"');
@@ -617,6 +737,17 @@ class DeclarationXmlController extends Controller
                 }
                 $i++;
             }
+
+            $nomDuFichier = 'utilisationcheque' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
 
             return response($xml->asXML(), 200)
                 ->header('Content-Type', 'application/xml')
@@ -673,6 +804,17 @@ class DeclarationXmlController extends Controller
                 }
                 $i++;
             }
+
+            $nomDuFichier = 'risquestra' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
 
             return response($xml->asXML(), 200)
                 ->header('Content-Type', 'application/xml')
@@ -756,6 +898,17 @@ class DeclarationXmlController extends Controller
                 $i++;
             }
 
+            $nomDuFichier = 'incidentstra' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
+
             return response($dom->saveXML(), 200)
                 ->header('Content-Type', 'application/xml')
                 ->header('Content-Disposition', 'attachment; filename="incidentstra_' . $request->debut_periode . '.xml"');
@@ -784,7 +937,7 @@ class DeclarationXmlController extends Controller
             $details = $dom->createElement('details');
             foreach ($rows as $item) {
                 $data = $dom->createElement('data');
-                $data->appendChild($dom->createElement('fraude', $item->code));
+                $data->appendChild($dom->createElement('fraude', $item->fraude));
                 $data->appendChild($dom->createElement('service', $item->service));
                 $data->appendChild($dom->createElement('nb_fraude', $item->nb_fraude));
                 $data->appendChild($dom->createElement('valeur_fraude', $item->valeur_fraude));
@@ -804,6 +957,17 @@ class DeclarationXmlController extends Controller
             }
 
             $root->appendChild($details);
+
+            $nomDuFichier = 'fraudestra' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
 
             return response($dom->saveXML(), 200)
                 ->header('Content-Type', 'application/xml')
@@ -848,10 +1012,21 @@ class DeclarationXmlController extends Controller
             }
             $root->appendChild($details);
 
+            $nomDuFichier = 'operationstra' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
+
             return response($dom->saveXML(), 200)
                 ->header('Content-Type', 'application/xml')
                 ->header('Content-Disposition', 'attachment; filename="operationstra_' . $request->debut_periode . '_' . $request->fin_periode . '.xml"');
-        } elseif ($request->type === 'reclamstra') {
+        } elseif ($request->type === 'reclamationstra') {
             $rows = \App\Models\ReclamationStra::where('debut_periode', $request->debut_periode)
                 ->where('fin_periode', $request->fin_periode)
                 ->get();
@@ -896,6 +1071,17 @@ class DeclarationXmlController extends Controller
             }
 
             $root->appendChild($details);
+
+            $nomDuFichier = 'reclamationstra' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
 
             return response($dom->saveXML(), 200)
                 ->header('Content-Type', 'application/xml')
@@ -951,6 +1137,17 @@ class DeclarationXmlController extends Controller
             }
 
             $root->appendChild($details);
+
+            $nomDuFichier = 'ecosysteme' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
 
             return response($dom->saveXML(), 200)
                 ->header('Content-Type', 'application/xml')
@@ -1053,13 +1250,514 @@ class DeclarationXmlController extends Controller
                     $details->appendChild($dataNode);
                 }
                 $root->appendChild($details);
+
+            $nomDuFichier = 'annuairestra' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
             }
 
             return response($dom->saveXML(), 200)
                 ->header('Content-Type', 'application/xml')
                 ->header('Content-Disposition', 'attachment; filename="annuairestra_' . $request->debut_periode . '_' . $request->fin_periode . '.xml"');
-        }
+        } elseif ($request->type === 'declarationincident') {
+            $rows = \App\Models\DeclarationIncident::where('debut_periode', $request->debut_periode)
+                ->where('fin_periode', $request->fin_periode)
+                ->get();
 
+            if ($rows->isEmpty()) {
+                return back()->withErrors(['type' => 'Aucune donnée trouvée pour cette période.']);
+            }
+
+            $dom = new \DOMDocument('1.0', 'UTF-8');
+            $dom->formatOutput = true;
+
+            $root = $dom->createElement('declarationincident');
+            $dom->appendChild($root);
+
+            // Période
+            $root->appendChild($dom->createElement('debutperiode', $request->debut_periode));
+            $root->appendChild($dom->createElement('finperiode', $request->fin_periode));
+
+            // <eltconstitutif>
+            $eltconstitutif = $dom->createElement('eltconstitutif');
+            foreach ($rows as $row) {
+                foreach ($row->elements_constitutifs ?? [] as $elt) {
+                    $eltNode = $dom->createElement('elt');
+                    $eltNode->setAttribute('code', $elt['code'] ?? '');
+
+                    $intitule = $dom->createElement('intitule');
+                    $intitule->appendChild($dom->createCDATASection($elt['intitule'] ?? ''));
+                    $eltNode->appendChild($intitule);
+
+                    $eltNode->appendChild($dom->createElement('valeur', $elt['valeur'] ?? ''));
+                    $eltconstitutif->appendChild($eltNode);
+                }
+            }
+            $root->appendChild($eltconstitutif);
+
+            // <fichedescriptiveincident>
+            $ficheDesc = $dom->createElement('fichedescriptiveincident');
+            foreach ($rows as $row) {
+                foreach ($row->incidents ?? [] as $inc) {
+                    $incNode = $dom->createElement('incident');
+                    $incNode->appendChild($dom->createElement('nombre', $inc['nombre'] ?? ''));
+
+                    $desc = $dom->createElement('descriptif');
+                    $desc->appendChild($dom->createCDATASection($inc['descriptif'] ?? ''));
+                    $incNode->appendChild($desc);
+
+                    $mesure = $dom->createElement('mesureprise');
+                    $mesure->appendChild($dom->createCDATASection($inc['mesureprise'] ?? ''));
+                    $incNode->appendChild($mesure);
+
+                    $ficheDesc->appendChild($incNode);
+                }
+            }
+            $root->appendChild($ficheDesc);
+
+            // <fichemotifcapture>
+            $ficheCapture = $dom->createElement('fichemotifcapture');
+            foreach ($rows as $row) {
+                foreach ($row->captures ?? [] as $cap) {
+                    $capNode = $dom->createElement('capture');
+                    $capNode->appendChild($dom->createElement('nombre', $cap['nombre'] ?? ''));
+
+                    $motif = $dom->createElement('motif');
+                    $motif->appendChild($dom->createCDATASection($cap['motif'] ?? ''));
+                    $capNode->appendChild($motif);
+
+                    $mesure = $dom->createElement('mesureprise');
+                    $mesure->appendChild($dom->createCDATASection($cap['mesureprise'] ?? ''));
+                    $capNode->appendChild($mesure);
+
+                    $ficheCapture->appendChild($capNode);
+                }
+            }
+            $root->appendChild($ficheCapture);
+
+            $nomDuFichier = 'declarationincident_' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
+
+            return response($dom->saveXML(), 200)
+                ->header('Content-Type', 'application/xml')
+                ->header('Content-Disposition', 'attachment; filename="' . $nomDuFichier . '"');
+        } elseif ($request->type === 'declarationratios') {
+            $rows = \App\Models\DeclarationRatio::where('debut_periode', $request->debut_periode)
+                ->where('fin_periode', $request->fin_periode)
+                ->get();
+
+            if ($rows->isEmpty()) {
+                return back()->withErrors(['type' => 'Aucune donnée trouvée pour cette période.']);
+            }
+
+            $dom = new \DOMDocument('1.0', 'UTF-8');
+            $dom->formatOutput = true;
+
+            $root = $dom->createElement('declarationratios');
+            $dom->appendChild($root);
+
+            // Période
+            $root->appendChild($dom->createElement('debutperiode', $request->debut_periode));
+            $root->appendChild($dom->createElement('finperiode', $request->fin_periode));
+
+            // <ratios>
+            $ratiosNode = $dom->createElement('ratios');
+            foreach ($rows as $row) {
+                $ratioNode = $dom->createElement('ratio');
+                $ratioNode->setAttribute('code', $row->code);
+
+                $intitule = $dom->createElement('intitule');
+                $intitule->appendChild($dom->createCDATASection($row->intitule));
+                $ratioNode->appendChild($intitule);
+
+                $ratioNode->appendChild($dom->createElement('taux', $row->taux));
+                $ratiosNode->appendChild($ratioNode);
+            }
+            $root->appendChild($ratiosNode);
+
+            $nomDuFichier = 'declarationratios_' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
+
+            return response($dom->saveXML(), 200)
+                ->header('Content-Type', 'application/xml')
+                ->header('Content-Disposition', 'attachment; filename="' . $nomDuFichier . '"');
+        } elseif ($request->type === 'declarationreclamation') {
+            $rows = \App\Models\DeclarationReclamation::where('debut_periode', $request->debut_periode)
+                ->where('fin_periode', $request->fin_periode)
+                ->get();
+
+            if ($rows->isEmpty()) {
+                return back()->withErrors(['type' => 'Aucune donnée trouvée pour cette période.']);
+            }
+
+            $dom = new \DOMDocument('1.0', 'UTF-8');
+            $dom->formatOutput = true;
+
+            $root = $dom->createElement('declarationreclamation');
+            $dom->appendChild($root);
+
+            // <declaration>
+            $header = $dom->createElement('declaration');
+            $header->appendChild($dom->createElement('debutperiode'))->appendChild($dom->createCDATASection($request->debut_periode));
+            $header->appendChild($dom->createElement('finperiode'))->appendChild($dom->createCDATASection($request->fin_periode));
+            $header->appendChild($dom->createElement('nbenregistre', $rows->sum('nbenregistre')));
+            $header->appendChild($dom->createElement('nbtraite', $rows->sum('nbtraite')));
+            $root->appendChild($header);
+
+            // <detailsreclamation>
+            $details = $dom->createElement('detailsreclamation');
+            foreach ($rows as $row) {
+                $recNode = $dom->createElement('reclamation');
+                $recNode->appendChild($dom->createElement('nbenregistre', $row->detail_nbenregistre ?? ''));
+                $motif = $dom->createElement('motif');
+                $motif->appendChild($dom->createCDATASection($row->motif ?? ''));
+                $recNode->appendChild($motif);
+                $recNode->appendChild($dom->createElement('nbtraite', $row->detail_nbtraite ?? ''));
+                $details->appendChild($recNode);
+            }
+            $root->appendChild($details);
+
+            $nomDuFichier = 'declarationreclamation_' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
+
+            return response($dom->saveXML(), 200)
+                ->header('Content-Type', 'application/xml')
+                ->header('Content-Disposition', 'attachment; filename="' . $nomDuFichier . '"');
+        } elseif ($request->type === 'declarationfraude') {
+            $rows = \App\Models\DeclarationFraude::where('debut_periode', $request->debut_periode)
+                ->where('fin_periode', $request->fin_periode)
+                ->get();
+
+            if ($rows->isEmpty()) {
+                return back()->withErrors(['type' => 'Aucune donnée trouvée pour cette période.']);
+            }
+
+            $dom = new \DOMDocument('1.0', 'UTF-8');
+            $dom->formatOutput = true;
+
+            $root = $dom->createElement('declarationfraude');
+            $dom->appendChild($root);
+
+            // <declaration>
+            $header = $dom->createElement('declaration');
+            $header->appendChild($dom->createElement('debutperiode', $request->debut_periode));
+            $header->appendChild($dom->createElement('finperiode', $request->fin_periode));
+            $header->appendChild($dom->createElement('nbtransaction', $rows->sum('nbtransaction')));
+            $header->appendChild($dom->createElement('valeurtransaction', $rows->sum('valeurtransaction')));
+            $root->appendChild($header);
+
+            // <fichedescriptive>
+            $fiche = $dom->createElement('fichedescriptive');
+            foreach ($rows as $row) {
+                $typeFraude = $dom->createElement('typefraude');
+                $typeFraude->setAttribute('code', $row->code);
+
+                $desc = $dom->createElement('description');
+                $desc->appendChild($dom->createCDATASection($row->description));
+                $typeFraude->appendChild($desc);
+
+                $typeFraude->appendChild($dom->createElement('nbtransaction', $row->nbtransaction));
+                $typeFraude->appendChild($dom->createElement('valeurtransaction', $row->valeurtransaction));
+
+                $dispositif = $dom->createElement('dispositifgestion');
+                $dispositif->appendChild($dom->createCDATASection($row->dispositifgestion));
+                $typeFraude->appendChild($dispositif);
+
+                $fiche->appendChild($typeFraude);
+            }
+            $root->appendChild($fiche);
+
+            $nomDuFichier = 'declarationfraude_' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
+
+            return response($dom->saveXML(), 200)
+                ->header('Content-Type', 'application/xml')
+                ->header('Content-Disposition', 'attachment; filename="' . $nomDuFichier . '"');
+        } elseif ($request->type === 'indicateurfinancier') {
+            $rows = \App\Models\IndicateurFinancier::where('debut_periode', $request->debut_periode)
+                ->where('fin_periode', $request->fin_periode)
+                ->get();
+
+            if ($rows->isEmpty()) {
+                return back()->withErrors(['type' => 'Aucune donnée trouvée pour cette période.']);
+            }
+
+            $dom = new \DOMDocument('1.0', 'UTF-8');
+            $dom->formatOutput = true;
+
+            $root = $dom->createElement('indicateurfinancier');
+            $dom->appendChild($root);
+
+            // Période
+            $root->appendChild($dom->createElement('debutperiode', $request->debut_periode));
+            $root->appendChild($dom->createElement('finperiode', $request->fin_periode));
+
+            // <indicateurs>
+            $indicateursNode = $dom->createElement('indicateurs');
+            foreach ($rows as $row) {
+                $indNode = $dom->createElement('indicateur');
+                $indNode->setAttribute('code', $row->code);
+
+                $intitule = $dom->createElement('intitule');
+                $intitule->appendChild($dom->createCDATASection($row->intitule));
+                $indNode->appendChild($intitule);
+
+                $indNode->appendChild($dom->createElement('valeur', $row->valeur));
+                $indicateursNode->appendChild($indNode);
+            }
+            $root->appendChild($indicateursNode);
+
+            $nomDuFichier = 'indicateurfinancier_' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
+
+            return response($dom->saveXML(), 200)
+                ->header('Content-Type', 'application/xml')
+                ->header('Content-Disposition', 'attachment; filename="' . $nomDuFichier . '"');
+        } elseif ($request->type === 'declarationsfm') {
+            $rows = \App\Models\DeclarationSFM::where('debut_periode', $request->debut_periode)
+                ->where('fin_periode', $request->fin_periode)
+                ->get();
+
+            if ($rows->isEmpty()) {
+                return back()->withErrors(['type' => 'Aucune donnée trouvée pour cette période.']);
+            }
+
+            $dom = new \DOMDocument('1.0', 'UTF-8');
+            $dom->formatOutput = true;
+
+            $root = $dom->createElement('declarationsfm');
+            $dom->appendChild($root);
+
+            // Période
+            $root->appendChild($dom->createElement('debutperiode', $request->debut_periode));
+            $root->appendChild($dom->createElement('finperiode', $request->fin_periode));
+
+            // <statistiques>
+            $statistiquesNode = $dom->createElement('statistiques');
+            foreach ($rows as $row) {
+                $sfmNode = $dom->createElement('sfm');
+                $sfmNode->setAttribute('code', $row->code);
+
+                $sfmNode->appendChild($dom->createElement('valeur', $row->valeur));
+
+                $details = $dom->createElement('details');
+                $details->appendChild($dom->createCDATASection($row->details ?? ''));
+                $sfmNode->appendChild($details);
+
+                $statistiquesNode->appendChild($sfmNode);
+            }
+            $root->appendChild($statistiquesNode);
+
+            $nomDuFichier = 'declarationsfm_' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
+
+            return response($dom->saveXML(), 200)
+                ->header('Content-Type', 'application/xml')
+                ->header('Content-Disposition', 'attachment; filename="' . $nomDuFichier . '"');
+        } elseif ($request->type === 'placementfinancier') {
+            $row = \App\Models\PlacementFinancier::where('debut_periode', $request->debut_periode)
+                ->where('fin_periode', $request->fin_periode)
+                ->first();
+
+            if (!$row) {
+                return back()->withErrors(['type' => 'Aucune donnée trouvée pour cette période.']);
+            }
+
+            $dom = new \DOMDocument('1.0', 'UTF-8');
+            $dom->formatOutput = true;
+
+            $root = $dom->createElement('placementfinancier');
+            $dom->appendChild($root);
+
+            $root->appendChild($dom->createElement('debutperiode', $request->debut_periode));
+            $root->appendChild($dom->createElement('finperiode', $request->fin_periode));
+            $root->appendChild($dom->createElement('depotavue', $row->depotavue));
+            $root->appendChild($dom->createElement('depotaterme', $row->depotaterme));
+            $root->appendChild($dom->createElement('titreacquis', $row->titreacquis));
+            $root->appendChild($dom->createElement('total', $row->total));
+
+            $nomDuFichier = 'placementfinancier_' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
+
+            return response($dom->saveXML(), 200)
+                ->header('Content-Type', 'application/xml')
+                ->header('Content-Disposition', 'attachment; filename="' . $nomDuFichier . '"');
+        } elseif ($request->type === 'controlencours') {
+            $controle = \App\Models\ControleEncours::with(['soldes', 'ecarts'])
+                ->where('debut_periode', $request->debut_periode)
+                ->where('fin_periode', $request->fin_periode)
+                ->first();
+
+            if (!$controle) {
+                return back()->withErrors(['type' => 'Aucune donnée trouvée pour cette période.']);
+            }
+
+            $dom = new \DOMDocument('1.0', 'UTF-8');
+            $dom->formatOutput = true;
+
+            $root = $dom->createElement('controlencours');
+            $dom->appendChild($root);
+
+            // <encours>
+            $encours = $dom->createElement('encours');
+            $encours->appendChild($dom->createElement('debutperiode', $controle->debut_periode));
+            $encours->appendChild($dom->createElement('finperiode', $controle->fin_periode));
+            $encours->appendChild($dom->createElement('valeurinitiale', $controle->valeurinitiale));
+            $encours->appendChild($dom->createElement('nouvelleemission', $controle->nouvelleemission));
+            $encours->appendChild($dom->createElement('destructionmonnaie', $controle->destructionmonnaie));
+            $encours->appendChild($dom->createElement('valeurfinale', $controle->valeurfinale));
+
+            // <comptecantonnement>
+            $compteCantonnement = $dom->createElement('comptecantonnement');
+            foreach ($controle->soldes as $solde) {
+                $soldeNode = $dom->createElement('soldecompte');
+                $banque = $dom->createElement('banque');
+                $banque->appendChild($dom->createCDATASection($solde->banque));
+                $soldeNode->appendChild($banque);
+
+                $num = $dom->createElement('numerocompte');
+                $num->appendChild($dom->createCDATASection($solde->numerocompte));
+                $soldeNode->appendChild($num);
+
+                $intitule = $dom->createElement('intitulecompte');
+                $intitule->appendChild($dom->createCDATASection($solde->intitulecompte));
+                $soldeNode->appendChild($intitule);
+
+                $soldeNode->appendChild($dom->createElement('solde', $solde->solde));
+                $compteCantonnement->appendChild($soldeNode);
+            }
+            $encours->appendChild($compteCantonnement);
+
+            $encours->appendChild($dom->createElement('soldecomptecantonnement', $controle->soldecomptecantonnement));
+            $encours->appendChild($dom->createElement('soldecomptabilite', $controle->soldecomptabilite));
+            $encours->appendChild($dom->createElement('ecartcantonnementvaleurfinale', $controle->ecartcantonnementvaleurfinale));
+            $encours->appendChild($dom->createElement('ecartcomptabilitevaleurfinale', $controle->ecartcomptabilitevaleurfinale));
+            $encours->appendChild($dom->createElement('ecartcomptabilitecantonnement', $controle->ecartcomptabilitecantonnement));
+            $encours->appendChild($dom->createElement('nbtransaction', $controle->nbtransaction));
+            $encours->appendChild($dom->createElement('valeurtransaction', $controle->valeurtransaction));
+            $root->appendChild($encours);
+
+            // <explicationecarts>
+            $explicationEcarts = $dom->createElement('explicationecarts');
+
+            // <ecartcantonnementvaleurfinale>
+            $ecartCantonnement = $dom->createElement('ecartcantonnementvaleurfinale');
+            foreach ($controle->ecarts->where('type_ecart', 'ecartcantonnementvaleurfinale') as $ecart) {
+                $exp = $dom->createElement('explication');
+                $exp->appendChild($dom->createElement('dateoperation', $ecart->dateoperation));
+                $ref = $dom->createElement('reference');
+                $ref->appendChild($dom->createCDATASection($ecart->reference));
+                $exp->appendChild($ref);
+                $nature = $dom->createElement('natureoperation');
+                $nature->appendChild($dom->createCDATASection($ecart->natureoperation));
+                $exp->appendChild($nature);
+                $exp->appendChild($dom->createElement('montant', $ecart->montant));
+                $obs = $dom->createElement('observations');
+                $obs->appendChild($dom->createCDATASection($ecart->observations));
+                $exp->appendChild($obs);
+                $ecartCantonnement->appendChild($exp);
+            }
+            $explicationEcarts->appendChild($ecartCantonnement);
+
+            // <ecartcomptabilitecantonnement>
+            $ecartComptaCanton = $dom->createElement('ecartcomptabilitecantonnement');
+            foreach ($controle->ecarts->where('type_ecart', 'ecartcomptabilitecantonnement') as $ecart) {
+                $exp = $dom->createElement('explication');
+                $exp->appendChild($dom->createElement('dateoperation', $ecart->dateoperation));
+                $ref = $dom->createElement('reference');
+                $ref->appendChild($dom->createCDATASection($ecart->reference));
+                $exp->appendChild($ref);
+                $nature = $dom->createElement('natureoperation');
+                $nature->appendChild($dom->createCDATASection($ecart->natureoperation));
+                $exp->appendChild($nature);
+                $exp->appendChild($dom->createElement('montant', $ecart->montant));
+                $obs = $dom->createElement('observations');
+                $obs->appendChild($dom->createCDATASection($ecart->observations));
+                $exp->appendChild($obs);
+                $ecartComptaCanton->appendChild($exp);
+            }
+            $explicationEcarts->appendChild($ecartComptaCanton);
+
+            $root->appendChild($explicationEcarts);
+
+            $nomDuFichier = 'controleencours_' . $request->debut_periode . '_' . $request->fin_periode . '.xml';
+
+            // Enregistrement dans la table XmlExport (optionnel)
+            \App\Models\XmlExport::create([
+                'type' => $request->type,
+                'debut_periode' => $request->debut_periode,
+                'fin_periode' => $request->fin_periode,
+                'filename' => $nomDuFichier,
+                'status' => 'en_attente',
+            ]);
+
+            return response($dom->saveXML(), 200)
+                ->header('Content-Type', 'application/xml')
+                ->header('Content-Disposition', 'attachment; filename="' . $nomDuFichier . '"');
+        }
 
         return back()->with('error', 'Type de déclaration non supporté.');
     }

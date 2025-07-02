@@ -4,12 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ecosysteme;
+use App\Models\Service;
+use App\Models\Operateur;
+use App\Models\PaysOperateur;
+use App\Models\PerimetrePartenariat;
+
 
 class EcosystemeController extends Controller
 {
     public function create()
     {
-        return view('ecosysteme.create');
+        return view('ecosysteme.create', [
+            'services' => Service::all(),
+            'operateurs' => Operateur::all(),
+            'paysoperateurs' => PaysOperateur::all(),
+            'perimetres' => PerimetrePartenariat::all(),
+        ]);
     }
 
     public function store(Request $request)

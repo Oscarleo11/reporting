@@ -4,12 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\FraudeStra;
+use App\Models\Service;
+use App\Models\FraudeCode;
+
 
 class FraudeStraController extends Controller
 {
     public function create()
     {
-        return view('fraudestra.create');
+        return view('fraudestra.create', [
+            'services' => Service::all(),
+            'fraudecodes' => Fraudecode::all(),
+        ]);
+
     }
 
     public function store(Request $request)

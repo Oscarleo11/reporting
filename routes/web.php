@@ -32,6 +32,15 @@ use App\Http\Controllers\ReclamationStraController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\XmlExportController;
+use App\Http\Controllers\DeclarationRatioController;
+use App\Http\Controllers\DeclarationFraudeController;
+use App\Http\Controllers\IndicateurFinancierController;
+use App\Http\Controllers\DeclarationIncidentController;
+use App\Http\Controllers\DeclarationReclamationController;
+use App\Http\Controllers\DeclarationSFMController;
+use App\Http\Controllers\ControleEncoursController;
+
+
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -194,11 +203,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/operationstra', [OperationStraController::class, 'index'])->name('operationstra.index');
 });
 
-
-Route::get('/reclamationstra/create', [ReclamationStraController::class, 'create'])->name('reclamationstra.create');
-Route::post('/reclamationstra/store', [ReclamationStraController::class, 'store'])->name('reclamationstra.store');
-Route::get('/reclamationstra', [ReclamationStraController::class, 'index'])->name('reclamationstra.index');
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/reclamationstra/create', [ReclamationStraController::class, 'create'])->name('reclamationstra.create');
+    Route::post('/reclamationstra/store', [ReclamationStraController::class, 'store'])->name('reclamationstra.store');
+    Route::get('/reclamationstra', [ReclamationStraController::class, 'index'])->name('reclamationstra.index');
+});
 
 
 Route::middleware(['auth'])->group(function () {
@@ -210,6 +219,38 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/xml_exports', [XmlExportController::class, 'index'])->name('xml_exports.index');
     Route::put('/xml-exports/{export}/status', [XmlExportController::class, 'updateStatus'])->name('xml_exports.updateStatus');
 });
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/declarationratios', [DeclarationRatioController::class, 'index'])->name('declarationratios.index');
+    Route::get('/declarationratios/create', [DeclarationRatioController::class, 'create'])->name('declarationratios.create');
+    Route::post('/declarationratios/store', [DeclarationRatioController::class, 'store'])->name('declarationratios.store');
+});
+
+// routes/web.php
+
+Route::get('/declarationfraude/create', [DeclarationFraudeController::class, 'create'])->name('declarationfraude.create');
+Route::post('/declarationfraude', [DeclarationFraudeController::class, 'store'])->name('declarationfraude.store');
+Route::get('/declarationfraude', [DeclarationFraudeController::class, 'index'])->name('declarationfraude.index');
+
+Route::get('/indicateurfinancier/create', [IndicateurFinancierController::class, 'create'])->name('indicateurfinancier.create');
+Route::post('/indicateurfinancier/store', [IndicateurFinancierController::class, 'store'])->name('indicateurfinancier.store');
+Route::get('/indicateurfinancier', [IndicateurFinancierController::class, 'index'])->name('indicateurfinancier.index');
+
+Route::resource('declarationsfm', \App\Http\Controllers\DeclarationSFMController::class)->only(['create', 'store', 'index']);
+
+Route::prefix('declarationincident')->name('declarationincident.')->group(function () {
+    Route::get('/', [DeclarationIncidentController::class, 'index'])->name('index');
+    Route::get('/create', [DeclarationIncidentController::class, 'create'])->name('create');
+    Route::post('/', [DeclarationIncidentController::class, 'store'])->name('store');
+});
+
+Route::resource('declarationreclamation', DeclarationReclamationController::class)->only(['create', 'store', 'index']);
+
+Route::resource('controleencours', ControleEncoursController::class)->only(['create','store','index']);
+
+Route::resource('placementfinancier', \App\Http\Controllers\PlacementFinancierController::class);
+
 
 
 require __DIR__ . '/auth.php';

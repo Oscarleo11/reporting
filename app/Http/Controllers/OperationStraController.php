@@ -4,12 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\OperationStra;
+use App\Models\Service;
+use App\Models\PaysOperateur;
+use App\Models\Motif;
 
 class OperationStraController extends Controller
 {
     public function create()
     {
-        return view('operationstra.create');
+        return view('operationstra.create', [
+            'services' => Service::all(),
+            'paysoperateurs' => Paysoperateur::all(),
+            'motifs' => Motif::all(),
+
+        ]);
     }
 
     public function store(Request $request)

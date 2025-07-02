@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\IncidentStra;
+use App\Models\PlateformeTechnique;
 
 class IncidentStraController extends Controller
 {
     public function create()
     {
-        return view('incidentstra.create');
+        $plateformes = PlateformeTechnique::all();
+        return view('incidentstra.create', compact('plateformes'));
+        // return view('incidentstra.create');
     }
 
     public function store(Request $request)

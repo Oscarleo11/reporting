@@ -9,7 +9,7 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>N°</th>
+                        {{-- <th>N°</th> --}}
                         <th>Type</th>
                         <th>Période</th>
                         <th>Fichier</th>
@@ -21,18 +21,18 @@
                 <tbody>
                     @foreach ($exports as $index => $export)
                         <tr>
-                            <td>{{ $index + 1 }}</td>
+                            {{-- <td>{{ $index + 1 }}</td> --}}
                             <td>{{ $export->type }}</td>
-                            <td style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            <td>
                                 {{ $export->debut_periode }} au {{ $export->fin_periode }}
                             </td>
-                            <td style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            <td style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                 <a href="{{ asset('exports/' . $export->filename) }}" download
                                     style="display: inline-block; max-width: 100%; overflow: hidden; text-overflow: ellipsis;">
                                     {{ $export->filename }}
                                 </a>
                             </td>
-                            <td>
+                            <td style="max-width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                 @if ($export->status === 'valide')
                                     <span class="badge badge-success">Validé</span>
                                 @elseif($export->status === 'non_valide')

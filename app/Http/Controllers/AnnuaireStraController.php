@@ -7,6 +7,8 @@ use App\Models\AnnuaireStra;
 use App\Models\AnnuaireService;
 use App\Models\AnnuaireTransaction;
 use App\Models\Service;
+use App\Models\Operateur;
+use App\Models\PerimetrePartenariat;
 use App\Models\ModeEnvoi;
 use App\Models\ModeReception;
 
@@ -16,6 +18,8 @@ class AnnuaireStraController extends Controller
     {
         return view('annuairestra.create', [
             'services' => Service::all(),
+            'operateur' => Operateur::all(),
+            'perimetres' => PerimetrePartenariat::all(),
             // 'modes_envoi' => ModeEnvoi::all(),
             // 'modes_reception' => ModeReception::all(),
         ]);
@@ -90,7 +94,7 @@ class AnnuaireStraController extends Controller
             }
         }
 
-        return redirect()->route('dashboard')->with('success', 'Déclaration STRA enregistrée avec succès.');
+        return redirect()->route('annuairestra.index')->with('success', 'Déclaration STRA enregistrée avec succès.');
     }
 
     public function index()

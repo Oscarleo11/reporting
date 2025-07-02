@@ -34,7 +34,12 @@
                                     <div class="card-body">
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <input type="text" name="details[0][plateformetechnique]" placeholder="Plateforme technique" class="form-control" required>
+                                                <select name="details[0][plateformetechnique]" class="form-control" required>
+                                                    <option value="">-- Plateforme technique --</option>
+                                                    @foreach($plateformes as $plateforme)
+                                                        <option value="{{ $plateforme->nom }}">{{ $plateforme->nom }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <input type="text" name="details[0][risque]" placeholder="Risque" class="form-control" required>
