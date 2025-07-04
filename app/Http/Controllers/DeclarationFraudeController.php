@@ -28,8 +28,7 @@ class DeclarationFraudeController extends Controller
         ]);
 
         foreach ($request->details as $detail) {
-            $description = CodeFraude::where('code', $detail['code'])->first()?->description ?? '';
-
+            $description = CodeFraude::where('code', $detail['code'])->first()?->libelle ?? '';
             DeclarationFraude::create([
                 'debut_periode' => $request->debut_periode,
                 'fin_periode' => $request->fin_periode,

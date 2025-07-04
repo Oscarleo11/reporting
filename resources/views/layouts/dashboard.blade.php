@@ -157,7 +157,7 @@
                         <li><a href="{{ route('declarationincident.create') }}" class="nav-link">Déclaration Incident</a></li>
                         <li><a href="{{ route('declarationratios.create') }}" class="nav-link">Déclaration Ratio</a></li>
                         <li><a href="{{ route('declarationreclamation.create') }}" class="nav-link">Déclaration Reclamation</a></li>
-                        <li><a href="{{ route('declarationfraude.create') }}" class="nav-link">DDéclaration Fraude</a></li>
+                        <li><a href="{{ route('declarationfraude.create') }}" class="nav-link">Déclaration Fraude</a></li>
                         <li><a href="{{ route('controleencours.create') }}" class="nav-link">Contrôle en Cours</a></li>
                         <li><a href="{{ route('indicateurfinancier.create') }}" class="nav-link">Indicateur Financier</a></li>
                         <li><a href="{{ route('placementfinancier.create') }}" class="nav-link">Placement Financier</a></li>

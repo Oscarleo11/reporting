@@ -111,11 +111,11 @@ class DeclarationXmlController extends Controller
                 ->where('fin_periode', $request->fin_periode)
                 ->get();
         } elseif ($request->type === 'declarationfraude') {
-            $data = \App\Models\IndicateurFinancier::where('debut_periode', $request->debut_periode)
+            $data = \App\Models\DeclarationFraude::where('debut_periode', $request->debut_periode)
                 ->where('fin_periode', $request->fin_periode)
                 ->get();
         } elseif ($request->type === 'indicateurfinancier') {
-            $data = \App\Models\DeclarationFraude::where('debut_periode', $request->debut_periode)
+            $data = \App\Models\IndicateurFinancier::where('debut_periode', $request->debut_periode)
                 ->where('fin_periode', $request->fin_periode)
                 ->get();
         } elseif ($request->type === 'declarationsfm') {
