@@ -10,12 +10,28 @@ class IndicateurFinancierController extends Controller
 {
     public function create()
     {
+        // Seuls admin et user_cocotiers peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_cocotiers'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $codes = CodeFinancier::all();
         return view('indicateurfinancier.create', compact('codes'));
     }
 
     public function store(Request $request)
     {
+        // Seuls admin et user_cocotiers peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_cocotiers'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $request->validate([
             'debut_periode' => 'required|date',
             'fin_periode' => 'required|date',
@@ -39,6 +55,14 @@ class IndicateurFinancierController extends Controller
 
     public function index()
     {
+        // Seuls admin et user_cocotiers peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_cocotiers'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $indicateurs = IndicateurFinancier::orderByDesc('debut_periode')->get()->groupBy('debut_periode');
         return view('indicateurfinancier.index', compact('indicateurs'));
     }

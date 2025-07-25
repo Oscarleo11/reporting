@@ -9,11 +9,27 @@ class DeclarationReclamationController extends Controller
 {
     public function create()
     {
+        // Seuls admin et user_cocotiers peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_cocotiers'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         return view('declarationreclamation.create');
     }
 
     public function store(Request $request)
     {
+        // Seuls admin et user_cocotiers peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_cocotiers'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $request->validate([
             'debut_periode' => 'required|date',
             'fin_periode' => 'required|date',
@@ -43,6 +59,14 @@ class DeclarationReclamationController extends Controller
 
     public function index()
     {
+        // Seuls admin et user_cocotiers peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_cocotiers'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $reclamations = DeclarationReclamation::all()->groupBy('debut_periode');
         return view('declarationreclamation.index', compact('reclamations'));
     }

@@ -10,6 +10,14 @@ class IncidentStraController extends Controller
 {
     public function create()
     {
+        // Seuls admin et user_stra peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_stra'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $plateformes = PlateformeTechnique::all();
         return view('incidentstra.create', compact('plateformes'));
         // return view('incidentstra.create');
@@ -17,6 +25,14 @@ class IncidentStraController extends Controller
 
     public function store(Request $request)
     {
+        // Seuls admin et user_stra peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_stra'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $request->validate([
             'debut_periode' => 'required|date',
             'fin_periode' => 'required|date',
@@ -58,6 +74,14 @@ class IncidentStraController extends Controller
 
     public function index()
     {
+        // Seuls admin et user_stra peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_stra'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $incidents = IncidentStra::orderBy('debut_periode', 'desc')->get()->groupBy('debut_periode');
         return view('incidentstra.index', compact('incidents'));
     }

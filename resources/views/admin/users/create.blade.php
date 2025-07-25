@@ -54,6 +54,15 @@
                                     <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="role">Profil utilisateur</label>
+                                <select name="role" id="role" class="form-control" required>
+                                    <option value="user_mps">Utilisateur MPS</option>
+                                    <option value="user_stra">Utilisateur STRA</option>
+                                    <option value="user_cocotiers">Utilisateur Cocotiers II</option>
+                                    <option value="admin">Administrateur</option>
+                                </select>
+                            </div>
                             <div class="d-flex justify-content-end mt-4">
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-save"></i> Créer l'utilisateur

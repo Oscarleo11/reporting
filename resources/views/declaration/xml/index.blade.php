@@ -22,33 +22,43 @@
                                     <div class="form-group col-md-4">
                                         <label>Type de déclaration</label>
                                         <select name="type" class="form-control" required>
-                                            <option value="">-- Choisir un type --</option>
-                                            <option value="acquisition" @selected(old('type', $type ?? '') === 'acquisition')>Acquisition de cartes</option>
-                                            <option value="emission" @selected(old('type', $type ?? '') === 'emission')>Émission de cartes</option>
-                                            <option value="fraudechequecarte" @selected(old('type', $type ?? '') === 'fraudechequecarte')>Fraude chèque/carte</option>
-                                            <option value="incidentchequecarte" @selected(old('type', $type ?? '') === 'incidentchequecarte')>Incidents chèque/carte</option>
-                                            <option value="incidentpaiementcarte" @selected(old('type', $type ?? '') === 'incidentpaiementcarte')>Incidents paiement carte</option>
-                                            <option value="incidentpaiementcheque" @selected(old('type', $type ?? '') === 'incidentpaiementcheque')>Incidents paiement chèque</option>
-                                            <option value="reclamationchequecarte" @selected(old('type', $type ?? '') === 'reclamationchequecarte')>Réclamations chèque/carte</option>
-                                            <option value="tarificationchequecarte" @selected(old('type', $type ?? '') === 'tarificationchequecarte')>Tarification carte / chèque</option>
-                                            <option value="typologiecheque" @selected(old('type', $type ?? '') === 'typologiecheque')>Typologie chèques</option>
-                                            <option value="utilisationcarte" @selected(old('type', $type ?? '') === 'utilisationcarte')>Utilisation carte</option>
-                                            <option value="utilisationcheque" @selected(old('type', $type ?? '') === 'utilisationcheque')>Utilisation chèque</option>
-                                            <option value="risquestra" @selected(old('type', $type ?? '') === 'risquestra')>Risques STRA</option>
-                                            <option value="incidentstra" @selected(old('type', $type ?? '') === 'incidentstra')>Incidents STRA</option>
-                                            <option value="ecosysteme" @selected(old('type', $type ?? '') === 'ecosysteme')>Écosystème STRA</option>
-                                            <option value="fraudestra" @selected(old('type', $type ?? '') === 'fraudestra')>Fraudes STRA</option>
-                                            <option value="operationstra" @selected(old('type', $type ?? '') === 'operationstra')>Opérations STRA </option>
-                                            <option value="reclamationstra" @selected(old('type', $type ?? '') === 'reclamationstra')>Réclamations STRA</option>
-                                            <option value="annuaire" @selected(old('type', $type ?? '') === 'annuaire')>Annuaire STRA</option>
-                                            <option value="declarationincident" @selected(old('type', $type ?? '') === 'annuaire')>Declaration Incident</option>
-                                            <option value="declarationratios" @selected(old('type', $type ?? '') === 'declarationratios')>Declaration Ratios</option>
-                                            <option value="declarationreclamation" @selected(old('type', $type ?? '') === 'declarationreclamation')>Declaration Reclamation</option>
-                                            <option value="declarationfraude" @selected(old('type', $type ?? '') === 'declarationfraude')>Declaration Fraude</option>
-                                            <option value="indicateurfinancier" @selected(old('type', $type ?? '') === 'indicateurfinancier')>Indicateur Financier</option>
-                                            <option value="declarationsfm" @selected(old('type', $type ?? '') === 'declarationsfm')>Declaration SFM</option>
-                                            <option value="placementfinancier" @selected(old('type', $type ?? '') === 'placementfinancier')>Placement Financier</option>
-                                            <option value="controlencours" @selected(old('type', $type ?? '') === 'controlencours')>Controle Encours</option>
+                                            @if(Auth::user()->role === 'admin' || Auth::user()->role === 'user_mps')
+                                                <option value="">-- Choisir un type --</option>
+                                                <option value="acquisition" @selected(old('type', $type ?? '') === 'acquisition')>Acquisition de cartes</option>
+                                                <option value="emission" @selected(old('type', $type ?? '') === 'emission')>Émission de cartes</option>
+                                                <option value="fraudechequecarte" @selected(old('type', $type ?? '') === 'fraudechequecarte')>Fraude chèque/carte</option>
+                                                <option value="incidentchequecarte" @selected(old('type', $type ?? '') === 'incidentchequecarte')>Incidents chèque/carte</option>
+                                                <option value="incidentpaiementcarte" @selected(old('type', $type ?? '') === 'incidentpaiementcarte')>Incidents paiement carte</option>
+                                                <option value="incidentpaiementcheque" @selected(old('type', $type ?? '') === 'incidentpaiementcheque')>Incidents paiement chèque</option>
+                                                <option value="reclamationchequecarte" @selected(old('type', $type ?? '') === 'reclamationchequecarte')>Réclamations chèque/carte</option>
+                                                <option value="tarificationchequecarte" @selected(old('type', $type ?? '') === 'tarificationchequecarte')>Tarification carte / chèque</option>
+                                                <option value="typologiecheque" @selected(old('type', $type ?? '') === 'typologiecheque')>Typologie chèques</option>
+                                                <option value="utilisationcarte" @selected(old('type', $type ?? '') === 'utilisationcarte')>Utilisation carte</option>
+                                                <option value="utilisationcheque" @selected(old('type', $type ?? '') === 'utilisationcheque')>Utilisation chèque</option>
+                                            @endif
+
+                                            @if(Auth::user()->role === 'admin' || Auth::user()->role === 'user_stra')
+                                                <option value="">-- Choisir un type --</option>
+                                                <option value="risquestra" @selected(old('type', $type ?? '') === 'risquestra')>Risques STRA</option>
+                                                <option value="incidentstra" @selected(old('type', $type ?? '') === 'incidentstra')>Incidents STRA</option>
+                                                <option value="ecosysteme" @selected(old('type', $type ?? '') === 'ecosysteme')>Écosystème STRA</option>
+                                                <option value="fraudestra" @selected(old('type', $type ?? '') === 'fraudestra')>Fraudes STRA</option>
+                                                <option value="operationstra" @selected(old('type', $type ?? '') === 'operationstra')>Opérations STRA </option>
+                                                <option value="reclamationstra" @selected(old('type', $type ?? '') === 'reclamationstra')>Réclamations STRA</option>
+                                                <option value="annuaire" @selected(old('type', $type ?? '') === 'annuaire')>Annuaire STRA</option>
+                                            @endif
+
+                                            @if(Auth::user()->role === 'admin' || Auth::user()->role === 'user_cocotiers')
+                                                <option value="">-- Choisir un type --</option>
+                                                <option value="declarationincident" @selected(old('type', $type ?? '') === 'annuaire')>Declaration Incident</option>
+                                                <option value="declarationratios" @selected(old('type', $type ?? '') === 'declarationratios')>Declaration Ratios</option>
+                                                <option value="declarationreclamation" @selected(old('type', $type ?? '') === 'declarationreclamation')>Declaration Reclamation</option>
+                                                <option value="declarationfraude" @selected(old('type', $type ?? '') === 'declarationfraude')>Declaration Fraude</option>
+                                                <option value="indicateurfinancier" @selected(old('type', $type ?? '') === 'indicateurfinancier')>Indicateur Financier</option>
+                                                <option value="declarationsfm" @selected(old('type', $type ?? '') === 'declarationsfm')>Declaration SFM</option>
+                                                <option value="placementfinancier" @selected(old('type', $type ?? '') === 'placementfinancier')>Placement Financier</option>
+                                                <option value="controlencours" @selected(old('type', $type ?? '') === 'controlencours')>Controle Encours</option>
+                                            @endif
 
                                         </select>
                                     </div>

@@ -11,6 +11,13 @@ class DeclarationFraudeController extends Controller
 {
     public function create()
     {
+        // Seuls admin et user_cocotiers peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_cocotiers'
+        ) {
+            abort(403, 'Accès refusé');
+        }
         $codes = CodeFraude::all();
         $libelles = $codes->pluck('libelle', 'code')->toArray();
         return view('declarationfraude.create', compact('codes'));
@@ -18,6 +25,13 @@ class DeclarationFraudeController extends Controller
 
     public function store(Request $request)
     {
+        // Seuls admin et user_cocotiers peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_cocotiers'
+        ) {
+            abort(403, 'Accès refusé');
+        }
         $request->validate([
             'debut_periode' => 'required|date',
             'fin_periode' => 'required|date',
@@ -45,6 +59,14 @@ class DeclarationFraudeController extends Controller
 
     public function index()
     {
+        // Seuls admin et user_cocotiers peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_cocotiers'
+        ) {
+            abort(403, 'Accès refusé');
+        }
+
         $fraudes = DeclarationFraude::all()->groupBy('debut_periode');
         return view('declarationfraude.index', compact('fraudes'));
     }

@@ -12,12 +12,28 @@ class RisqueStraController extends Controller
 {
     public function create()
     {
+        // Seuls admin et user_stra peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_stra'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $types = TypeRisqueStra::all();
         return view('risquestra.create', compact('types'));
     }
 
     public function store(Request $request)
     {
+        // Seuls admin et user_stra peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_stra'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $request->validate([
             'debut_periode' => 'required|date',
             'fin_periode' => 'required|date',
@@ -43,6 +59,14 @@ class RisqueStraController extends Controller
 
     public function index()
     {
+        // Seuls admin et user_stra peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_stra'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $risques = RisqueStra::with('details')->orderBy('debut_periode', 'desc')->get();
         return view('risquestra.index', compact('risques'));
     }

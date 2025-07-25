@@ -12,6 +12,14 @@ class UtilisationCarteController extends Controller
 {
     public function create()
     {
+        // Seuls admin et user_mps peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_mps'
+        ) {
+            abort(403, 'Accès refusé');
+        }
+
         $familles = FamilleChequeCarte::all();
         $types = TypeCarte::all();
         return view('utilisationcarte.create', compact('familles', 'types'));
@@ -19,6 +27,14 @@ class UtilisationCarteController extends Controller
 
     public function store(Request $request)
     {
+        // Seuls admin et user_mps peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_mps'
+        ) {
+            abort(403, 'Accès refusé');
+        }
+
         $request->validate([
             'debut_periode' => 'required|date',
             'fin_periode' => 'required|date',
@@ -49,6 +65,14 @@ class UtilisationCarteController extends Controller
 
     public function index()
     {
+        // Seuls admin et user_mps peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_mps'
+        ) {
+            abort(403, 'Accès refusé');
+        }
+
         $utilisations = UtilisationCarte::orderBy('debut_periode', 'desc')->get()->groupBy('debut_periode');
         return view('utilisationcarte.index', compact('utilisations'));
     }

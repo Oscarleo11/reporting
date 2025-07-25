@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost:3306
--- Généré le : lun. 30 juin 2025 à 09:33
--- Version du serveur : 8.0.30
--- Version de PHP : 8.2.26
+-- Hôte : 127.0.0.1
+-- Généré le : ven. 25 juil. 2025 à 12:17
+-- Version du serveur : 10.4.32-MariaDB
+-- Version de PHP : 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,13 +28,13 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `acquisition_cartes` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `code_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tarif` bigint UNSIGNED NOT NULL,
-  `plafond_rechargement` bigint UNSIGNED NOT NULL,
-  `plafond_retrait_journalier` bigint UNSIGNED NOT NULL,
+  `code_type` varchar(255) NOT NULL,
+  `tarif` bigint(20) UNSIGNED NOT NULL,
+  `plafond_rechargement` bigint(20) UNSIGNED NOT NULL,
+  `plafond_retrait_journalier` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -44,13 +44,8 @@ CREATE TABLE `acquisition_cartes` (
 --
 
 INSERT INTO `acquisition_cartes` (`id`, `debut_periode`, `fin_periode`, `code_type`, `tarif`, `plafond_rechargement`, `plafond_retrait_journalier`, `created_at`, `updated_at`) VALUES
-(5, '2023-01-01', '2023-06-30', 'FCARTE_1_T2', 20000, 2000000, 400000, '2025-06-03 20:23:28', '2025-06-03 20:23:28'),
-(6, '2023-01-01', '2023-06-30', 'FCARTE_3_T2', 20000, 2000000, 400000, '2025-06-03 20:23:28', '2025-06-03 20:23:28'),
 (7, '2025-06-01', '2025-06-30', 'FCARTE_1_T2', 500, 10000, 900, '2025-06-10 08:10:50', '2025-06-10 08:10:50'),
-(8, '2025-06-01', '2025-06-30', 'FCARTE_1_T1', 600, 1200, 1000, '2025-06-10 08:10:50', '2025-06-10 08:10:50'),
-(9, '2023-01-01', '2023-08-30', 'FCARTE_3_T2', 2000, 5000000, 200000, '2025-06-26 06:44:04', '2025-06-26 06:44:04'),
-(10, '2023-01-01', '2023-08-30', 'FCARTE_2_T1', 4500, 5000000, 500000, '2025-06-26 06:44:04', '2025-06-26 06:44:04'),
-(11, '2024-01-01', '2024-06-03', 'FCARTE_3_T2', 30400, 20000000000000, 200000, '2025-06-26 06:48:02', '2025-06-26 06:48:02');
+(8, '2025-06-01', '2025-06-30', 'FCARTE_1_T1', 600, 1200, 1000, '2025-06-10 08:10:50', '2025-06-10 08:10:50');
 
 -- --------------------------------------------------------
 
@@ -59,31 +54,22 @@ INSERT INTO `acquisition_cartes` (`id`, `debut_periode`, `fin_periode`, `code_ty
 --
 
 CREATE TABLE `annuaires_stras` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `nbsous_agents` int NOT NULL,
-  `nbpoints_service` int NOT NULL,
-  `nb_emission_intra` int NOT NULL,
-  `valeur_emission_intra` int NOT NULL,
-  `nb_emission_hors` int NOT NULL,
-  `valeur_emission_hors` int NOT NULL,
-  `nb_reception_intra` int NOT NULL,
-  `valeur_reception_intra` int NOT NULL,
-  `nb_reception_hors` int NOT NULL,
-  `valeur_reception_hors` int NOT NULL,
+  `nbsous_agents` int(11) NOT NULL,
+  `nbpoints_service` int(11) NOT NULL,
+  `nb_emission_intra` int(11) NOT NULL,
+  `valeur_emission_intra` int(11) NOT NULL,
+  `nb_emission_hors` int(11) NOT NULL,
+  `valeur_emission_hors` int(11) NOT NULL,
+  `nb_reception_intra` int(11) NOT NULL,
+  `valeur_reception_intra` int(11) NOT NULL,
+  `nb_reception_hors` int(11) NOT NULL,
+  `valeur_reception_hors` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `annuaires_stras`
---
-
-INSERT INTO `annuaires_stras` (`id`, `debut_periode`, `fin_periode`, `nbsous_agents`, `nbpoints_service`, `nb_emission_intra`, `valeur_emission_intra`, `nb_emission_hors`, `valeur_emission_hors`, `nb_reception_intra`, `valeur_reception_intra`, `nb_reception_hors`, `valeur_reception_hors`, `created_at`, `updated_at`) VALUES
-(1, '2023-01-01', '2023-03-30', 11214, 12087, 50, 34, 50, 60, 70, 10, 30, 60, '2025-06-08 13:02:57', '2025-06-08 13:02:57'),
-(3, '2023-01-01', '2023-06-30', 222, 22, 33, 0, 2, 0, 5, 0, 42, 0, '2025-06-16 13:19:41', '2025-06-16 13:19:41'),
-(15, '2024-01-01', '2024-01-31', 66, 66, 0, 0, 0, 0, 66, 0, 66, 0, '2025-06-26 10:26:48', '2025-06-26 10:26:48');
 
 -- --------------------------------------------------------
 
@@ -92,29 +78,19 @@ INSERT INTO `annuaires_stras` (`id`, `debut_periode`, `fin_periode`, `nbsous_age
 --
 
 CREATE TABLE `annuaire_services` (
-  `id` bigint UNSIGNED NOT NULL,
-  `annuaire_stra_id` bigint UNSIGNED NOT NULL,
-  `operateur` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code_service` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description_service` text COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `annuaire_stra_id` bigint(20) UNSIGNED NOT NULL,
+  `operateur` varchar(255) NOT NULL,
+  `code_service` varchar(255) NOT NULL,
+  `description_service` text DEFAULT NULL,
   `date_lancement` date DEFAULT NULL,
-  `perimetre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mecanisme_compensation_reglement` text COLLATE utf8mb4_unicode_ci,
-  `nbsous_agents` int NOT NULL DEFAULT '0',
-  `nbpoints_service` int NOT NULL DEFAULT '0',
+  `perimetre` varchar(255) DEFAULT NULL,
+  `mecanisme_compensation_reglement` text DEFAULT NULL,
+  `nbsous_agents` int(11) NOT NULL DEFAULT 0,
+  `nbpoints_service` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `annuaire_services`
---
-
-INSERT INTO `annuaire_services` (`id`, `annuaire_stra_id`, `operateur`, `code_service`, `description_service`, `date_lancement`, `perimetre`, `mecanisme_compensation_reglement`, `nbsous_agents`, `nbpoints_service`, `created_at`, `updated_at`) VALUES
-(1, 1, 'MOGR', 'STRA_MOGR', 'Transfert d\'argent vers presque tous les pays du monde en agence', '2021-01-01', 'INTRA_ET_HORS_UEMOA', 'Compensation via SICA-UEMOA et règlement à travers STAR-UEMOA', 4333, 5750, '2025-06-08 13:02:57', '2025-06-08 13:02:57'),
-(2, 1, 'ETABLISSEMENT', 'STRA_RAPTR', 'Transfert d\'argent vers presque tous les pays du monde en agence', '2021-01-01', 'INTRA_UEMOA', 'Compensation et règlement à travers RTGS', 6881, 6337, '2025-06-08 13:02:57', '2025-06-08 13:02:57'),
-(4, 3, 'TTTTTT', 'STRA_RAPTR', 'Transfert d\'argent vers presque tous les pays du monde en agence', '2023-03-03', 'INTRA_ET_HORS_UEMOA', 'Compensation via SICA-UEMOA et règlement à travers STAR-UEMOA', 222, 22, '2025-06-16 13:19:41', '2025-06-16 13:19:41'),
-(5, 15, 'ETABLISSEMENT', 'STRA_WEUN', 'Transfert d\'argent vers presque tous les pays du monde en agence', '2023-01-20', 'INTRA_ET_HORS_UEMOA', 'Compensation via SICA-UEMOA et règlement à travers STAR-UEMOA', 66, 66, '2025-06-26 10:26:48', '2025-06-26 10:26:48');
 
 -- --------------------------------------------------------
 
@@ -123,29 +99,18 @@ INSERT INTO `annuaire_services` (`id`, `annuaire_stra_id`, `operateur`, `code_se
 --
 
 CREATE TABLE `annuaire_transactions` (
-  `id` bigint UNSIGNED NOT NULL,
-  `annuaire_service_id` bigint UNSIGNED NOT NULL,
-  `type_transaction` enum('emission','reception') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mode_envoi` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mode_reception` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nb_intra` int NOT NULL DEFAULT '0',
-  `valeur_intra` bigint NOT NULL DEFAULT '0',
-  `nb_hors` int NOT NULL DEFAULT '0',
-  `valeur_hors` bigint NOT NULL DEFAULT '0',
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `annuaire_service_id` bigint(20) UNSIGNED NOT NULL,
+  `type_transaction` enum('emission','reception') NOT NULL,
+  `mode_envoi` varchar(255) DEFAULT NULL,
+  `mode_reception` varchar(255) DEFAULT NULL,
+  `nb_intra` int(11) NOT NULL DEFAULT 0,
+  `valeur_intra` bigint(20) NOT NULL DEFAULT 0,
+  `nb_hors` int(11) NOT NULL DEFAULT 0,
+  `valeur_hors` bigint(20) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `annuaire_transactions`
---
-
-INSERT INTO `annuaire_transactions` (`id`, `annuaire_service_id`, `type_transaction`, `mode_envoi`, `mode_reception`, `nb_intra`, `valeur_intra`, `nb_hors`, `valeur_hors`, `created_at`, `updated_at`) VALUES
-(1, 1, 'emission', 'APPLICATION_WEB', 'COMPTE_BANCAIRE', 25, 125, 25, 125, '2025-06-08 13:02:57', '2025-06-08 13:02:57'),
-(2, 2, 'emission', 'SOUS_AGENTS', 'ESPECE_GUICHET', 25, 125, 25, 125, '2025-06-08 13:02:57', '2025-06-08 13:02:57'),
-(5, 4, 'reception', 'APPLICATION_WEB', 'DS', 5, 444, 42, 43, '2025-06-16 13:19:41', '2025-06-16 13:19:41'),
-(6, 4, 'emission', '333', 'PORTE_MONNAIE_ELECTRONIQUE', 33, 22, 2, 33, '2025-06-16 13:19:41', '2025-06-16 13:19:41'),
-(7, 5, 'reception', NULL, 'COMPTE_BANCAIRE', 66, 66, 66, 66, '2025-06-26 10:26:48', '2025-06-26 10:26:48');
 
 -- --------------------------------------------------------
 
@@ -154,9 +119,9 @@ INSERT INTO `annuaire_transactions` (`id`, `annuaire_service_id`, `type_transact
 --
 
 CREATE TABLE `cache` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expiration` int NOT NULL
+  `key` varchar(255) NOT NULL,
+  `value` mediumtext NOT NULL,
+  `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -166,12 +131,20 @@ CREATE TABLE `cache` (
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
 ('reporting_cache_acalmy@gmail.com|127.0.0.1', 'i:1;', 1750951135),
 ('reporting_cache_acalmy@gmail.com|127.0.0.1:timer', 'i:1750951135;', 1750951135),
+('reporting_cache_akodogbo.franck@ubagroup.com|10.74.18.151', 'i:1;', 1751378447),
+('reporting_cache_akodogbo.franck@ubagroup.com|10.74.18.151:timer', 'i:1751378447;', 1751378447),
 ('reporting_cache_gilbert.afantohou@ubagroup.com|127.0.0.1', 'i:1;', 1750328932),
 ('reporting_cache_gilbert.afantohou@ubagroup.com|127.0.0.1:timer', 'i:1750328932;', 1750328932),
+('reporting_cache_jonh@gmail.com|127.0.0.1', 'i:2;', 1753223125),
+('reporting_cache_jonh@gmail.com|127.0.0.1:timer', 'i:1753223125;', 1753223125),
 ('reporting_cache_lo@gmail.com|127.0.0.1', 'i:1;', 1750333699),
 ('reporting_cache_lo@gmail.com|127.0.0.1:timer', 'i:1750333699;', 1750333699),
 ('reporting_cache_oscafolitse@gmail.com|127.0.0.1', 'i:1;', 1751269526),
-('reporting_cache_oscafolitse@gmail.com|127.0.0.1:timer', 'i:1751269526;', 1751269526);
+('reporting_cache_oscafolitse@gmail.com|127.0.0.1:timer', 'i:1751269526;', 1751269526),
+('reporting_cache_oscarfolitse@gmail.com|::1', 'i:1;', 1753358874),
+('reporting_cache_oscarfolitse@gmail.com|::1:timer', 'i:1753358874;', 1753358874),
+('reporting_cache_oscarfolitse@gmail.com|127.0.0.1', 'i:1;', 1753199022),
+('reporting_cache_oscarfolitse@gmail.com|127.0.0.1:timer', 'i:1753199022;', 1753199022);
 
 -- --------------------------------------------------------
 
@@ -180,9 +153,9 @@ INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
 --
 
 CREATE TABLE `cache_locks` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expiration` int NOT NULL
+  `key` varchar(255) NOT NULL,
+  `owner` varchar(255) NOT NULL,
+  `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -192,9 +165,9 @@ CREATE TABLE `cache_locks` (
 --
 
 CREATE TABLE `code_financiers` (
-  `id` bigint UNSIGNED NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `libelle` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -219,9 +192,9 @@ INSERT INTO `code_financiers` (`id`, `code`, `libelle`, `created_at`, `updated_a
 --
 
 CREATE TABLE `code_fraudes` (
-  `id` bigint UNSIGNED NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `libelle` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -259,9 +232,9 @@ INSERT INTO `code_fraudes` (`id`, `code`, `libelle`, `created_at`, `updated_at`)
 --
 
 CREATE TABLE `code_incidents` (
-  `id` bigint UNSIGNED NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `libelle` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -288,9 +261,9 @@ INSERT INTO `code_incidents` (`id`, `code`, `libelle`, `created_at`, `updated_at
 --
 
 CREATE TABLE `code_ratios` (
-  `id` bigint UNSIGNED NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `libelle` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -311,9 +284,9 @@ INSERT INTO `code_ratios` (`id`, `code`, `libelle`, `created_at`, `updated_at`) 
 --
 
 CREATE TABLE `code_service_financiers` (
-  `id` bigint UNSIGNED NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `libelle` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -463,30 +436,23 @@ INSERT INTO `code_service_financiers` (`id`, `code`, `libelle`, `created_at`, `u
 --
 
 CREATE TABLE `controle_encours` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `valeurinitiale` bigint NOT NULL,
-  `nouvelleemission` bigint NOT NULL,
-  `destructionmonnaie` bigint NOT NULL,
-  `valeurfinale` bigint NOT NULL,
-  `soldecomptecantonnement` bigint DEFAULT NULL,
-  `soldecomptabilite` bigint NOT NULL,
-  `ecartcantonnementvaleurfinale` bigint NOT NULL,
-  `ecartcomptabilitevaleurfinale` bigint NOT NULL,
-  `ecartcomptabilitecantonnement` bigint NOT NULL,
-  `nbtransaction` bigint NOT NULL,
-  `valeurtransaction` bigint NOT NULL,
+  `valeurinitiale` bigint(20) NOT NULL,
+  `nouvelleemission` bigint(20) NOT NULL,
+  `destructionmonnaie` bigint(20) NOT NULL,
+  `valeurfinale` bigint(20) NOT NULL,
+  `soldecomptecantonnement` bigint(20) DEFAULT NULL,
+  `soldecomptabilite` bigint(20) NOT NULL,
+  `ecartcantonnementvaleurfinale` bigint(20) NOT NULL,
+  `ecartcomptabilitevaleurfinale` bigint(20) NOT NULL,
+  `ecartcomptabilitecantonnement` bigint(20) NOT NULL,
+  `nbtransaction` bigint(20) NOT NULL,
+  `valeurtransaction` bigint(20) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `controle_encours`
---
-
-INSERT INTO `controle_encours` (`id`, `debut_periode`, `fin_periode`, `valeurinitiale`, `nouvelleemission`, `destructionmonnaie`, `valeurfinale`, `soldecomptecantonnement`, `soldecomptabilite`, `ecartcantonnementvaleurfinale`, `ecartcomptabilitevaleurfinale`, `ecartcomptabilitecantonnement`, `nbtransaction`, `valeurtransaction`, `created_at`, `updated_at`) VALUES
-(1, '2018-01-01', '2018-03-31', 3000000, 500000, 0, 3500000, 3450000, 3500000, -50000, 0, 50000, 15000000, 1000000, '2025-06-29 20:10:07', '2025-06-29 20:10:07');
 
 -- --------------------------------------------------------
 
@@ -495,25 +461,15 @@ INSERT INTO `controle_encours` (`id`, `debut_periode`, `fin_periode`, `valeurini
 --
 
 CREATE TABLE `declarationsfm` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `valeur` bigint DEFAULT NULL,
-  `details` text COLLATE utf8mb4_unicode_ci,
+  `code` varchar(255) NOT NULL,
+  `valeur` bigint(20) DEFAULT NULL,
+  `details` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `declarationsfm`
---
-
-INSERT INTO `declarationsfm` (`id`, `debut_periode`, `fin_periode`, `code`, `valeur`, `details`, `created_at`, `updated_at`) VALUES
-(1, '2018-01-01', '2018-03-31', 'SFM01_01', 150, 'xxxxxxxxxxxxxxxxxxxxxxxxxxx', '2025-06-29 15:24:27', '2025-06-29 15:24:27'),
-(2, '2018-01-01', '2018-03-31', 'SFM01_02', 1000, 'xxxxxxxxxxxxxxxxxxxxxxxxxxx', '2025-06-29 15:24:27', '2025-06-29 15:24:27'),
-(3, '2018-01-01', '2018-03-31', 'SFM02_01', 515, 'xxxxxxxxxxxxxxxxxxxxxxxxxxx', '2025-06-29 15:24:27', '2025-06-29 15:24:27'),
-(4, '2028-02-02', '2028-04-04', 'SFM04_03', 323, 'xxxxxxxxxxxxxxxxxxxxxxxxxxx', '2025-06-29 15:25:59', '2025-06-29 15:25:59');
 
 -- --------------------------------------------------------
 
@@ -522,14 +478,14 @@ INSERT INTO `declarationsfm` (`id`, `debut_periode`, `fin_periode`, `code`, `val
 --
 
 CREATE TABLE `declaration_fraudes` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nbtransaction` int NOT NULL,
-  `valeurtransaction` bigint NOT NULL,
-  `dispositifgestion` text COLLATE utf8mb4_unicode_ci,
+  `code` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `nbtransaction` int(11) NOT NULL,
+  `valeurtransaction` bigint(20) NOT NULL,
+  `dispositifgestion` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -539,9 +495,8 @@ CREATE TABLE `declaration_fraudes` (
 --
 
 INSERT INTO `declaration_fraudes` (`id`, `debut_periode`, `fin_periode`, `code`, `description`, `nbtransaction`, `valeurtransaction`, `dispositifgestion`, `created_at`, `updated_at`) VALUES
-(2, '2018-01-01', '2018-03-31', 'DFRA_1', '', 75, 7000000, 'Des actions de sensibilisation ont été menées à l\'endroit des clients', '2025-06-29 14:03:55', '2025-06-29 14:03:55'),
-(3, '2018-01-01', '2018-03-31', 'DFRA_8', '', 250, 6000000, 'Suspension du marchand concerné du réseau d\'acceptation]', '2025-06-29 14:03:55', '2025-06-29 14:03:55'),
-(4, '2018-01-01', '2018-03-31', 'DFRA_3', '', 100, 5000000, 'Des actions de sensibilisation ont été menées à l\'endroit des clients', '2025-06-29 14:03:55', '2025-06-29 14:03:55');
+(5, '2025-04-01', '2025-06-30', 'DFRA_5', '', 1, 9000000, 'Formation - sensibilisation- contrôle inopiné', '2025-07-03 08:51:56', '2025-07-03 08:51:56'),
+(8, '2025-04-01', '2025-06-30', 'DFRA_11', '', 2, 50000, 'Mise à jour vidéo surveillance -sensibilisation et formation', '2025-07-03 09:06:53', '2025-07-03 09:06:53');
 
 -- --------------------------------------------------------
 
@@ -550,12 +505,12 @@ INSERT INTO `declaration_fraudes` (`id`, `debut_periode`, `fin_periode`, `code`,
 --
 
 CREATE TABLE `declaration_incidents` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `elements_constitutifs` json DEFAULT NULL,
-  `incidents` json DEFAULT NULL,
-  `captures` json DEFAULT NULL,
+  `elements_constitutifs` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`elements_constitutifs`)),
+  `incidents` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`incidents`)),
+  `captures` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`captures`)),
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -565,7 +520,7 @@ CREATE TABLE `declaration_incidents` (
 --
 
 INSERT INTO `declaration_incidents` (`id`, `debut_periode`, `fin_periode`, `elements_constitutifs`, `incidents`, `captures`, `created_at`, `updated_at`) VALUES
-(1, '2018-01-01', '2018-03-31', '[{\"code\": \"DINC_1\", \"valeur\": \"1\", \"intitule\": \"Nombre d\'incidents constatés (1)\"}, {\"code\": \"DINC_2\", \"valeur\": \"1\", \"intitule\": \"Durée moyenne de résolution des incidents en heure\"}]', '[{\"nombre\": \"25\", \"descriptif\": \"Fiche descriptive des incidents\", \"mesureprise\": \"Fiche des motifs de capture\"}, {\"nombre\": \"34\", \"descriptif\": \"Dysfonctionnement du GAB\", \"mesureprise\": \"Maintenance du système\"}]', '[{\"motif\": \"Indisponibilité du réseau\", \"nombre\": \"65\", \"mesureprise\": \"Dysfonctionnement du GAB\"}, {\"motif\": \"Éléments constitutifs\", \"nombre\": \"23\", \"mesureprise\": \"Dysfonctionnement du GAB\"}]', '2025-06-29 17:03:22', '2025-06-29 17:03:22');
+(2, '2001-01-01', '2001-06-30', '[{\"code\":\"DINC_5\",\"intitule\":\"Nombre de cartes captur\\u00e9es (2)\",\"valeur\":\"3\"}]', '[{\"nombre\":\"3\",\"descriptif\":\"Fiche descriptive des incidents\",\"mesureprise\":\"Fiche des motifs de capture\"}]', '[{\"nombre\":\"2\",\"motif\":\"Indisponibilit\\u00e9 du r\\u00e9seau\",\"mesureprise\":\"Dysfonctionnement du GAB\"}]', '2025-07-22 22:03:27', '2025-07-22 22:03:27');
 
 -- --------------------------------------------------------
 
@@ -574,11 +529,11 @@ INSERT INTO `declaration_incidents` (`id`, `debut_periode`, `fin_periode`, `elem
 --
 
 CREATE TABLE `declaration_ratios` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `intitule` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `intitule` varchar(255) NOT NULL,
   `taux` decimal(8,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -600,14 +555,14 @@ INSERT INTO `declaration_ratios` (`id`, `debut_periode`, `fin_periode`, `code`, 
 --
 
 CREATE TABLE `declaration_reclamations` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `nbenregistre` int NOT NULL,
-  `nbtraite` int NOT NULL,
-  `detail_nbenregistre` int NOT NULL,
-  `detail_nbtraite` int NOT NULL,
-  `motif` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nbenregistre` int(11) NOT NULL,
+  `nbtraite` int(11) NOT NULL,
+  `detail_nbenregistre` int(11) NOT NULL,
+  `detail_nbtraite` int(11) NOT NULL,
+  `motif` text NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -617,7 +572,6 @@ CREATE TABLE `declaration_reclamations` (
 --
 
 INSERT INTO `declaration_reclamations` (`id`, `debut_periode`, `fin_periode`, `nbenregistre`, `nbtraite`, `detail_nbenregistre`, `detail_nbtraite`, `motif`, `created_at`, `updated_at`) VALUES
-(1, '2018-01-01', '2018-03-31', 75, 40, 45, 10, 'Motif de la reclamation...', '2025-06-29 19:36:10', '2025-06-29 19:36:10'),
 (2, '2018-01-01', '2018-03-31', 75, 40, 30, 30, 'Motif de la reclamation...', '2025-06-29 19:36:10', '2025-06-29 19:36:10');
 
 -- --------------------------------------------------------
@@ -627,11 +581,11 @@ INSERT INTO `declaration_reclamations` (`id`, `debut_periode`, `fin_periode`, `n
 --
 
 CREATE TABLE `details_risques_stras` (
-  `id` bigint UNSIGNED NOT NULL,
-  `risque_stra_id` bigint UNSIGNED NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `risque` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mecanisme_maitrise` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `risque_stra_id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `risque` text NOT NULL,
+  `mecanisme_maitrise` text NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -654,17 +608,17 @@ INSERT INTO `details_risques_stras` (`id`, `risque_stra_id`, `code`, `risque`, `
 --
 
 CREATE TABLE `ecosystemes` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `nbsous_agents` int NOT NULL,
-  `nbpoints_service` int NOT NULL,
-  `modalite_controle_sousagents` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `service_offert` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description_service` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `operateur` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pays_operateur` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `perimetre_partenariat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nbsous_agents` int(11) NOT NULL,
+  `nbpoints_service` int(11) NOT NULL,
+  `modalite_controle_sousagents` text NOT NULL,
+  `service_offert` varchar(255) NOT NULL,
+  `description_service` text NOT NULL,
+  `operateur` varchar(255) NOT NULL,
+  `pays_operateur` varchar(255) NOT NULL,
+  `perimetre_partenariat` varchar(255) NOT NULL,
   `debut_partenariat` date NOT NULL,
   `fin_partenariat` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -676,9 +630,6 @@ CREATE TABLE `ecosystemes` (
 --
 
 INSERT INTO `ecosystemes` (`id`, `debut_periode`, `fin_periode`, `nbsous_agents`, `nbpoints_service`, `modalite_controle_sousagents`, `service_offert`, `description_service`, `operateur`, `pays_operateur`, `perimetre_partenariat`, `debut_partenariat`, `fin_partenariat`, `created_at`, `updated_at`) VALUES
-(1, '2023-01-01', '2023-01-31', 5, 50, 'Contrôle sur place de l’activité. Transmission mensuelle des reporting par les sous agents', 'STRA_MOGR', 'MoneyGram fournit des services de transfert d\'argent et d\'autres services financiers dans le monde entier avec des plateformes numériques et des points de vente.', 'MOGR', 'US', 'INTRA_ET_HORS_UEMOA', '2021-02-01', NULL, '2025-06-13 06:45:48', '2025-06-13 06:45:48'),
-(2, '2023-01-01', '2023-01-31', 5, 50, 'Contrôle sur place de l’activité. Transmission mensuelle des reporting par les sous agents', 'STRA_MOCA', 'Services de transfert d\'argent.', 'MOGR', 'US', 'INTRA_ET_HORS_UEMOA', '2018-04-01', '2022-06-11', '2025-06-13 06:45:48', '2025-06-13 06:45:48'),
-(3, '2024-01-01', '2024-06-30', 22, 34, 'service_offert', 'STRA_MOGR', 'Aucune compensation possible...', 'MOGR', 'US', 'INTRA_ET_HORS_UEMOA', '2024-02-02', '2024-04-04', '2025-06-26 07:23:31', '2025-06-26 07:23:31'),
 (4, '2025-01-01', '2025-06-30', 44, 457, 'perimetre_partenariat', 'RIA', 'Aucune compensation possible CHACAL', 'ETABLISSEMENT', 'BJ', 'INTRA_ET_HORS_UEMOA', '2025-02-02', '2025-03-03', '2025-06-26 07:25:40', '2025-06-26 07:25:40');
 
 -- --------------------------------------------------------
@@ -688,14 +639,14 @@ INSERT INTO `ecosystemes` (`id`, `debut_periode`, `fin_periode`, `nbsous_agents`
 --
 
 CREATE TABLE `emission_cartes` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `totalcarte` int NOT NULL,
-  `codefamille` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `codetype` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nbcarte` int NOT NULL,
+  `totalcarte` int(11) NOT NULL,
+  `codefamille` varchar(255) NOT NULL,
+  `codetype` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `nbcarte` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -717,25 +668,17 @@ INSERT INTO `emission_cartes` (`id`, `debut_periode`, `fin_periode`, `totalcarte
 --
 
 CREATE TABLE `explication_ecarts` (
-  `id` bigint UNSIGNED NOT NULL,
-  `controle_encours_id` bigint UNSIGNED NOT NULL,
-  `type_ecart` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `controle_encours_id` bigint(20) UNSIGNED NOT NULL,
+  `type_ecart` varchar(255) NOT NULL,
   `dateoperation` date NOT NULL,
-  `reference` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `natureoperation` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `montant` bigint NOT NULL,
-  `observations` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `reference` varchar(255) NOT NULL,
+  `natureoperation` varchar(255) NOT NULL,
+  `montant` bigint(20) NOT NULL,
+  `observations` text NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `explication_ecarts`
---
-
-INSERT INTO `explication_ecarts` (`id`, `controle_encours_id`, `type_ecart`, `dateoperation`, `reference`, `natureoperation`, `montant`, `observations`, `created_at`, `updated_at`) VALUES
-(1, 1, 'ecartcantonnementvaleurfinale', '2018-07-03', 'AAAAAAAA', 'Opération de dépôt', 50000, 'Ecart lié à la date de valeur au niveau de la banque', '2025-06-29 20:10:07', '2025-06-29 20:10:07'),
-(2, 1, 'ecartcomptabilitecantonnement', '2018-07-03', 'AAAAAAAA', 'Opération de dépôt', 15000, 'Ecart lié à la date de valeur au niveau de la banque', '2025-06-29 20:10:07', '2025-06-29 20:10:07');
 
 -- --------------------------------------------------------
 
@@ -744,13 +687,13 @@ INSERT INTO `explication_ecarts` (`id`, `controle_encours_id`, `type_ecart`, `da
 --
 
 CREATE TABLE `failed_jobs` (
-  `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(255) NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -760,9 +703,9 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `famille_cartes` (
-  `id` bigint UNSIGNED NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -818,9 +761,9 @@ INSERT INTO `famille_cartes` (`id`, `code`, `libelle`, `created_at`, `updated_at
 --
 
 CREATE TABLE `famille_cheques` (
-  `id` bigint UNSIGNED NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -857,9 +800,9 @@ INSERT INTO `famille_cheques` (`id`, `code`, `libelle`, `created_at`, `updated_a
 --
 
 CREATE TABLE `famille_cheque_cartes` (
-  `id` bigint UNSIGNED NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -897,19 +840,19 @@ INSERT INTO `famille_cheque_cartes` (`id`, `code`, `libelle`, `created_at`, `upd
 --
 
 CREATE TABLE `fraudestras` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `fraude` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `service` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nb_fraude` int NOT NULL,
-  `valeur_fraude` bigint NOT NULL,
-  `mesures_correctives` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mode_operatoire` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fraude` varchar(255) NOT NULL,
+  `service` varchar(255) NOT NULL,
+  `nb_fraude` int(11) NOT NULL,
+  `valeur_fraude` bigint(20) NOT NULL,
+  `mesures_correctives` text NOT NULL,
+  `mode_operatoire` text NOT NULL,
   `debut_fraude` date NOT NULL,
   `fin_fraude` date NOT NULL,
-  `total_fraude` int NOT NULL,
-  `total_valeur_fraude` bigint NOT NULL,
+  `total_fraude` int(11) NOT NULL,
+  `total_valeur_fraude` bigint(20) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -930,19 +873,19 @@ INSERT INTO `fraudestras` (`id`, `debut_periode`, `fin_periode`, `fraude`, `serv
 --
 
 CREATE TABLE `fraude_cheque_cartes` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `codecheque` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `codecheque` varchar(255) NOT NULL,
   `datefraude` date NOT NULL,
-  `libellefraude` text COLLATE utf8mb4_unicode_ci,
-  `mesurescorrectives` text COLLATE utf8mb4_unicode_ci,
-  `modeoperatoire` text COLLATE utf8mb4_unicode_ci,
-  `nbfraude` int NOT NULL,
-  `valeurcfa` bigint NOT NULL,
-  `totalfraude` int NOT NULL,
-  `totalvaleurcfa` bigint NOT NULL,
+  `libellefraude` text DEFAULT NULL,
+  `mesurescorrectives` text DEFAULT NULL,
+  `modeoperatoire` text DEFAULT NULL,
+  `nbfraude` int(11) NOT NULL,
+  `valeurcfa` bigint(20) NOT NULL,
+  `totalfraude` int(11) NOT NULL,
+  `totalvaleurcfa` bigint(20) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -963,8 +906,8 @@ INSERT INTO `fraude_cheque_cartes` (`id`, `debut_periode`, `fin_periode`, `type`
 --
 
 CREATE TABLE `fraude_codes` (
-  `id` bigint UNSIGNED NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1017,34 +960,25 @@ INSERT INTO `fraude_codes` (`id`, `code`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `incident_cheque_cartes` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) NOT NULL,
   `dateincident` date NOT NULL,
-  `libelleincident` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `risque` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nboccurrence` int NOT NULL,
-  `descriptiondetaillee` text COLLATE utf8mb4_unicode_ci,
-  `mesurescorrectives` text COLLATE utf8mb4_unicode_ci,
-  `impactfinancier` bigint NOT NULL,
-  `statutincident` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `libelleincident` varchar(255) NOT NULL,
+  `risque` varchar(255) DEFAULT NULL,
+  `nboccurrence` int(11) NOT NULL,
+  `descriptiondetaillee` text DEFAULT NULL,
+  `mesurescorrectives` text DEFAULT NULL,
+  `impactfinancier` bigint(20) NOT NULL,
+  `statutincident` varchar(255) NOT NULL,
   `datecloture` date DEFAULT NULL,
-  `infoscomplementaires` text COLLATE utf8mb4_unicode_ci,
-  `totalincidents` int NOT NULL,
-  `totalimpactfinancier` bigint NOT NULL,
+  `infoscomplementaires` text DEFAULT NULL,
+  `totalincidents` int(11) NOT NULL,
+  `totalimpactfinancier` bigint(20) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `incident_cheque_cartes`
---
-
-INSERT INTO `incident_cheque_cartes` (`id`, `debut_periode`, `fin_periode`, `type`, `dateincident`, `libelleincident`, `risque`, `nboccurrence`, `descriptiondetaillee`, `mesurescorrectives`, `impactfinancier`, `statutincident`, `datecloture`, `infoscomplementaires`, `totalincidents`, `totalimpactfinancier`, `created_at`, `updated_at`) VALUES
-(4, '2023-01-01', '2023-06-30', 'CARTE', '2023-04-01', 'Vol de cartes', 'financier', 3, 'La carte du client a été volée', 'carte bloquée', 500, 'T', '2023-04-03', 'Pas d\'informations particulières', 10, 7000, '2025-06-04 09:54:37', '2025-06-04 09:54:37'),
-(5, '2023-01-01', '2023-06-30', 'CHEQUE', '2023-04-01', 'Refus de paiement de chèques pour défaut ou insuffisance de provision', 'financier', 6, 'Le client n\'a pas assez de fonds pour l\'opération.', 'Le client a été invité à approvisionner le compte.', 1500, 'P', '2023-04-06', 'Pas d\'informations particulières', 10, 7000, '2025-06-04 09:54:37', '2025-06-04 09:54:37'),
-(6, '2023-01-01', '2023-06-30', 'CHEQUE', '2023-04-01', 'Infraction aux interdictions bancaires et judiciaires', 'juridique', 1, 'émission de plusieurs chèques sans provision', 'inscrire sur le Fichier Central des Chèques', 5000, 'N', '2023-04-02', 'Pas d\'informations particulières', 10, 7000, '2025-06-04 09:54:37', '2025-06-04 09:54:37');
 
 -- --------------------------------------------------------
 
@@ -1053,29 +987,18 @@ INSERT INTO `incident_cheque_cartes` (`id`, `debut_periode`, `fin_periode`, `typ
 --
 
 CREATE TABLE `incident_paiement_cartes` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nbcarte` int NOT NULL,
-  `valeurcfa` bigint DEFAULT NULL,
-  `totalnombre` int NOT NULL,
-  `totalvaleurcfa` bigint DEFAULT NULL,
+  `code` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `nbcarte` int(11) NOT NULL,
+  `valeurcfa` bigint(20) DEFAULT NULL,
+  `totalnombre` int(11) NOT NULL,
+  `totalvaleurcfa` bigint(20) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `incident_paiement_cartes`
---
-
-INSERT INTO `incident_paiement_cartes` (`id`, `debut_periode`, `fin_periode`, `code`, `description`, `nbcarte`, `valeurcfa`, `totalnombre`, `totalvaleurcfa`, `created_at`, `updated_at`) VALUES
-(1, '2023-01-01', '2023-06-30', 'IPCARTE_3', 'Perte de cartes', 4, 4, 27, 20, '2025-06-04 11:40:41', '2025-06-04 11:40:41'),
-(2, '2023-01-01', '2023-06-30', 'IPCARTE_4', 'Cartes capturées', 8, NULL, 27, 20, '2025-06-04 11:40:41', '2025-06-04 11:40:41'),
-(3, '2023-01-01', '2023-06-30', 'IPCARTE_2', 'Vol de cartes', 3, 4, 27, 20, '2025-06-04 11:40:41', '2025-06-04 11:40:41'),
-(4, '2023-01-01', '2023-06-30', 'IPCARTE_5', 'Cartes en opposition', 8, 8, 27, 20, '2025-06-04 11:40:41', '2025-06-04 11:40:41'),
-(5, '2023-01-01', '2023-06-30', 'IPCARTE_6', 'Autres à préciser', 4, 4, 27, 20, '2025-06-04 11:40:41', '2025-06-04 11:40:41');
 
 -- --------------------------------------------------------
 
@@ -1084,15 +1007,15 @@ INSERT INTO `incident_paiement_cartes` (`id`, `debut_periode`, `fin_periode`, `c
 --
 
 CREATE TABLE `incident_paiement_cheques` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nbcheque` int NOT NULL,
-  `valeurcfa` bigint DEFAULT NULL,
-  `totalnombre` int NOT NULL,
-  `totalvaleurcfa` bigint DEFAULT NULL,
+  `code` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `nbcheque` int(11) NOT NULL,
+  `valeurcfa` bigint(20) DEFAULT NULL,
+  `totalnombre` int(11) NOT NULL,
+  `totalvaleurcfa` bigint(20) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1109,7 +1032,8 @@ INSERT INTO `incident_paiement_cheques` (`id`, `debut_periode`, `fin_periode`, `
 (5, '2023-01-01', '2023-06-30', 'IPCHEQUE_5', 'Oppositions pour perte ou vol de formules de chèques', 2, 8, 19, 21, '2025-06-04 20:24:46', '2025-06-04 20:24:46'),
 (6, '2023-01-01', '2023-06-30', 'IPCHEQUE_8', 'Levées des interdictions bancaires d\'émettre des chèques', 1, NULL, 19, 21, '2025-06-04 20:24:46', '2025-06-04 20:24:46'),
 (7, '2023-01-01', '2023-06-30', 'IPCHEQUE_6', 'Formules de faux chèques et/ou chèques falsifiés', 3, NULL, 19, 21, '2025-06-04 20:24:46', '2025-06-04 20:24:46'),
-(8, '2023-01-01', '2023-06-30', 'IPCHEQUE_7', 'Régularisation d\'incidents de paiement sur chèque', 1, 8, 19, 21, '2025-06-04 20:24:46', '2025-06-04 20:24:46');
+(8, '2023-01-01', '2023-06-30', 'IPCHEQUE_7', 'Régularisation d\'incidents de paiement sur chèque', 1, 8, 19, 21, '2025-06-04 20:24:46', '2025-06-04 20:24:46'),
+(9, '2025-01-01', '2025-06-30', 'IPCHEQUE_1', 'REFUS DE PAIEMENT POUR DEFAUT OU INSUFFISANCE DE PAIEMENT', 136, 395790796, 136, 395790796, '2025-07-03 08:26:15', '2025-07-03 08:26:15');
 
 -- --------------------------------------------------------
 
@@ -1118,25 +1042,25 @@ INSERT INTO `incident_paiement_cheques` (`id`, `debut_periode`, `fin_periode`, `
 --
 
 CREATE TABLE `incident_stras` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `plateformetechnique` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `risque` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `plateformetechnique` varchar(255) NOT NULL,
+  `risque` varchar(255) NOT NULL,
   `dateincident` date NOT NULL,
-  `libelleincident` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nboccurrence` int NOT NULL,
-  `descriptiondetaillee` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mesurescorrectives` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `impactfinancier` bigint DEFAULT NULL,
-  `statutincident` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `libelleincident` varchar(255) NOT NULL,
+  `nboccurrence` int(11) NOT NULL,
+  `descriptiondetaillee` text NOT NULL,
+  `mesurescorrectives` text NOT NULL,
+  `impactfinancier` bigint(20) DEFAULT NULL,
+  `statutincident` varchar(255) NOT NULL,
   `datecloture` date DEFAULT NULL,
-  `naturedeclaration` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `reference` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `naturedeclaration` varchar(255) DEFAULT NULL,
+  `reference` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `totalincidents` int DEFAULT NULL,
-  `totalimpactfinancier` bigint DEFAULT NULL
+  `totalincidents` int(11) DEFAULT NULL,
+  `totalimpactfinancier` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1154,12 +1078,12 @@ INSERT INTO `incident_stras` (`id`, `debut_periode`, `fin_periode`, `plateformet
 --
 
 CREATE TABLE `indicateur_financiers` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `intitule` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `valeur` bigint NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `intitule` varchar(255) NOT NULL,
+  `valeur` bigint(20) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1182,13 +1106,13 @@ INSERT INTO `indicateur_financiers` (`id`, `debut_periode`, `fin_periode`, `code
 --
 
 CREATE TABLE `jobs` (
-  `id` bigint UNSIGNED NOT NULL,
-  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `attempts` tinyint UNSIGNED NOT NULL,
-  `reserved_at` int UNSIGNED DEFAULT NULL,
-  `available_at` int UNSIGNED NOT NULL,
-  `created_at` int UNSIGNED NOT NULL
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `queue` varchar(255) NOT NULL,
+  `payload` longtext NOT NULL,
+  `attempts` tinyint(3) UNSIGNED NOT NULL,
+  `reserved_at` int(10) UNSIGNED DEFAULT NULL,
+  `available_at` int(10) UNSIGNED NOT NULL,
+  `created_at` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1198,16 +1122,16 @@ CREATE TABLE `jobs` (
 --
 
 CREATE TABLE `job_batches` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `total_jobs` int NOT NULL,
-  `pending_jobs` int NOT NULL,
-  `failed_jobs` int NOT NULL,
-  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `options` mediumtext COLLATE utf8mb4_unicode_ci,
-  `cancelled_at` int DEFAULT NULL,
-  `created_at` int NOT NULL,
-  `finished_at` int DEFAULT NULL
+  `id` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `total_jobs` int(11) NOT NULL,
+  `pending_jobs` int(11) NOT NULL,
+  `failed_jobs` int(11) NOT NULL,
+  `failed_job_ids` longtext NOT NULL,
+  `options` mediumtext DEFAULT NULL,
+  `cancelled_at` int(11) DEFAULT NULL,
+  `created_at` int(11) NOT NULL,
+  `finished_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1217,9 +1141,9 @@ CREATE TABLE `job_batches` (
 --
 
 CREATE TABLE `migrations` (
-  `id` int UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int NOT NULL
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) NOT NULL,
+  `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1286,7 +1210,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (57, '2025_06_29_203907_create_controle_encours_table', 46),
 (58, '2025_06_29_205021_create_solde_compte_cantonnements_table', 46),
 (59, '2025_06_29_205049_create_explication_ecarts_table', 46),
-(60, '2025_06_29_211352_create_placement_financiers_table', 47);
+(60, '2025_06_29_211352_create_placement_financiers_table', 47),
+(61, '2025_07_22_132223_add_formulaires_autorises_to_users_table', 48);
 
 -- --------------------------------------------------------
 
@@ -1295,9 +1220,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `modes_envoi` (
-  `id` bigint UNSIGNED NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `libelle` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1307,9 +1232,9 @@ CREATE TABLE `modes_envoi` (
 --
 
 CREATE TABLE `modes_reception` (
-  `id` bigint UNSIGNED NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `libelle` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1319,8 +1244,8 @@ CREATE TABLE `modes_reception` (
 --
 
 CREATE TABLE `motifs` (
-  `id` bigint UNSIGNED NOT NULL,
-  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `libelle` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1342,9 +1267,9 @@ INSERT INTO `motifs` (`id`, `libelle`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `operateurs` (
-  `id` bigint UNSIGNED NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `libelle` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1365,20 +1290,20 @@ INSERT INTO `operateurs` (`id`, `code`, `libelle`, `created_at`, `updated_at`) V
 --
 
 CREATE TABLE `operationstras` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `service` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pays` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `motif` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nb_transaction_emission` int NOT NULL,
-  `valeur_transaction_emission` bigint NOT NULL,
-  `nb_transaction_reception` int NOT NULL,
-  `valeur_transaction_reception` bigint NOT NULL,
-  `total_nb_emission` int NOT NULL,
-  `total_valeur_emission` bigint NOT NULL,
-  `total_nb_reception` int NOT NULL,
-  `total_valeur_reception` bigint NOT NULL,
+  `service` varchar(255) NOT NULL,
+  `pays` varchar(255) NOT NULL,
+  `motif` varchar(255) NOT NULL,
+  `nb_transaction_emission` int(11) NOT NULL,
+  `valeur_transaction_emission` bigint(20) NOT NULL,
+  `nb_transaction_reception` int(11) NOT NULL,
+  `valeur_transaction_reception` bigint(20) NOT NULL,
+  `total_nb_emission` int(11) NOT NULL,
+  `total_valeur_emission` bigint(20) NOT NULL,
+  `total_nb_reception` int(11) NOT NULL,
+  `total_valeur_reception` bigint(20) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1391,7 +1316,8 @@ INSERT INTO `operationstras` (`id`, `debut_periode`, `fin_periode`, `service`, `
 (1, '2023-12-01', '2023-12-31', 'STRA_WEUN', 'SN', 'ASSISTANCE_FAMILIALE', 10, 10, 10, 10, 20, 30, 25, 30, '2025-06-13 08:31:50', '2025-06-13 08:31:50'),
 (2, '2023-12-01', '2023-12-31', 'STRA_WEUN', 'SN', 'AIDE_SCOLAIRE', 5, 10, 10, 10, 20, 30, 25, 30, '2025-06-13 08:31:50', '2025-06-13 08:31:50'),
 (3, '2023-12-01', '2023-12-31', 'RIA', 'BJ', 'ACQUISITION_IMMOBILIERE_FONCIERE', 5, 10, 5, 10, 20, 30, 25, 30, '2025-06-13 08:31:50', '2025-06-13 08:31:50'),
-(4, '2025-01-01', '2025-12-01', 'STRA_WEUN', 'BJ', 'ASSISTANCE_FAMILIALE', 34, 340005, 45, 650000, 34, 340005, 45, 650000, '2025-06-26 08:15:10', '2025-06-26 08:15:10');
+(4, '2025-01-01', '2025-12-01', 'STRA_WEUN', 'BJ', 'ASSISTANCE_FAMILIALE', 34, 340005, 45, 650000, 34, 340005, 45, 650000, '2025-06-26 08:15:10', '2025-06-26 08:15:10'),
+(5, '2001-01-01', '2001-06-30', 'STRA_MOGR', 'NG', 'AIDE_SCOLAIRE', 23, 200000, 3, 3232323, 23, 200000, 3, 3232323, '2025-07-22 22:22:37', '2025-07-22 22:22:37');
 
 -- --------------------------------------------------------
 
@@ -1400,8 +1326,8 @@ INSERT INTO `operationstras` (`id`, `debut_periode`, `fin_periode`, `service`, `
 --
 
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -1412,8 +1338,8 @@ CREATE TABLE `password_reset_tokens` (
 --
 
 CREATE TABLE `pays_operateurs` (
-  `id` bigint UNSIGNED NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1435,8 +1361,8 @@ INSERT INTO `pays_operateurs` (`id`, `code`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `perimetre_partenariats` (
-  `id` bigint UNSIGNED NOT NULL,
-  `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nom` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1456,13 +1382,13 @@ INSERT INTO `perimetre_partenariats` (`id`, `nom`, `created_at`, `updated_at`) V
 --
 
 CREATE TABLE `placement_financiers` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `depotavue` bigint NOT NULL,
-  `depotaterme` bigint NOT NULL,
-  `titreacquis` bigint NOT NULL,
-  `total` bigint NOT NULL,
+  `depotavue` bigint(20) NOT NULL,
+  `depotaterme` bigint(20) NOT NULL,
+  `titreacquis` bigint(20) NOT NULL,
+  `total` bigint(20) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1481,8 +1407,8 @@ INSERT INTO `placement_financiers` (`id`, `debut_periode`, `fin_periode`, `depot
 --
 
 CREATE TABLE `plateforme_techniques` (
-  `id` bigint UNSIGNED NOT NULL,
-  `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nom` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1502,16 +1428,16 @@ INSERT INTO `plateforme_techniques` (`id`, `nom`, `created_at`, `updated_at`) VA
 --
 
 CREATE TABLE `reclamation_cheque_cartes` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `motif` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `etattraitement` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mesurescorrectives` text COLLATE utf8mb4_unicode_ci,
-  `nbre` int NOT NULL,
-  `totalcarte` int DEFAULT NULL,
-  `totalcheque` int DEFAULT NULL,
+  `type` varchar(255) NOT NULL,
+  `motif` varchar(255) NOT NULL,
+  `etattraitement` varchar(255) NOT NULL,
+  `mesurescorrectives` text DEFAULT NULL,
+  `nbre` int(11) NOT NULL,
+  `totalcarte` int(11) DEFAULT NULL,
+  `totalcheque` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1531,16 +1457,16 @@ INSERT INTO `reclamation_cheque_cartes` (`id`, `debut_periode`, `fin_periode`, `
 --
 
 CREATE TABLE `reclamation_stras` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `service` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nb_recu` int NOT NULL,
-  `nb_traite` int NOT NULL,
-  `motif_reclamation` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `procedure_traitement` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `total_recu` int DEFAULT NULL,
-  `total_traite` int DEFAULT NULL,
+  `service` varchar(255) NOT NULL,
+  `nb_recu` int(11) NOT NULL,
+  `nb_traite` int(11) NOT NULL,
+  `motif_reclamation` text NOT NULL,
+  `procedure_traitement` text NOT NULL,
+  `total_recu` int(11) DEFAULT NULL,
+  `total_traite` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1561,10 +1487,10 @@ INSERT INTO `reclamation_stras` (`id`, `debut_periode`, `fin_periode`, `service`
 --
 
 CREATE TABLE `risques_stras` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `nb_risque` int NOT NULL DEFAULT '0',
+  `nb_risque` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1586,9 +1512,9 @@ INSERT INTO `risques_stras` (`id`, `debut_periode`, `fin_periode`, `nb_risque`, 
 --
 
 CREATE TABLE `services` (
-  `id` bigint UNSIGNED NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `libelle` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1609,12 +1535,12 @@ INSERT INTO `services` (`id`, `code`, `libelle`) VALUES
 --
 
 CREATE TABLE `sessions` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` bigint UNSIGNED DEFAULT NULL,
-  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` text COLLATE utf8mb4_unicode_ci,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_activity` int NOT NULL
+  `id` varchar(255) NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `ip_address` varchar(45) DEFAULT NULL,
+  `user_agent` text DEFAULT NULL,
+  `payload` longtext NOT NULL,
+  `last_activity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1622,8 +1548,10 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('DPwUgKsU6EaxA9BeF80vAOIrHAaKIGvEHEazkzKX', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiMWQ4ZmtPa0wxRzZMcUlGVTRsM1ZpajVwVnA4c1U5bUVtN0wzc2FNeSI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQ3OiJodHRwOi8vcmVwb3J0aW5nLmxvY2FsL2RlY2xhcmF0aW9ucmF0aW9zL2NyZWF0ZSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', 1751269383),
-('qpqnsVbPf8K4YjHI573hezeUIFhwj5zMU67RjiBE', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 OPR/119.0.0.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiV2VwR3BzbVpLaGprbkNrV050ZmJaNXNBaWNBcVFFRWVpcTg4blEybiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly9yZXBvcnRpbmcubG9jYWwveG1sX2V4cG9ydHMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=', 1751275419);
+('8fDRLvMtl5LUSvM5964iSslkwYkOQOo8wHqiOe9u', 5, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoic0Nrcmk4a0JFbEowbThqcTh1S2VRSWdYTWZpdTFzRFRxZHdPRDdqbiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDA6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi91c2Vycy9jcmVhdGUiO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo1O30=', 1753226425),
+('KP8iPW5w9FpNP3PmKGP73mq1XMNFayBBwTkna6ha', 5, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiUmlMdUVxRk5tNHpDTk1vS0p0Smx3VGpIVHJ0TlVBWEN5TTVwMzFPaSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kYXNoYm9hcmQiO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo1O30=', 1753300201),
+('MGVYGOInhl0egfzghBaVanlNLh1DnC22ddNk1KFF', 5, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiaGM1TFg1bTFUeHNDYXN5akdHWFFDeGFpSXd5dHk3dzJhR3VWYTlmVSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTI6Imh0dHA6Ly9sb2NhbGhvc3QvcmVwb3J0aW5nL3B1YmxpYy9hZG1pbi91c2Vycy9jcmVhdGUiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo1O30=', 1753358841),
+('REZ2rEwcRNwUWO7gDlihm4eAvCPfvR90au11Abcy', 18, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiMWd2M1RVTEZ6U2JCMXRJZ2JqVVhESGFwUXJKS2hpSTllWHNyZ2tsNCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9jb250cm9sZWVuY291cnMvY3JlYXRlIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTg7fQ==', 1753227381);
 
 -- --------------------------------------------------------
 
@@ -1632,23 +1560,15 @@ INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, 
 --
 
 CREATE TABLE `solde_compte_cantonnements` (
-  `id` bigint UNSIGNED NOT NULL,
-  `controle_encours_id` bigint UNSIGNED NOT NULL,
-  `banque` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `numerocompte` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `intitulecompte` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `solde` bigint NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `controle_encours_id` bigint(20) UNSIGNED NOT NULL,
+  `banque` varchar(255) NOT NULL,
+  `numerocompte` varchar(255) NOT NULL,
+  `intitulecompte` varchar(255) NOT NULL,
+  `solde` bigint(20) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `solde_compte_cantonnements`
---
-
-INSERT INTO `solde_compte_cantonnements` (`id`, `controle_encours_id`, `banque`, `numerocompte`, `intitulecompte`, `solde`, `created_at`, `updated_at`) VALUES
-(1, 1, 'xxxxxxx', 'xxxxxxxxxxxxxxxxx', 'xxxxxxxxxxxxxxxxx', 2000000, '2025-06-29 20:10:07', '2025-06-29 20:10:07'),
-(2, 1, 'xxxxxxx', 'xxxxxxxxxxxxxxxxx', 'xxxxxxxxxxxxxxxxx', 1450000, '2025-06-29 20:10:07', '2025-06-29 20:10:07');
 
 -- --------------------------------------------------------
 
@@ -1657,12 +1577,12 @@ INSERT INTO `solde_compte_cantonnements` (`id`, `controle_encours_id`, `banque`,
 --
 
 CREATE TABLE `tarification_cheque_cartes` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `coutminimum` int NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `coutminimum` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1687,9 +1607,9 @@ INSERT INTO `tarification_cheque_cartes` (`id`, `debut_periode`, `fin_periode`, 
 --
 
 CREATE TABLE `type_cartes` (
-  `id` bigint UNSIGNED NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1702,7 +1622,8 @@ INSERT INTO `type_cartes` (`id`, `code`, `libelle`, `created_at`, `updated_at`) 
 (1, 'FCARTE_1_T2', 'Cartes adossées à un compte épargne', NULL, NULL),
 (3, 'FCARTE_3_T2', 'Cartes Mastercard', NULL, NULL),
 (7, 'FCARTE_1_T1', ' Cartes adossées à un compte courant', NULL, NULL),
-(8, 'FCARTE_2_T1', 'Cartes adossées à un compte de monnaie électronique', NULL, NULL);
+(8, 'FCARTE_2_T1', 'Cartes adossées à un compte de monnaie électronique', NULL, NULL),
+(10, 'FCARTE_3_T1', 'Cartes VISA', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1711,9 +1632,9 @@ INSERT INTO `type_cartes` (`id`, `code`, `libelle`, `created_at`, `updated_at`) 
 --
 
 CREATE TABLE `type_risque_stras` (
-  `id` bigint UNSIGNED NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `libelle` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1733,13 +1654,13 @@ INSERT INTO `type_risque_stras` (`id`, `code`, `libelle`, `created_at`, `updated
 --
 
 CREATE TABLE `typologie_cheques` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nbcheque` int NOT NULL,
-  `totalcheque` int NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `nbcheque` int(11) NOT NULL,
+  `totalcheque` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1760,25 +1681,39 @@ INSERT INTO `typologie_cheques` (`id`, `debut_periode`, `fin_periode`, `code`, `
 --
 
 CREATE TABLE `users` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `formulaires_autorises` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`formulaires_autorises`)),
+  `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'user'
+  `role` varchar(255) NOT NULL DEFAULT 'user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`) VALUES
-(1, 'OSCAR', 'oscarfolitse@gmail.com', NULL, '$2y$12$ntOQq6XBZqG1.o49eBynS.3XzdRt0/sGs4iULkzJFCOfwrpzbAdRO', NULL, '2025-06-02 13:05:30', '2025-06-18 13:11:21', 'admin'),
-(2, 'M. Gilbert', 'gilbert.afantohou@gmail.com', NULL, '$2y$12$w4wG.9C72pTJMX5a2XTS0.8YkNlXnHxaKklVP59whXr7yDTTquDwy', NULL, '2025-06-18 13:19:56', '2025-06-18 14:30:04', 'admin'),
-(5, 'Jonh Doe', 'jonh@gmail.com', NULL, '$2y$12$Ucir6EQI1hr8aJux3Lvil.wfklyrln5t2925yuVx9urARO7cB0Cx6', NULL, '2025-06-19 16:07:29', '2025-06-19 16:07:29', 'user');
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `formulaires_autorises`, `remember_token`, `created_at`, `updated_at`, `role`) VALUES
+(2, 'M. Gilbert', 'gilbert.afantohou@gmail.com', NULL, '$2y$12$w4wG.9C72pTJMX5a2XTS0.8YkNlXnHxaKklVP59whXr7yDTTquDwy', NULL, NULL, '2025-06-18 13:19:56', '2025-06-18 14:30:04', 'admin'),
+(5, 'John', 'john@gmail.com', NULL, '$2y$12$Ucir6EQI1hr8aJux3Lvil.wfklyrln5t2925yuVx9urARO7cB0Cx6', NULL, NULL, '2025-06-19 16:07:29', '2025-07-21 15:03:31', 'admin'),
+(6, 'Aline Ewassadja', 'Aline.Ewassadja@ubagroup.com', NULL, '$2y$12$efQX.9oFeJ779QRCWPU7te7CVQfzWg1MPfxbWJuXPpJ49SOJ2sGCG', NULL, NULL, '2025-07-01 06:09:16', '2025-07-01 06:09:16', 'user'),
+(7, 'Djigla Sandrine', 'djigla.sandrine@ubagroup.com', NULL, '$2y$12$dRXrGExsI9PVpmLMy85rdu18frCFE68HWa/rSPBazwkIC1unBewYK', NULL, NULL, '2025-07-01 06:10:12', '2025-07-01 06:10:12', 'user'),
+(8, 'Francine Avolonto', 'Francine.Avolonto@ubagroup.com', NULL, '$2y$12$5lDc2yzV7IUWWwv517zkCeEh3KJJH0sXyuET0321zmLFN.Dd1VlQO', NULL, NULL, '2025-07-01 06:11:20', '2025-07-01 06:11:20', 'user'),
+(9, 'Silas Aiko', 'silas.aiko@ubagroup.com', NULL, '$2y$12$LebkK49STvLf.saI3MYkV.OBvmjs0MZmf70z2aMokPx1gV9KzUqMu', NULL, 'F9s5ezEggr77214A7kRHysGRjgx1zKcvrlbcrDX0ij0KLy1VfkomhrvnsxLC', '2025-07-01 06:12:31', '2025-07-01 06:12:31', 'user'),
+(10, 'Ramatou Raimi', 'ramatou.raimi@ubagroup.com', NULL, '$2y$12$QbkxE4PobE2RM6epG6/DQe6e8Wnta0/S3325a/4AmLjccv8ao7Uia', NULL, NULL, '2025-07-01 06:16:51', '2025-07-01 06:16:51', 'user'),
+(11, 'Precilia Kogbalo', 'precilia.kogbalo@ubagroup.com', NULL, '$2y$12$KbUCkK1S4ASvr7P/afgWG.JIyN8MKTNGthzPe0LacxPA.WZztCK9O', NULL, NULL, '2025-07-01 06:35:09', '2025-07-01 06:35:09', 'admin'),
+(12, 'Gilbert AFANTOHOU', 'gilbert.afantohou@ubagroup.com', NULL, '$2y$12$OH8VF6M1PnNjXKVi/mjIS.U.7B7fjCHtB7Smobb2J6g0mLp/xqC/O', NULL, 'SELQPpcZDtpTm4IbAGsh776aW63coACgRgWFa0y40ceOaC9qsEZ9lwufkz64', '2025-07-01 06:35:58', '2025-07-01 06:35:58', 'admin'),
+(13, 'Marcel Akpode', 'marcel.akpode@ubagroup.com', NULL, '$2y$12$pLq1medG5xFLJYbITMGlPO/Isv5H2V3OgBdQe0UNtpLwl635W/F4K', NULL, NULL, '2025-07-03 08:28:00', '2025-07-03 08:28:00', 'user'),
+(14, 'Michael Akpassou', 'michael.akpassou@ubagroup.com', NULL, '$2y$12$VkuV.z5bZbpB/ygzBLrWFO0o4z7GwH78rucwzy2oL/OzG0Mtr1OLS', NULL, NULL, '2025-07-03 08:30:06', '2025-07-03 08:30:06', 'user'),
+(15, 'Test', 'test@gmail.com', NULL, '$2y$12$hGm9223FGeso5RFLBinCj.yKx9RrxJd04GhGy6wKbdSfWGgcaemUm', NULL, NULL, '2025-07-22 14:29:34', '2025-07-22 14:29:34', 'user'),
+(17, 'ss', 'ss@gmail.com', NULL, '$2y$12$APYTi6iwviAoYgn4LFdYgOxWw3rau81mvimklyUXqx/pyEJd0AS2C', NULL, NULL, '2025-07-22 15:13:44', '2025-07-22 15:13:44', 'user'),
+(18, 'coco', 'coco@gmail.com', NULL, '$2y$12$hNbJaDHozyo92J12wW1pb.tMJTDXh4viTmcGZb8apwmK2JcEpbgd.', NULL, NULL, '2025-07-22 21:48:22', '2025-07-22 21:48:22', 'user_cocotiers'),
+(19, 'MPS', 'mps@gmail.com', NULL, '$2y$12$/6G2JBeebT1UnOVb39RCqON3iugTbvoVIvVC6oqVcNSPjuqsEV3We', NULL, NULL, '2025-07-22 22:02:17', '2025-07-22 22:02:17', 'user_mps'),
+(20, 'STRA', 'stra@gmail.com', NULL, '$2y$12$BstYlFXBq0OfEYvUvMjDXutL3irkgWIrmggyS8MalxjmFRoRPn60G', NULL, NULL, '2025-07-22 22:20:24', '2025-07-22 22:20:24', 'user_stra');
 
 -- --------------------------------------------------------
 
@@ -1787,27 +1722,18 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 --
 
 CREATE TABLE `utilisation_cartes` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nbcarte` int NOT NULL,
-  `valeurcfa` bigint NOT NULL,
-  `totalnbcarte` int NOT NULL,
-  `totalvaleurcfa` bigint NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `nbcarte` int(11) NOT NULL,
+  `valeurcfa` bigint(20) NOT NULL,
+  `totalnbcarte` int(11) NOT NULL,
+  `totalvaleurcfa` bigint(20) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `utilisation_cartes`
---
-
-INSERT INTO `utilisation_cartes` (`id`, `debut_periode`, `fin_periode`, `code`, `description`, `nbcarte`, `valeurcfa`, `totalnbcarte`, `totalvaleurcfa`, `created_at`, `updated_at`) VALUES
-(1, '2023-01-01', '2023-06-30', 'UTLCARTE_1', 'Retraits effectués par nos clients sur nos GAB/DAB', 50, 250000, 200, 450000, '2025-06-04 21:49:44', '2025-06-04 21:49:44'),
-(2, '2023-01-01', '2023-06-30', 'UTLCARTE_3', 'Dépôts d\'espèces sur nos GAB/DAB', 145, 50000, 200, 450000, '2025-06-04 21:49:44', '2025-06-04 21:49:44'),
-(3, '2023-01-01', '2023-06-30', 'UTLCARTE_5', 'Paiement via les TPE', 5, 150000, 200, 450000, '2025-06-04 21:49:44', '2025-06-04 21:49:44');
 
 -- --------------------------------------------------------
 
@@ -1816,15 +1742,15 @@ INSERT INTO `utilisation_cartes` (`id`, `debut_periode`, `fin_periode`, `code`, 
 --
 
 CREATE TABLE `utilisation_cheques` (
-  `id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nbcheque` int NOT NULL,
-  `valeurcfa` bigint NOT NULL,
-  `totalnbcheque` int NOT NULL,
-  `totalvaleurcfa` bigint NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `nbcheque` int(11) NOT NULL,
+  `valeurcfa` bigint(20) NOT NULL,
+  `totalnbcheque` int(11) NOT NULL,
+  `totalvaleurcfa` bigint(20) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1836,7 +1762,8 @@ CREATE TABLE `utilisation_cheques` (
 INSERT INTO `utilisation_cheques` (`id`, `debut_periode`, `fin_periode`, `code`, `description`, `nbcheque`, `valeurcfa`, `totalnbcheque`, `totalvaleurcfa`, `created_at`, `updated_at`) VALUES
 (1, '2023-01-01', '2023-06-30', 'UTLCHEQUE_1', 'Chèques encaissés au guichet', 5, 70000, 14, 500000, '2025-06-04 21:55:40', '2025-06-04 21:55:40'),
 (2, '2023-01-01', '2023-06-30', 'UTLCHEQUE_3', 'Chèques reçus à la compensation', 5, 30000, 14, 500000, '2025-06-04 21:55:40', '2025-06-04 21:55:40'),
-(3, '2023-01-01', '2023-06-30', 'UTLCHEQUE_2', 'Chèques présentés à la compensation', 4, 400000, 14, 500000, '2025-06-04 21:55:40', '2025-06-04 21:55:40');
+(3, '2023-01-01', '2023-06-30', 'UTLCHEQUE_2', 'Chèques présentés à la compensation', 4, 400000, 14, 500000, '2025-06-04 21:55:40', '2025-06-04 21:55:40'),
+(4, '2001-01-01', '2001-06-30', 'FRACHEQUE_2', 'Cartes adossées à un compte courant', 3, 3000000, 3, 3000000, '2025-07-22 22:19:22', '2025-07-22 22:19:22');
 
 -- --------------------------------------------------------
 
@@ -1845,13 +1772,13 @@ INSERT INTO `utilisation_cheques` (`id`, `debut_periode`, `fin_periode`, `code`,
 --
 
 CREATE TABLE `xml_exports` (
-  `id` bigint UNSIGNED NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `type` varchar(255) NOT NULL,
   `debut_periode` date NOT NULL,
   `fin_periode` date NOT NULL,
-  `filename` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'en_attente',
-  `motif_refus` text COLLATE utf8mb4_unicode_ci,
+  `filename` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL DEFAULT 'en_attente',
+  `motif_refus` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1861,46 +1788,8 @@ CREATE TABLE `xml_exports` (
 --
 
 INSERT INTO `xml_exports` (`id`, `type`, `debut_periode`, `fin_periode`, `filename`, `status`, `motif_refus`, `created_at`, `updated_at`) VALUES
-(1, 'acquisition', '2023-01-01', '2023-06-30', 'acquisition_2023-01-01.xml', 'en_attente', NULL, '2025-06-25 12:33:49', '2025-06-25 12:59:17'),
-(2, 'acquisition', '2023-01-01', '2023-06-30', 'acquisition_2023-01-01.xml', 'valide', NULL, '2025-06-25 12:51:36', '2025-06-25 13:02:03'),
-(3, 'emission', '2023-01-01', '2023-06-30', 'emission_2023-01-01_2023-06-30.xml', 'valide', NULL, '2025-06-25 13:13:46', '2025-06-27 11:35:46'),
-(4, 'emission', '2023-01-01', '2023-06-30', 'emission_2023-01-01_2023-06-30.xml', 'en_attente', NULL, '2025-06-25 13:34:45', '2025-06-25 13:34:45'),
-(5, 'fraudechequecarte', '2023-01-01', '2023-06-30', 'fraudechequecarte_2023-01-01_2023-06-30.xml', 'en_attente', NULL, '2025-06-25 13:44:29', '2025-06-25 14:42:37'),
-(6, 'acquisition', '2023-01-01', '2023-06-30', 'acquisition_2023-01-01.xml', 'en_attente', NULL, '2025-06-25 14:41:34', '2025-06-29 23:27:04'),
-(7, 'emission', '2023-01-01', '2023-06-30', 'emission_2023-01-01_2023-06-30.xml', 'valide', NULL, '2025-06-25 14:55:48', '2025-06-25 14:56:01'),
-(8, 'fraudechequecarte', '2023-01-01', '2023-06-30', 'fraudechequecarte_2023-01-01_2023-06-30.xml', 'valide', NULL, '2025-06-25 15:02:53', '2025-06-25 15:14:21'),
-(9, 'acquisition', '2024-01-01', '2024-06-03', 'acquisition_2024-01-01.xml', 'non_valide', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', '2025-06-26 06:49:55', '2025-06-30 08:22:13'),
-(10, 'acquisition', '2023-01-01', '2023-06-30', 'acquisition_2023-01-01.xml', 'en_attente', NULL, '2025-06-27 11:31:27', '2025-06-27 11:31:27'),
-(11, 'declarationincident', '2018-01-01', '2018-03-31', 'declarationincident_2018-01-01_2018-03-31.xml', 'en_attente', NULL, '2025-06-29 21:02:54', '2025-06-29 21:02:54'),
-(12, 'declarationratios', '2018-01-01', '2018-03-31', 'declarationratios_2018-01-01_2018-03-31.xml', 'valide', NULL, '2025-06-29 21:08:56', '2025-06-30 06:50:11'),
-(13, 'declarationreclamation', '2018-01-01', '2018-03-31', 'declarationreclamation_2018-01-01_2018-03-31.xml', 'valide', NULL, '2025-06-29 21:15:16', '2025-06-30 06:50:21'),
-(14, 'declarationreclamation', '2018-01-01', '2018-03-31', 'declarationreclamation_2018-01-01_2018-03-31.xml', 'en_attente', NULL, '2025-06-29 21:25:30', '2025-06-29 21:25:30'),
-(15, 'declarationfraude', '2018-01-01', '2018-03-31', 'declarationfraude_2018-01-01_2018-03-31.xml', 'en_attente', NULL, '2025-06-29 22:04:49', '2025-06-29 22:04:49'),
-(16, 'indicateurfinancier', '2018-01-01', '2018-03-31', 'indicateurfinancier_2018-01-01_2018-03-31.xml', 'en_attente', NULL, '2025-06-29 22:09:23', '2025-06-29 22:09:23'),
-(17, 'declarationsfm', '2018-01-01', '2018-03-31', 'declarationsfm_2018-01-01_2018-03-31.xml', 'en_attente', NULL, '2025-06-29 22:13:52', '2025-06-29 22:13:52'),
-(18, 'placementfinancier', '2018-01-01', '2018-03-31', 'placementfinancier_2018-01-01_2018-03-31.xml', 'non_valide', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', '2025-06-29 22:18:13', '2025-06-30 08:22:59'),
-(19, 'declarationreclamation', '2018-01-01', '2018-03-31', 'declarationreclamation_2018-01-01_2018-03-31.xml', 'en_attente', NULL, '2025-06-30 06:58:33', '2025-06-30 06:58:33'),
-(20, 'annuaire', '2023-01-01', '2023-06-30', 'annuairestra2023-01-01_2023-06-30.xml', 'en_attente', NULL, '2025-06-30 07:42:43', '2025-06-30 07:42:43'),
-(21, 'ecosysteme', '2023-01-01', '2023-01-31', 'ecosysteme2023-01-01_2023-01-31.xml', 'en_attente', NULL, '2025-06-30 07:45:50', '2025-06-30 07:45:50'),
-(22, 'reclamationstra', '2023-01-01', '2023-01-31', 'reclamationstra2023-01-01_2023-01-31.xml', 'en_attente', NULL, '2025-06-30 07:48:34', '2025-06-30 07:48:34'),
-(23, 'operationstra', '2023-12-01', '2023-12-31', 'operationstra2023-12-01_2023-12-31.xml', 'en_attente', NULL, '2025-06-30 07:49:35', '2025-06-30 07:49:35'),
-(24, 'fraudestra', '2023-01-01', '2023-01-31', 'fraudestra2023-01-01_2023-01-31.xml', 'en_attente', NULL, '2025-06-30 07:52:45', '2025-06-30 07:52:45'),
-(25, 'incidentstra', '2023-01-01', '2023-01-31', 'incidentstra2023-01-01_2023-01-31.xml', 'en_attente', NULL, '2025-06-30 07:53:06', '2025-06-30 07:53:06'),
-(26, 'risquestra', '2023-01-01', '2023-01-31', 'risquestra2023-01-01_2023-01-31.xml', 'non_valide', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', '2025-06-30 07:57:15', '2025-06-30 08:23:38'),
-(27, 'utilisationcheque', '2023-01-01', '2023-06-30', 'utilisationcheque2023-01-01_2023-06-30.xml', 'en_attente', NULL, '2025-06-30 07:59:30', '2025-06-30 07:59:30'),
-(28, 'utilisationcarte', '2023-01-01', '2023-06-30', 'utilisationcarte2023-01-01_2023-06-30.xml', 'en_attente', NULL, '2025-06-30 08:00:29', '2025-06-30 08:00:29'),
-(29, 'tarificationchequecarte', '2023-01-01', '2023-06-30', 'tarificationchequecarte2023-01-01_2023-06-30.xml', 'en_attente', NULL, '2025-06-30 08:01:20', '2025-06-30 08:01:20'),
-(30, 'reclamationchequecarte', '2023-01-01', '2023-06-30', 'reclamationchequecarte2023-01-01_2023-06-30.xml', 'en_attente', NULL, '2025-06-30 08:08:18', '2025-06-30 08:08:18'),
-(31, 'incidentpaiementcheque', '2023-01-01', '2023-06-30', 'incidentpaiementcheque2023-01-01_2023-06-30.xml', 'en_attente', NULL, '2025-06-30 08:08:36', '2025-06-30 08:08:36'),
-(32, 'incidentpaiementcarte', '2023-01-01', '2023-06-30', 'incidentpaiementcarte2023-01-01_2023-06-30.xml', 'en_attente', NULL, '2025-06-30 08:08:54', '2025-06-30 08:08:54'),
-(33, 'incidentchequecarte', '2023-01-01', '2023-06-30', 'incidentchequecarte2023-01-01_2023-06-30.xml', 'en_attente', NULL, '2025-06-30 08:09:23', '2025-06-30 08:09:23'),
-(34, 'fraudechequecarte', '2023-01-01', '2023-06-30', 'fraudechequecarte2023-01-01_2023-06-30.xml', 'en_attente', NULL, '2025-06-30 08:10:39', '2025-06-30 08:10:39'),
-(35, 'emission', '2023-01-01', '2023-06-30', 'emission_2023-01-01_2023-06-30.xml', 'valide', NULL, '2025-06-30 08:10:55', '2025-06-30 08:16:55'),
-(36, 'emission', '2023-01-01', '2023-06-30', 'emission2023-01-01_2023-06-30.xml', 'en_attente', NULL, '2025-06-30 08:10:55', '2025-06-30 08:10:55'),
-(37, 'acquisition', '2023-01-01', '2023-06-30', 'acquisition_2023-01-01.xml', 'en_attente', NULL, '2025-06-30 08:11:20', '2025-06-30 08:11:20'),
-(38, 'acquisition', '2023-01-01', '2023-06-30', 'acquisition2023-01-01_2023-06-30.xml', 'en_attente', NULL, '2025-06-30 08:11:20', '2025-06-30 08:11:20'),
-(39, 'acquisition', '2023-01-01', '2023-06-30', 'acquisition_2023-01-01.xml', 'non_valide', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', '2025-06-30 08:11:54', '2025-06-30 08:23:18'),
-(40, 'acquisition', '2023-01-01', '2023-06-30', 'acquisition2023-01-01_2023-06-30.xml', 'en_attente', NULL, '2025-06-30 08:11:54', '2025-06-30 08:17:23');
+(1, 'utilisationcarte', '2025-01-01', '2025-06-30', 'utilisationcarte2025-01-01_2025-06-30.xml', 'non_valide', NULL, '2025-07-02 05:59:12', '2025-07-02 14:53:47'),
+(2, 'declarationreclamation', '2018-01-01', '2018-03-31', 'declarationreclamation_2018-01-01_2018-03-31.xml', 'en_attente', NULL, '2025-07-03 10:17:48', '2025-07-03 10:17:48');
 
 --
 -- Index pour les tables déchargées
@@ -2298,331 +2187,331 @@ ALTER TABLE `xml_exports`
 -- AUTO_INCREMENT pour la table `acquisition_cartes`
 --
 ALTER TABLE `acquisition_cartes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `annuaires_stras`
 --
 ALTER TABLE `annuaires_stras`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT pour la table `annuaire_services`
 --
 ALTER TABLE `annuaire_services`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `annuaire_transactions`
 --
 ALTER TABLE `annuaire_transactions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `code_financiers`
 --
 ALTER TABLE `code_financiers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `code_fraudes`
 --
 ALTER TABLE `code_fraudes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT pour la table `code_incidents`
 --
 ALTER TABLE `code_incidents`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT pour la table `code_ratios`
 --
 ALTER TABLE `code_ratios`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `code_service_financiers`
 --
 ALTER TABLE `code_service_financiers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=254;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=254;
 
 --
 -- AUTO_INCREMENT pour la table `controle_encours`
 --
 ALTER TABLE `controle_encours`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `declarationsfm`
 --
 ALTER TABLE `declarationsfm`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `declaration_fraudes`
 --
 ALTER TABLE `declaration_fraudes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `declaration_incidents`
 --
 ALTER TABLE `declaration_incidents`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `declaration_ratios`
 --
 ALTER TABLE `declaration_ratios`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `declaration_reclamations`
 --
 ALTER TABLE `declaration_reclamations`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `details_risques_stras`
 --
 ALTER TABLE `details_risques_stras`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `ecosystemes`
 --
 ALTER TABLE `ecosystemes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `emission_cartes`
 --
 ALTER TABLE `emission_cartes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT pour la table `explication_ecarts`
 --
 ALTER TABLE `explication_ecarts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `famille_cartes`
 --
 ALTER TABLE `famille_cartes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT pour la table `famille_cheques`
 --
 ALTER TABLE `famille_cheques`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT pour la table `famille_cheque_cartes`
 --
 ALTER TABLE `famille_cheque_cartes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT pour la table `fraudestras`
 --
 ALTER TABLE `fraudestras`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `fraude_cheque_cartes`
 --
 ALTER TABLE `fraude_cheque_cartes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `fraude_codes`
 --
 ALTER TABLE `fraude_codes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT pour la table `incident_cheque_cartes`
 --
 ALTER TABLE `incident_cheque_cartes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `incident_paiement_cartes`
 --
 ALTER TABLE `incident_paiement_cartes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `incident_paiement_cheques`
 --
 ALTER TABLE `incident_paiement_cheques`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pour la table `incident_stras`
 --
 ALTER TABLE `incident_stras`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pour la table `indicateur_financiers`
 --
 ALTER TABLE `indicateur_financiers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT pour la table `modes_envoi`
 --
 ALTER TABLE `modes_envoi`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `modes_reception`
 --
 ALTER TABLE `modes_reception`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `motifs`
 --
 ALTER TABLE `motifs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `operateurs`
 --
 ALTER TABLE `operateurs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `operationstras`
 --
 ALTER TABLE `operationstras`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `pays_operateurs`
 --
 ALTER TABLE `pays_operateurs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `perimetre_partenariats`
 --
 ALTER TABLE `perimetre_partenariats`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `placement_financiers`
 --
 ALTER TABLE `placement_financiers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `plateforme_techniques`
 --
 ALTER TABLE `plateforme_techniques`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `reclamation_cheque_cartes`
 --
 ALTER TABLE `reclamation_cheque_cartes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `reclamation_stras`
 --
 ALTER TABLE `reclamation_stras`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `risques_stras`
 --
 ALTER TABLE `risques_stras`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pour la table `services`
 --
 ALTER TABLE `services`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pour la table `solde_compte_cantonnements`
 --
 ALTER TABLE `solde_compte_cantonnements`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `tarification_cheque_cartes`
 --
 ALTER TABLE `tarification_cheque_cartes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `type_cartes`
 --
 ALTER TABLE `type_cartes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT pour la table `type_risque_stras`
 --
 ALTER TABLE `type_risque_stras`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `typologie_cheques`
 --
 ALTER TABLE `typologie_cheques`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT pour la table `utilisation_cartes`
 --
 ALTER TABLE `utilisation_cartes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `utilisation_cheques`
 --
 ALTER TABLE `utilisation_cheques`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `xml_exports`
 --
 ALTER TABLE `xml_exports`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Contraintes pour les tables déchargées

@@ -12,6 +12,14 @@ class FraudeStraController extends Controller
 {
     public function create()
     {
+        // Seuls admin et user_stra peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_stra'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         return view('fraudestra.create', [
             'services' => Service::all(),
             'fraudecodes' => Fraudecode::all(),
@@ -21,6 +29,14 @@ class FraudeStraController extends Controller
 
     public function store(Request $request)
     {
+        // Seuls admin et user_stra peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_stra'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $request->validate([
             'debut_periode' => 'required|date',
             'fin_periode' => 'required|date',
@@ -64,6 +80,14 @@ class FraudeStraController extends Controller
 
     public function index()
     {
+        // Seuls admin et user_stra peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_stra'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $fraudes = FraudeStra::orderBy('debut_periode', 'desc')->get()->groupBy('debut_periode');
         return view('fraudestra.index', compact('fraudes'));
     }

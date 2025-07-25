@@ -12,6 +12,14 @@ class FraudeChequeCarteController extends Controller
 {
     public function create()
     {
+        // Seuls admin et user_mps peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_mps'
+        ) {
+            abort(403, 'Accès refusé');
+        }
+        
         $familles = FamilleCarte::all();
         $types = TypeCarte::all();
         return view('fraudechequecarte.create', compact('familles', 'types'));
@@ -19,6 +27,14 @@ class FraudeChequeCarteController extends Controller
 
     public function store(Request $request)
     {
+        // Seuls admin et user_mps peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_mps'
+        ) {
+            abort(403, 'Accès refusé');
+        }
+
         $request->validate([
             'debut_periode' => 'required|date',
             'fin_periode' => 'required|date',
@@ -62,6 +78,14 @@ class FraudeChequeCarteController extends Controller
 
     public function index()
     {
+        // Seuls admin et user_mps peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_mps'
+        ) {
+            abort(403, 'Accès refusé');
+        }
+
         $fraudes = FraudeChequeCarte::orderBy('debut_periode', 'desc')->get()->groupBy('debut_periode');
         // $fraudesf = FraudeChequeCarte::orderBy('fin_periode', 'desc')->get()->groupBy('fin_periode');
         return view('fraudechequecarte.index', compact('fraudes'));

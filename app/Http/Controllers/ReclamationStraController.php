@@ -10,12 +10,28 @@ class ReclamationStraController extends Controller
 {
     public function create()
     {
+        // Seuls admin et user_stra peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_stra'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $services = Service::all();
         return view('reclamationstra.create', compact('services'));
     }
 
     public function store(Request $request)
     {
+        // Seuls admin et user_stra peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_stra'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $request->validate([
             'debut_periode' => 'required|date',
             'fin_periode' => 'required|date',
@@ -53,6 +69,14 @@ class ReclamationStraController extends Controller
 
     public function index()
     {
+        // Seuls admin et user_stra peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_stra'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $reclamations = ReclamationStra::orderBy('debut_periode', 'desc')->get()->groupBy('debut_periode');
         return view('reclamationstra.index', compact('reclamations'));
     }

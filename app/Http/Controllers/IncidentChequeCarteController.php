@@ -11,6 +11,14 @@ class IncidentChequeCarteController extends Controller
 {
     public function create()
     {
+        // Seuls admin et user_mps peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_mps'
+        ) {
+            abort(403, 'Accès refusé');
+        }
+
         $familles = FamilleCarte::all();
         $types = TypeCarte::all();
         return view('incidentchequecarte.create', compact('familles', 'types'));
@@ -18,6 +26,14 @@ class IncidentChequeCarteController extends Controller
 
     public function store(Request $request)
     {
+        // Seuls admin et user_mps peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_mps'
+        ) {
+            abort(403, 'Accès refusé');
+        }
+
         $request->validate([
             'debut_periode' => 'required|date',
             'fin_periode' => 'required|date',
@@ -67,6 +83,14 @@ class IncidentChequeCarteController extends Controller
 
     public function index()
     {
+        // Seuls admin et user_mps peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_mps'
+        ) {
+            abort(403, 'Accès refusé');
+        }
+
         $incidents = IncidentChequeCarte::orderBy('debut_periode', 'desc')->get()->groupBy('debut_periode');
         return view('incidentchequecarte.index', compact('incidents'));
     }

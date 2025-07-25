@@ -10,12 +10,28 @@ class DeclarationSFMController extends Controller
 {
     public function create()
     {
+        // Seuls admin et user_cocotiers peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_cocotiers'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $codes = CodeServiceFinancier::orderBy('code')->get();
         return view('declarationsfm.create', compact('codes'));
     }
 
     public function store(Request $request)
     {
+        // Seuls admin et user_cocotiers peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_cocotiers'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $request->validate([
             'debut_periode' => 'required|date',
             'fin_periode' => 'required|date|after_or_equal:debut_periode',
@@ -40,6 +56,14 @@ class DeclarationSFMController extends Controller
 
     public function index()
     {
+        // Seuls admin et user_cocotiers peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_cocotiers'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $sfms = DeclarationSFM::orderBy('debut_periode', 'desc')->get()->groupBy('debut_periode');
         return view('declarationsfm.index', compact('sfms'));
     }

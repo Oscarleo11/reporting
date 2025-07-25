@@ -16,6 +16,14 @@ class AnnuaireStraController extends Controller
 {
     public function create()
     {
+        // Seuls admin et user_stra peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_stra'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         return view('annuairestra.create', [
             'services' => Service::all(),
             'operateur' => Operateur::all(),
@@ -27,6 +35,14 @@ class AnnuaireStraController extends Controller
 
     public function store(Request $request)
     {
+        // Seuls admin et user_stra peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_stra'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $totalSousAgents = 0;
         $totalPointsService = 0;
         $totalEmissionIntra = 0;
@@ -99,6 +115,14 @@ class AnnuaireStraController extends Controller
 
     public function index()
     {
+        // Seuls admin et user_stra peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_stra'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $stras = AnnuaireStra::with('services')->orderByDesc('debut_periode')->get();
         return view('annuairestra.index', compact('stras'));
     }

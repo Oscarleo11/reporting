@@ -94,76 +94,84 @@
 
                 <li>
                     @if (Auth::check() && Auth::user()->role === 'admin')
-                        <a href="{{ route('admin.users.create') }}"><i class="fas fa-user-plus mr-2"></i><span> Ajouter
-                                un utilisateur</span></a>
+                        <a href="{{ route('admin.users.create') }}"><i class="fas fa-user-plus mr-2"></i><span> Ajouter un utilisateur</span></a>
                     @endif
                 </li>
 
-                <li class="menu-header">Produit électronique</li>
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
-                        <i class="fas fa-credit-card"></i> <span>MPS</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ route('acquisition.create') }}" class="nav-link">Acquisition de cartes</a></li>
-                        <li><a href="{{ route('emission-cartes.create') }}" class="nav-link">Émission de cartes</a>
-                        </li>
-                        <li><a href="{{ route('fraudechequecarte.create') }}" class="nav-link">Fraude chèque/carte</a>
-                        </li>
-                        <li><a href="{{ route('incidentchequecarte.create') }}" class="nav-link">Incidents
-                                chèque/carte</a></li>
-                        <li><a href="{{ route('incidentpaiementcarte.create') }}" class="nav-link">Incidents paiement
-                                carte</a></li>
-                        <li><a href="{{ route('incidentpaiementcheque.create') }}" class="nav-link">Incidents paiement
-                                chèque</a>
-                        </li>
-                        <li><a href="{{ route('reclamationchequecarte.create') }}" class="nav-link">Réclamations</a>
-                        </li>
-                        <li><a href="{{ route('tarificationchequecarte.create') }}" class="nav-link">Tarification
-                                (carte &
-                                chèque)</a></li>
-                        <li><a href="{{ route('typologiecheque.create') }}" class="nav-link">Typologie chèques</a></li>
-                        <li><a href="{{ route('utilisationcarte.create') }}" class="nav-link">Utilisation carte</a>
-                        </li>
-                        <li><a href="{{ route('utilisationcheque.create') }}" class="nav-link">Utilisation chèque</a>
-                        </li>
-                    </ul>
-                </li>
+                {{-- MPS --}}
+                @if(Auth::user()->role === 'admin' || Auth::user()->role === 'user_mps')
+                    <li class="menu-header">Produit électronique</li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                            <i class="fas fa-credit-card"></i> <span>MPS</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ route('acquisition.create') }}" class="nav-link">Acquisition de cartes</a></li>
+                            <li><a href="{{ route('emission-cartes.create') }}" class="nav-link">Émission de cartes</a>
+                            </li>
+                            <li><a href="{{ route('fraudechequecarte.create') }}" class="nav-link">Fraude chèque/carte</a>
+                            </li>
+                            <li><a href="{{ route('incidentchequecarte.create') }}" class="nav-link">Incidents
+                                    chèque/carte</a></li>
+                            <li><a href="{{ route('incidentpaiementcarte.create') }}" class="nav-link">Incidents paiement
+                                    carte</a></li>
+                            <li><a href="{{ route('incidentpaiementcheque.create') }}" class="nav-link">Incidents paiement
+                                    chèque</a>
+                            </li>
+                            <li><a href="{{ route('reclamationchequecarte.create') }}" class="nav-link">Réclamations</a>
+                            </li>
+                            <li><a href="{{ route('tarificationchequecarte.create') }}" class="nav-link">Tarification
+                                    (carte &
+                                    chèque)</a></li>
+                            <li><a href="{{ route('typologiecheque.create') }}" class="nav-link">Typologie chèques</a></li>
+                            <li><a href="{{ route('utilisationcarte.create') }}" class="nav-link">Utilisation carte</a>
+                            </li>
+                            <li><a href="{{ route('utilisationcheque.create') }}" class="nav-link">Utilisation chèque</a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
 
-                <li class="menu-header">Produit de transfert rapide</li>
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
-                        <i class="fas fa-exchange-alt"></i> <span>STRA</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ route('risquestra.create') }}" class="nav-link">Risques STRA</a></li>
-                        <li><a href="{{ route('incidentstra.create') }}" class="nav-link">Incidents STRA</a></li>
-                        <li><a href="{{ route('ecosysteme.create') }}" class="nav-link">Écosystème STRA</a></li>
-                        <li><a href="{{ route('fraudestra.create') }}" class="nav-link">Fraudes STRA</a></li>
-                        <li><a href="{{ route('operationstra.create') }}" class="nav-link">Opérations STRA</a></li>
-                        <li><a href="{{ route('reclamationstra.create') }}" class="nav-link">Réclamations STRA</a>
-                        </li>
-                        <li><a href="{{ route('annuairestra.create') }}" class="nav-link">Annuaire STRA</a></li>
-                    </ul>
-                </li>
+                {{-- STRA --}}
+                @if(Auth::user()->role === 'admin' || Auth::user()->role === 'user_stra')
+                    <li class="menu-header">Produit de transfert rapide</li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                            <i class="fas fa-exchange-alt"></i> <span>STRA</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ route('risquestra.create') }}" class="nav-link">Risques STRA</a></li>
+                            <li><a href="{{ route('incidentstra.create') }}" class="nav-link">Incidents STRA</a></li>
+                            <li><a href="{{ route('ecosysteme.create') }}" class="nav-link">Écosystème STRA</a></li>
+                            <li><a href="{{ route('fraudestra.create') }}" class="nav-link">Fraudes STRA</a></li>
+                            <li><a href="{{ route('operationstra.create') }}" class="nav-link">Opérations STRA</a></li>
+                            <li><a href="{{ route('reclamationstra.create') }}" class="nav-link">Réclamations STRA</a>
+                            </li>
+                            <li><a href="{{ route('annuairestra.create') }}" class="nav-link">Annuaire STRA</a></li>
+                        </ul>
+                    </li>
+                @endif
 
 
-                <li class="menu-header">Produit de ...</li>
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
-                        <i class="fas fa-exchange-alt"></i> <span>Autres</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ route('declarationincident.create') }}" class="nav-link">Déclaration Incident</a></li>
-                        <li><a href="{{ route('declarationratios.create') }}" class="nav-link">Déclaration Ratio</a></li>
-                        <li><a href="{{ route('declarationreclamation.create') }}" class="nav-link">Déclaration Reclamation</a></li>
-                        <li><a href="{{ route('declarationfraude.create') }}" class="nav-link">Déclaration Fraude</a></li>
-                        <li><a href="{{ route('controleencours.create') }}" class="nav-link">Contrôle en Cours</a></li>
-                        <li><a href="{{ route('indicateurfinancier.create') }}" class="nav-link">Indicateur Financier</a></li>
-                        <li><a href="{{ route('placementfinancier.create') }}" class="nav-link">Placement Financier</a></li>
-                        <li><a href="{{ route('declarationsfm.create') }}" class="nav-link">Déclaration SFM</a></li>
-                    </ul>
-                </li>
+                {{-- Cocotiers II --}}
+                @if(Auth::user()->role === 'admin' || Auth::user()->role === 'user_cocotiers')
+                    <li class="menu-header">Produit de ...</li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                            <i class="fas fa-exchange-alt"></i> <span>Cocotiers II</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ route('declarationincident.create') }}" class="nav-link">Déclaration Incident</a></li>
+                            <li><a href="{{ route('declarationratios.create') }}" class="nav-link">Déclaration Ratio</a></li>
+                            <li><a href="{{ route('declarationreclamation.create') }}" class="nav-link">Déclaration Reclamation</a></li>
+                            <li><a href="{{ route('declarationfraude.create') }}" class="nav-link">Déclaration Fraude</a></li>
+                            <li><a href="{{ route('controleencours.create') }}" class="nav-link">Contrôle en Cours</a></li>
+                            <li><a href="{{ route('indicateurfinancier.create') }}" class="nav-link">Indicateur Financier</a></li>
+                            <li><a href="{{ route('placementfinancier.create') }}" class="nav-link">Placement Financier</a></li>
+                            <li><a href="{{ route('declarationsfm.create') }}" class="nav-link">Déclaration SFM</a></li>
+                        </ul>
+                    </li>
+                @endif
             </ul>
         </aside>
     </div>

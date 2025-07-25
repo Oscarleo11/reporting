@@ -12,6 +12,14 @@ class TarificationChequeCarteController extends Controller
 {
     public function create()
     {
+        // Seuls admin et user_mps peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_mps'
+        ) {
+            abort(403, 'Accès refusé');
+        }
+
         $famillesCH = FamilleCheque::all();
         $famillesCa = FamilleChequeCarte::all();
         $types = TypeCarte::all();
@@ -20,6 +28,14 @@ class TarificationChequeCarteController extends Controller
 
     public function store(Request $request)
     {
+        // Seuls admin et user_mps peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_mps'
+        ) {
+            abort(403, 'Accès refusé');
+        }
+
         $request->validate([
             'debut_periode' => 'required|date',
             'fin_periode' => 'required|date',
@@ -54,6 +70,14 @@ class TarificationChequeCarteController extends Controller
 
     public function index()
     {
+        // Seuls admin et user_mps peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_mps'
+        ) {
+            abort(403, 'Accès refusé');
+        }
+
         $tarifs = TarificationChequeCarte::orderBy('debut_periode', 'desc')->get()->groupBy('debut_periode');
         return view('tarificationchequecarte.index', compact('tarifs'));
     }

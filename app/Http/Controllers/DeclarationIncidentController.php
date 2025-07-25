@@ -10,12 +10,28 @@ class DeclarationIncidentController extends Controller
 {
     public function create()
     {
-    $codes = CodeIncident::all();
-    return view('declarationincident.create', compact('codes'));
-}
+        // Seuls admin et user_cocotiers peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_cocotiers'
+        ) {
+            abort(403, 'Accès refusé');
+        }
+
+        $codes = CodeIncident::all();
+        return view('declarationincident.create', compact('codes'));
+    }
 
     public function store(Request $request)
     {
+        // Seuls admin et user_cocotiers peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_cocotiers'
+        ) {
+            abort(403, 'Accès refusé');
+        }
+
         $request->validate([
             'debut_periode' => 'required|date',
             'fin_periode' => 'required|date',
@@ -34,6 +50,14 @@ class DeclarationIncidentController extends Controller
 
     public function index()
     {
+        // Seuls admin et user_cocotiers peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_cocotiers'
+        ) {
+            abort(403, 'Accès refusé');
+        }
+
         $incidents = DeclarationIncident::all()->groupBy('debut_periode');
         return view('declarationincident.index', compact('incidents'));
     }

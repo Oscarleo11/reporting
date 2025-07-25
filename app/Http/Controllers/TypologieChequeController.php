@@ -11,6 +11,14 @@ class TypologieChequeController extends Controller
 {
     public function create()
     {
+        // Seuls admin et user_mps peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_mps'
+        ) {
+            abort(403, 'Accès refusé');
+        }
+
         // $familles = FamilleCarte::all();
         $familles = FamilleCheque::all();
         $types = TypeCarte::all();
@@ -19,6 +27,14 @@ class TypologieChequeController extends Controller
 
     public function store(Request $request)
     {
+        // Seuls admin et user_mps peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_mps'
+        ) {
+            abort(403, 'Accès refusé');
+        }
+
         $request->validate([
             'debut_periode' => 'required|date',
             'fin_periode' => 'required|date',
@@ -45,6 +61,14 @@ class TypologieChequeController extends Controller
 
     public function index()
     {
+        // Seuls admin et user_mps peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_mps'
+        ) {
+            abort(403, 'Accès refusé');
+        }
+
         $typologies = TypologieCheque::orderBy('debut_periode', 'desc')->get()->groupBy('debut_periode');
         return view('typologiecheque.index', compact('typologies'));
     }

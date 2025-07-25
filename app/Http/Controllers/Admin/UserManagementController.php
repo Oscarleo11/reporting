@@ -34,7 +34,7 @@ class UserManagementController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'user', // ou autre valeur par défaut
+            'role' => $request->role,
         ]);
 
         return redirect()->route('admin.users.create')->with('success', 'Utilisateur créé avec succès.');

@@ -14,6 +14,14 @@ class EcosystemeController extends Controller
 {
     public function create()
     {
+        // Seuls admin et user_stra peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_stra'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         return view('ecosysteme.create', [
             'services' => Service::all(),
             'operateurs' => Operateur::all(),
@@ -24,6 +32,14 @@ class EcosystemeController extends Controller
 
     public function store(Request $request)
     {
+        // Seuls admin et user_stra peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_stra'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $request->validate([
             'debut_periode' => 'required|date',
             'fin_periode' => 'required|date',
@@ -62,6 +78,14 @@ class EcosystemeController extends Controller
 
     public function index()
     {
+        // Seuls admin et user_stra peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_stra'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $ecosystemes = Ecosysteme::orderByDesc('debut_periode')->get()->groupBy('debut_periode');
         return view('ecosysteme.index', compact('ecosystemes'));
     }

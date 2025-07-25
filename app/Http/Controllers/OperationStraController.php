@@ -12,6 +12,14 @@ class OperationStraController extends Controller
 {
     public function create()
     {
+        // Seuls admin et user_stra peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_stra'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         return view('operationstra.create', [
             'services' => Service::all(),
             'paysoperateurs' => Paysoperateur::all(),
@@ -22,6 +30,14 @@ class OperationStraController extends Controller
 
     public function store(Request $request)
     {
+        // Seuls admin et user_stra peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_stra'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $request->validate([
             'debut_periode' => 'required|date',
             'fin_periode' => 'required|date',
@@ -69,6 +85,14 @@ class OperationStraController extends Controller
 
     public function index()
     {
+        // Seuls admin et user_stra peuvent accéder
+        if (
+            auth()->user()->role !== 'admin' &&
+            auth()->user()->role !== 'user_stra'
+        ) {
+            abort(403, 'Accès refusé');
+        }  
+
         $operations = OperationStra::orderBy('debut_periode', 'desc')->get()->groupBy('debut_periode');
         return view('operationstra.index', compact('operations'));
     }
